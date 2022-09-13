@@ -32,6 +32,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 captcha
 
-config/config.php
 /config/config.php
 config.php

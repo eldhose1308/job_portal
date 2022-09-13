@@ -29,11 +29,10 @@ $config['base_url'] = $url;
 
 
 $config['email_address'] = 'designer@smcim.com';
+$config['email_address'] = 'developer@smcim.com';
+$config['email_address'] = 'support@smcim.com';
 
-
-$config['google_key'] = '6Lcx4xYgAAAAAI9TPRJ9wxfvMN3YxySZS3ArJH-P';
-$config['google_secret'] = '6Lcx4xYgAAAAAJBFI6zOn3Qt8GaeKgTTGjbcQ3g5';
-
+// Another comment
 
 
 /*
