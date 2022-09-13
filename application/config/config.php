@@ -28,7 +28,7 @@ $url .= $_SERVER['HTTP_HOST']. str_replace(basename($_SERVER['SCRIPT_NAME']),"",
 $config['base_url'] = $url;
 
 
-$config['email_address'] = 'designer@smcim.com';
+// $config['email_address'] = 'designer@smcim.com';
 $config['email_address'] = 'developer@smcim.com';
 
 // Another comment
