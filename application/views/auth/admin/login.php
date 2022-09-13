@@ -30,6 +30,54 @@
 <body>
 
 
+
+  <!--=================================
+header -->
+  <header class="header bg-dark">
+    <nav class="navbar navbar-static-top navbar-expand-lg header-sticky">
+      <div class="container-fluid">
+        <button id="nav-icon4" type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a class="navbar-brand" href="<?= base_url() ?>assets/users/index.html">
+          <img class="img-fluid" src="<?= base_url() ?>assets/users/images/logo.svg" alt="logo">
+        </a>
+        <div class="navbar-collapse collapse justify-content-start">
+          <ul class="nav navbar-nav">
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url() ?>" role="button">Home</a>
+            </li>
+
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Listing <i class="fas fa-chevron-down fa-xs"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-grid.html">Job Grid</a></li>
+                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing.html">Job Listing</a></li>
+                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-detail.html">Job Detail</a></li>
+                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing-map.html">Job Listing Map</a></li>
+              </ul>
+            </li>
+
+
+
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+  <!--=================================
+  header -->
+
+
+
   <!--=================================
 inner banner -->
   <div class="header-inner bg-light text-center">
@@ -60,9 +108,12 @@ Signin -->
             </div>
 
             <div class="tab-content">
-              <div class="tab-pane active" id="candidate" role="tabpanel">
+              <div class="tab-pane active" id="login-tab" role="tabpanel">
 
 
+
+                <div id="alert-message-div" style="display: none; padding: 0% 3%;">
+                </div>
 
                 <?php echo form_open(base_url('admin/save_login'), 'class="mt-4" id="login-forms" autocomplete="off" '); ?>
 
@@ -82,25 +133,17 @@ Signin -->
                     </div>
 
                     <span class="text-black"><a class="" onclick="grecaptcha.reset()" id="refresh_button" style="cursor: pointer;color:#96c952">
-                    Refresh Captcha
+                        Refresh Captcha
                         <i class="fas fa-sync" aria-hidden="true"></i></a></span>
                   </div>
 
 
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
-                    <button class="btn btn-primary d-grid" href="<?= base_url() ?>assets/users/#">Sign In</button>
+                  <div class="col-md-12 p-2">
+                    <button class="btn btn-primary btn-100  d-grid" href="<?= base_url() ?>assets/users/#">Sign In</button>
                   </div>
-                  <div class="col-md-6">
-                    <div class="mt-3 mt-md-0 forgot-pass">
-                      <a href="<?= base_url() ?>assets/users/#">Forgot Password?</a>
-                      <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" value="" id="Remember-02">
-                        <label class="form-check-label" for="Remember-02">Remember Password</label>
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
 
                 <?php echo form_close(); ?>
@@ -139,6 +182,45 @@ Signin -->
 
 
   <!--=================================
+footer-->
+  <footer class="footer bg-light">
+
+
+    <div class="footer-bottom bg-dark mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 ">
+            <div class="d-flex justify-content-md-start justify-content-center">
+              <ul class="list-unstyled d-flex mb-0">
+                <li><a href="<?= base_url() ?>assets/users/#">Privacy Policy</a></li>
+                <li><a href="<?= base_url() ?>assets/users/about.html">About</a></li>
+                <li><a href="<?= base_url() ?>assets/users/#">Team</a></li>
+                <li><a href="<?= base_url() ?>assets/users/contact-us.html">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 text-center text-md-end mt-4 mt-md-0">
+            <p class="mb-0"> &copy;Copyright <span id="copyright">
+                <script>
+                  document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                </script>
+              </span> <a href="<?= base_url() ?>assets/users/#"> Nexcode </a>-<?= APP_NAME ?> Admin portal . All Rights Reserved </p>
+
+            <span> Page loaded in <?= page_speed() . ' seconds' ?> </span>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--=================================
+footer-->
+
+
+
+
+  <!--=================================
 Back To Top-->
   <div id="back-to-top" class="back-to-top">
     <i class="fas fa-angle-up"></i>
@@ -160,7 +242,7 @@ Javascript -->
   <script src="<?= base_url() ?>assets/auth/scripts.js"></script>
 
 
-  
+
   <style>
     .internet-connection-status {
       display: none;

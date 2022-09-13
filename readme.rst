@@ -1,5 +1,5 @@
 ###################
-Mace office
+Job Portal
 ###################
 
-Generate pdf for teachers 
+A Portal to add and manage several job offers

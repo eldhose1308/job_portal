@@ -9,15 +9,15 @@ header -->
           <span></span>
           <span></span>
       </button>
-      <a class="navbar-brand" href="<?= base_url () ?>assets/users/index.html">
-        <img class="img-fluid" src="<?= base_url () ?>assets/users/images/logo.svg" alt="logo">
+      <a class="navbar-brand" href="<?= base_url() ?>assets/users/index.html">
+        <img class="img-fluid" src="<?= base_url() ?>assets/users/images/logo.svg" alt="logo">
       </a>
       <div class="navbar-collapse collapse justify-content-start">
         <ul class="nav navbar-nav">
 
 
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url () ?>" role="button">Home</a>
+            <a class="nav-link" href="<?= base_url() ?>" role="button">Home</a>
           </li>
           
 
@@ -26,10 +26,10 @@ header -->
               Listing <i class="fas fa-chevron-down fa-xs"></i>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="<?= base_url () ?>assets/users/job-grid.html">Job Grid</a></li>
-              <li><a class="dropdown-item" href="<?= base_url () ?>assets/users/job-listing.html">Job Listing</a></li>
-              <li><a class="dropdown-item" href="<?= base_url () ?>assets/users/job-detail.html">Job Detail</a></li>
-              <li><a class="dropdown-item" href="<?= base_url () ?>assets/users/job-listing-map.html">Job Listing Map</a></li>
+              <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-grid.html">Job Grid</a></li>
+              <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing.html">Job Listing</a></li>
+              <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-detail.html">Job Detail</a></li>
+              <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing-map.html">Job Listing Map</a></li>
             </ul>
           </li>
           
@@ -39,9 +39,9 @@ header -->
       </div>
       <div class="add-listing">
           <div class="login d-inline-block me-4">
-            <a href="<?= base_url () ?>assets/users/#"><i class="far fa-user pe-2"></i>Username</a>
+            <a href="<?= base_url() ?>assets/users/#"><i class="far fa-user pe-2"></i>Username</a>
           </div>
-          <a class="btn btn-white btn-md" href="<?= base_url () ?>admin/logout"> <i class="fa fa-sign-out"></i>Logout</a>
+          <a class="btn btn-white btn-md" href="<?= base_url() ?>admin/logout"> <i class="fa fa-sign-out"></i>Logout</a>
         </div>
     </div>
   </nav>

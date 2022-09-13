@@ -6094,3 +6094,31 @@ iframe {
     border-left: 1px solid #eeeeee !important; } }
 
 /*# sourceMappingURL=../css/style.css.map */
+
+#login-tab{
+  margin: 2% 14%;
+}
+#login-forms{
+  padding: 0% 3%;
+}
+
+.btn-100{
+  width: 100%;
+}
+
+.btn-50{
+  width: 50%;
+}
+
+.p-1{
+  padding: 1% !important;
+}
+.p-2{
+  padding: 2% !important;
+}
+.p-5{
+  padding: 5% !important;
+}
+.p-10{
+  padding: 10% !important;
+}
