@@ -30,9 +30,8 @@ $config['base_url'] = $url;
 
 $config['email_address'] = 'designer@smcim.com';
 $config['email_address'] = 'developer@smcim.com';
-$config['email_address'] = 'support@smcim.com';
 
-// Another comment
+// Another comment here
 
 
 /*
