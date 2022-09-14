@@ -328,7 +328,7 @@
 
             <div class="form-group">
               <label class="form-label" for="input-1">Email address *</label>
-              <input class="form-control" id="user_email" type="email" required="" name="user_email" placeholder="abc@gmail.com">
+              <input class="form-control" id="user_email" value="<?= ($this->input->get('_') ? $this->input->get('_') : '') ?>" type="email" required="" name="user_email" placeholder="abc@gmail.com">
             </div>
             <div class="form-group">
               <label class="form-label" for="input-4">Password *</label>

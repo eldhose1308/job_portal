@@ -11,8 +11,14 @@ class Register extends CI_Controller
         $this->load->helper('url');
         $this->load->helper('captcha');
         $this->load->library('session');
+        $this->load->library('user_agent');
 
         $this->load->model('M_users');
+        $this->load->model('Common_model');
+        $this->load->model('M_candidates');
+
+        date_default_timezone_set("Asia/Kolkata");
+
     }
 
     public function index()
@@ -27,46 +33,129 @@ class Register extends CI_Controller
         remove_flashdata();
     }
 
-    public function register_user()
+    public function save_register()
     {
-        if (!$this->validate_register_form())
-            redirect('register');
+        $this->form_validation->set_rules('full_name', 'Full name', 'required|min_length[3]|max_length[30]');
+        $this->form_validation->set_rules('user_email', 'Email address', 'required|valid_email|min_length[10]|max_length[30]');
+        $this->form_validation->set_rules('user_mobile', 'Mobile number', 'required|numeric|min_length[9]|max_length[12]');
+        $this->form_validation->set_rules('user_password', 'Password', 'required|min_length[5]|max_length[15]');
+        $this->form_validation->set_rules('retyped_password', 'Confirm Password', 'required|min_length[5]|max_length[15]');
+        $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required');
 
-        $token = rand(100000, 9999999);
-        $tokenEnc = md5($token);
-
-        $data_insert = array(
-            'full_name' => $this->input->post('full_name', TRUE),
-            'user_name' => $this->input->post('user_name', TRUE),
-            'user_password' => md5($this->input->post('user_password', TRUE)),
-            'user_email' => $this->input->post('user_email', TRUE),
-            'user_mobile' => $this->input->post('user_mobile', TRUE),
-            'user_token' => $tokenEnc,
-            'created_at' => date("Y-m-d h:i:s"),
-            'updated_at' => date("Y-m-d h:i:s"),
-            'user_status' => 1,
-            'user_type' => 2,
-            'user_photo' => 'avatar.png',
-
-        );
-
-        $data_insert = $this->security->xss_clean($data_insert);
-        $result = $this->M_users->save_registration($data_insert);
-
-        if ($result) :
-            $message['status'] = 'success';
-            $message['msg'] = 'Registered successfully';
-            echo json_encode($message);
+        if ($this->form_validation->run() == FALSE) :
+            $data = array('status' => 'error', 'msg' => validation_errors());
+            echo json_encode($data);
             exit();
-        else :
+        endif;
+
+
+
+        /***
+         * 
+         * Check User Passwords matching or not with the confirmed password
+         * 
+         */
+        $user_password = $this->input->post('user_password', TRUE);
+        $retyped_password = $this->input->post('retyped_password', TRUE);
+        if ($user_password != $retyped_password) :
             $message['status'] = 'error';
-            $message['msg'] = 'Could not register';
+            $message['msg'] = 'Passwords doesnt match';
             echo json_encode($message);
             exit();
         endif;
 
 
-        $this->add_activity_log(1);
+        
+        /***
+         * 
+         * Check Captcha response
+         * 
+         */
+
+        $captcha_response = trim($this->input->post('g-recaptcha-response'));
+        if ($captcha_response != '') {
+            $keySecret = $this->config->item('google_secret');
+            $userIp = $this->input->ip_address();
+
+            $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $keySecret . "&response=" . $captcha_response;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $status = json_decode($output, true);
+
+            // $status['success'] = true;
+
+            if (!$status['success']) {
+                $data = array('status' => 'error', 'msg' => 'Something wrong with captcha,Try again later !!');
+                echo json_encode($data);
+                exit();
+            }
+        }
+
+
+        
+        /***
+         * 
+         * Check User already registered with the same email address
+         * 
+         */
+        $candidatetExists = $this->M_candidates->check_candidate_exists($this->input->post('user_email'));
+        if ($candidatetExists) :
+            $message['status'] = 'error';
+            $message['msg'] = 'User already exists for this mail address,Try forgot password';
+            echo json_encode($message);
+            exit();
+        endif;
+
+
+        $agent = ($this->agent->is_browser()) ?
+            $this->agent->browser() . ' ' . $this->agent->version() : (($this->agent->is_mobile()) ? $this->agent->mobile() : 'Nulls');
+
+
+
+        $platform =  $this->agent->platform();
+
+
+        $data_insert = array(
+            'user_password' => md5($this->input->post('user_password', TRUE)),
+            'full_name' => $this->input->post('full_name', TRUE),
+            'user_email' => $this->input->post('user_email', TRUE),
+            'user_mobile' => $this->input->post('user_mobile', TRUE),
+            'email_verified' => 0,
+            'email_verified_at' => NULL,
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s"),
+            'status' => 1,
+
+        );
+
+
+        $qry_response = $this->Common_model->insert_table($data_insert, 'ci_candidates');
+
+
+
+
+        $message = "You have logged in from " . $platform . " , " . $agent . " at " . date("Y-m-d h:i:s");
+
+
+        if ($qry_response > 0) :
+            //$mail_response = $this->send_email($data->user_email, $message, 'Sanjeevini patients_login Attempt');
+
+            $data = array('status' => 'success', 'msg' => 'Successfully registered -<a class="btn btn-sm btn-primary" href="'.base_url().'users/login?_='.$this->input->post("user_email").'">Click to login</a>');
+            echo json_encode($data);
+            exit();
+        endif;
+
+        $data = array('status' => 'error', 'msg' => 'Could not register,Please try again');
+        echo json_encode($data);
+        exit();
+
+
+
+
     }
 
     function validate_register_form()

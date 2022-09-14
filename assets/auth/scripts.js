@@ -62,13 +62,114 @@ $(document).on('submit', '#login-forms', function (e) {
   usertype_xhr.fail(function () {
     $(".progress-bar").width('0%');
     $(".progress").hide();
-    
+
     alertMessage('error', 'Page has expired, try later !');
     loading_btn();
     refresh_captcha();
 
   });
 });
+
+
+
+$(document).on('submit', '#register-forms', function (e) {
+  e.preventDefault();
+
+
+  // device_type = getDeviceType();
+  // $('#device_type').val(device_type);
+
+
+  alertMessage('', '');
+
+  $(".login-btn").toggle();
+  $(".progress-md").toggle();
+
+  var formData = new FormData($("#register-forms")[0]);
+  var post_url = $($(this)).attr('action');
+  var usertype_xhr = $.ajax({
+    url: post_url,
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    xhr: function () {
+      var xhr = new window.XMLHttpRequest();
+      xhr.upload.addEventListener("progress", function (evt) {
+        if (evt.lengthComputable) {
+          var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+          $(".progress-bar").width(percentComplete + '%');
+          $(".progress-bar").html(percentComplete + '%');
+        }
+      }, false);
+      return xhr;
+    },
+    beforeSend: function () {
+      $(".progress").show();
+      $(".progress-bar").width('0%');
+    }
+  })
+
+  usertype_xhr.done(function (data) {
+    $(".login-btn").toggle();
+    $(".progress-md").toggle();
+
+    refresh_captcha();
+    var out = jQuery.parseJSON(data);
+    alertMessage(out.status, out.msg);
+    $('.login-btn').show();
+
+    
+  });
+
+  usertype_xhr.fail(function () {
+    alertMessage('error', 'Page has expired, try later !');
+    loading_btn();
+    refresh_captcha();
+
+    $(".login-btn").toggle();
+    $(".progress-md").toggle();
+
+    $('.login-btn').show();
+
+  });
+});
+
+$(document).on("keyup", "#full_name", function (e) {
+  e.preventDefault();
+  let full_name = $(this).val();
+  full_name = full_name.replace(/ /g, "_");
+  $("#user_name").val(full_name)
+});
+
+
+$(document).on("keyup", "#user_password", function (e) {
+  e.preventDefault();
+  check_passwords();
+});
+
+$(document).on("keyup", "#retyped_password", function (e) {
+  e.preventDefault();
+  check_passwords();
+});
+
+
+
+
+function check_passwords() {
+  let user_password = $("#user_password").val();
+  let retyped_password = $("#retyped_password").val();
+
+  if (user_password != retyped_password) {
+    $("#user_password").css("border", "1px solid #c9302c");
+    $("#retyped_password").css("border", "1px solid #c9302c");
+    return;
+  }
+
+  $("#user_password").css("border", "1px solid #449d44");
+  $("#retyped_password").css("border", "1px solid #449d44");
+
+}
 
 
 

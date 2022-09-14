@@ -70,6 +70,7 @@ $route['upload'] = "admin/CkEditor/upload";
  * 
  * *********/
 $route['users/register'] = 'auth/users/register';
+$route['users/save_register'] = 'auth/users/register/save_register';
 
 $route['users/auth'] = 'auth/users/login';
 $route['users/login'] = 'auth/users/login';

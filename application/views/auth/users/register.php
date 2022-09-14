@@ -321,37 +321,80 @@
                             <button class="btn social-login hover-up mb-20"><img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-google.svg" alt="Nexcode"><strong>Sign up with Google</strong></button>
                             <div class="divider-text-center"><span>Or continue with</span></div>
                         </div>
-                        <form class="login-register text-start mt-20" action="#">
-                            <div class="form-group">
-                                <label class="form-label" for="input-1">Full Name *</label>
-                                <input class="form-control" id="input-1" type="text" required="" name="fullname" placeholder="ABC XYZ">
+
+
+                        <?php echo form_open(base_url('users/save_register'), 'class="login-register text-start mt-20" id="register-forms" autocomplete="off" '); ?>
+
+                        <div id="alert-message-div" style="display: none; padding: 0% 3%;">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-1">Full Name *</label>
+                            <input class="form-control" id="full_name" type="text" required="" name="full_name" placeholder="ABC XYZ">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-2">Email *</label>
+                            <input class="form-control" id="user_email" type="email" required="" name="user_email" placeholder="abc@gmail.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-2">Mobile </label>
+                            <input class="form-control" id="user_mobile" type="text" required="" name="user_mobile" placeholder="1234567890">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-3">Username *</label>
+                            <input class="form-control" id="user_name" type="text" required="" name="user_name" placeholder="abc">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-4">Password *</label>
+                            <input class="form-control" id="user_password" type="password" required="" name="user_password" placeholder="************">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-5">Re-Password *</label>
+                            <input class="form-control" id="retyped_password" type="password" required="" name="retyped_password" placeholder="************">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-4">Captcha *</label>
+
+                            <div class="col-12 mt--30 text-center">
+                                <div class="check-box">
+                                    <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('google_key') ?>"></div>
+                                </div>
+                                <span class="text-black"><a class="" onclick="grecaptcha.reset()" id="refresh_button" style="cursor: pointer;color:#96c952">
+                                        Refresh Captcha
+                                        <i class="fas fa-sync" aria-hidden="true"></i></a></span>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="input-2">Email *</label>
-                                <input class="form-control" id="input-2" type="email" required="" name="emailaddress" placeholder="abc@gmail.com">
+                        </div>
+
+
+
+                        <div class="login_footer form-group d-flex justify-content-between">
+                            <label class="cb-container">
+                                <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span class="checkmark"></span>
+                            </label><a class="text-muted" href="page-contact.html">Lean more</a>
+                        </div>
+
+
+                        <div class="progress mb-3 progress-lg" style="display: none;">
+                            <div class="progress-bar bg-custom" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="input-3">Username *</label>
-                                <input class="form-control" id="input-3" type="text" required="" name="username" placeholder="abc">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="input-4">Password *</label>
-                                <input class="form-control" id="input-4" type="password" required="" name="password" placeholder="************">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="input-5">Re-Password *</label>
-                                <input class="form-control" id="input-5" type="password" required="" name="re-password" placeholder="************">
-                            </div>
-                            <div class="login_footer form-group d-flex justify-content-between">
-                                <label class="cb-container">
-                                    <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span class="checkmark"></span>
-                                </label><a class="text-muted" href="page-contact.html">Lean more</a>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit &amp; Register</button>
-                            </div>
-                            <div class="text-muted text-center">Already have an account? <a href="<?= base_url() ?>users/login">Sign in</a></div>
-                        </form>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit &amp; Register</button>
+                        </div>
+                        <div class="text-muted text-center">Already have an account? <a href="<?= base_url() ?>users/login">Sign in</a></div>
+
+                        <?php echo form_close(); ?>
+
+
+
+
                     </div>
                     <div class="img-1 d-none d-lg-block"><img class="shape-1" src="<?= base_url() ?>assets/users/imgs/page/login-register/img-1.svg" alt="Nexcode"></div>
                     <div class="img-2"><img src="<?= base_url() ?>assets/users/imgs/page/login-register/img-2.svg" alt="Nexcode"></div>
