@@ -44,6 +44,9 @@ $(document).on('submit', '#login-forms', function (e) {
   })
 
   usertype_xhr.done(function (data) {
+    $(".progress-bar").width('0%');
+    $(".progress").hide();
+
     $(".login-btn").toggle();
     $(".progress-md").toggle();
 
@@ -57,6 +60,9 @@ $(document).on('submit', '#login-forms', function (e) {
   });
 
   usertype_xhr.fail(function () {
+    $(".progress-bar").width('0%');
+    $(".progress").hide();
+    
     alertMessage('error', 'Page has expired, try later !');
     loading_btn();
     refresh_captcha();

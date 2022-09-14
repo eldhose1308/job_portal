@@ -6,4 +6,7 @@
 <div id="alert-message-div" class="mt-15" style="display: none; padding: 0% 3%;">
 </div>
 
-<?php echo @$_mainContent; ?>
+
+<main class="main">
+    <?php echo @$_mainContent; ?>
+</main>

@@ -2,266 +2,408 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title><?= APP_NAME ?> | Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="msapplication-TileColor" content="#0E0E0E">
+  <meta name="template-color" content="#0E0E0E">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
 
-  <!-- Favicon -->
-  <link href="<?= base_url() ?>assets/users/images/favicon.ico" rel="shortcut icon" />
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-
-  <!-- CSS Global Compulsory (Do not remove)-->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/users/css/font-awesome/all.min.css" />
-  <link rel="stylesheet" href="<?= base_url() ?>assets/users/css/flaticon/flaticon.css" />
-  <link rel="stylesheet" href="<?= base_url() ?>assets/users/css/bootstrap/bootstrap.min.css" />
-
-  <!-- Template Style -->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/users/css/style.css" />
+  <link rel="manifest" href="manifest.json" crossorigin>
+  <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>assets/users/imgs/template/favicon.svg">
+  <link href="<?= base_url() ?>assets/users/css/style.css" rel="stylesheet">
 
   <script src='https://www.google.com/recaptcha/api.js'></script>
+
+  <title><?= APP_NAME ?> | Login </title>
 
 </head>
 
 <body>
-
-
-
-  <!--=================================
-header -->
-  <header class="header bg-dark">
-    <nav class="navbar navbar-static-top navbar-expand-lg header-sticky">
-      <div class="container-fluid">
-        <button id="nav-icon4" type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <a class="navbar-brand" href="<?= base_url() ?>assets/users/index.html">
-          <img class="img-fluid" src="<?= base_url() ?>assets/users/images/logo.svg" alt="logo">
-        </a>
-        <div class="navbar-collapse collapse justify-content-start">
-          <ul class="nav navbar-nav">
-
-
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url() ?>" role="button">Home</a>
-            </li>
-
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Listing <i class="fas fa-chevron-down fa-xs"></i>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-grid.html">Job Grid</a></li>
-                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing.html">Job Listing</a></li>
-                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-detail.html">Job Detail</a></li>
-                <li><a class="dropdown-item" href="<?= base_url() ?>assets/users/job-listing-map.html">Job Listing Map</a></li>
-              </ul>
-            </li>
-
-
-
-          </ul>
-        </div>
-
+  <div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="preloader-inner position-relative">
+        <div class="text-center"><img src="<?= base_url() ?>assets/users/imgs/template/loading.gif" alt="jobBox"></div>
       </div>
-    </nav>
-  </header>
-  <!--=================================
-  header -->
-
-
-
-  <!--=================================
-inner banner -->
-  <div class="header-inner bg-light text-center">
+    </div>
+  </div>
+  
+  <header class="header sticky-bar">
     <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h2 class="text-primary">Login</h2>
-          <ol class="breadcrumb mb-0 p-0">
-            <li class="breadcrumb-item"><a href="<?= base_url() ?>"> Home </a></li>
-            <li class="breadcrumb-item active"> <i class="fas fa-chevron-right"></i> <span> Login </span></li>
-          </ol>
+      <div class="main-header">
+        <div class="header-left">
+          <div class="header-logo"><a class="d-flex" href="index.html"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a></div>
+        </div>
+        <div class="header-nav">
+          <nav class="nav-main-menu">
+            <ul class="main-menu">
+              <li class="has-children"><a class="active" href="index.html">Home</a>
+                <ul class="sub-menu">
+                  <li><a href="index.html">Home 1</a></li>
+                  <li><a href="index-2.html">Home 2</a></li>
+                  <li><a href="index-3.html">Home 3</a></li>
+                  <li><a href="index-4.html">Home 4</a></li>
+                  <li><a href="index-5.html">Home 5</a></li>
+                  <li><a href="index-6.html">Home 6</a></li>
+                </ul>
+              </li>
+              <li class="has-children"><a href="jobs-grid.html">Find a Job</a>
+                <ul class="sub-menu">
+                  <li><a href="jobs-grid.html">Jobs Grid</a></li>
+                  <li><a href="jobs-list.html">Jobs List</a></li>
+                  <li><a href="job-details.html">Jobs Details </a></li>
+                  <li><a href="job-details-2.html">Jobs Details 2 </a></li>
+                </ul>
+              </li>
+              <li class="has-children"><a href="companies-grid.html">Recruiters</a>
+                <ul class="sub-menu">
+                  <li><a href="companies-grid.html">Recruiters</a></li>
+                  <li><a href="company-details.html">Company Details</a></li>
+                </ul>
+              </li>
+              <li class="has-children"><a href="candidates-grid.html">Candidates</a>
+                <ul class="sub-menu">
+                  <li><a href="candidates-grid.html">Candidates Grid</a></li>
+                  <li><a href="candidate-details.html">Candidate Details</a></li>
+                  <li><a href="candidate-profile.html">Candidate Profile</a></li>
+                </ul>
+              </li>
+              <li class="has-children"><a href="blog-grid.html">Pages</a>
+                <ul class="sub-menu">
+                  <li><a href="page-about.html">About Us</a></li>
+                  <li><a href="page-pricing.html">Pricing Plan</a></li>
+                  <li><a href="page-contact.html">Contact Us</a></li>
+                  <li><a href="page-register.html">Register</a></li>
+                  <li><a href="page-signin.html">Signin</a></li>
+                  <li><a href="page-reset-password.html">Reset Password</a></li>
+                  <li><a href="page-content-protected.html">Content Protected</a></li>
+                </ul>
+              </li>
+              <li class="has-children"><a href="blog-grid.html">Blog</a>
+                <ul class="sub-menu">
+                  <li><a href="blog-grid.html">Blog Grid</a></li>
+                  <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
+                  <li><a href="blog-details.html">Blog Single</a></li>
+                </ul>
+              </li>
+              <li><a href="page-contact.html">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
+        </div>
+        <div class="header-right">
+          <div class="block-signin">
+            <a class="text-link-bd-btom hover-up d-none" href="page-register.html">Register</a>
+            <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>admin/login">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+    <div class="mobile-header-wrapper-inner">
+      <div class="mobile-header-content-area">
+        <div class="perfect-scroll">
+          <div class="mobile-search mobile-header-border mb-30">
+            <form action="#">
+              <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
+            </form>
+          </div>
+          <div class="mobile-menu-wrap mobile-header-border">
+            <!-- mobile menu start-->
+            <nav>
+              <ul class="mobile-menu font-heading">
+                <li class="has-children"><a class="active" href="index.html">Home</a>
+                  <ul class="sub-menu">
+                    <li><a href="index.html">Home 1</a></li>
+                    <li><a href="index-2.html">Home 2</a></li>
+                    <li><a href="index-3.html">Home 3</a></li>
+                    <li><a href="index-4.html">Home 4</a></li>
+                    <li><a href="index-5.html">Home 5</a></li>
+                    <li><a href="index-6.html">Home 6</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="jobs-grid.html">Find a Job</a>
+                  <ul class="sub-menu">
+                    <li><a href="jobs-grid.html">Jobs Grid</a></li>
+                    <li><a href="jobs-list.html">Jobs List</a></li>
+                    <li><a href="job-details.html">Jobs Details </a></li>
+                    <li><a href="job-details-2.html">Jobs Details 2 </a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="companies-grid.html">Recruiters</a>
+                  <ul class="sub-menu">
+                    <li><a href="companies-grid.html">Recruiters</a></li>
+                    <li><a href="company-details.html">Company Details</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="candidates-grid.html">Candidates</a>
+                  <ul class="sub-menu">
+                    <li><a href="candidates-grid.html">Candidates Grid</a></li>
+                    <li><a href="candidate-details.html">Candidate Details</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="blog-grid.html">Pages</a>
+                  <ul class="sub-menu">
+                    <li><a href="page-about.html">About Us</a></li>
+                    <li><a href="page-pricing.html">Pricing Plan</a></li>
+                    <li><a href="page-contact.html">Contact Us</a></li>
+                    <li><a href="page-register.html">Register</a></li>
+                    <li><a href="page-signin.html">Signin</a></li>
+                    <li><a href="page-reset-password.html">Reset Password</a></li>
+                    <li><a href="page-content-protected.html">Content Protected</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="blog-grid.html">Blog</a>
+                  <ul class="sub-menu">
+                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                    <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
+                    <li><a href="blog-details.html">Blog Single</a></li>
+                  </ul>
+                </li>
+                <li><a href="page-contact.html">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="mobile-account">
+            <h6 class="mb-10">Your Account</h6>
+            <ul class="mobile-menu font-heading">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Work Preferences</a></li>
+              <li><a href="#">Account Settings</a></li>
+              <li><a href="#">Go Pro</a></li>
+              <li><a href="page-signin.html">Sign Out</a></li>
+            </ul>
+          </div>
+          <div class="site-copyright">Copyright 2022 &copy; JobBox. <br>Designed by AliThemes.</div>
         </div>
       </div>
     </div>
   </div>
-  <!--=================================
-inner banner -->
 
-  <!--=================================
-Signin -->
-  <section class="space-ptb">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-8 col-lg-10 col-md-12">
-          <div class="login-register">
-            <div class="section-title">
-              <h4 class="text-center">Login to Your Account</h4>
-            </div>
-
-            <div class="tab-content">
-              <div class="tab-pane active" id="login-tab" role="tabpanel">
-
-
-
-                <div id="alert-message-div" style="display: none; padding: 0% 3%;">
-                </div>
-
-                <?php echo form_open(base_url('admin/save_login'), 'class="mt-4" id="login-forms" autocomplete="off" '); ?>
-
-                <div class="row">
-                  <div class="mb-3 col-12">
-                    <label class="form-label" for="Email2">Email Address</label>
-                    <input type="email" name="user_email" class="form-control" id="user_email">
-                  </div>
-                  <div class="mb-3 col-12">
-                    <label class="form-label" for="password2">Password*</label>
-                    <input type="password" name="user_password" class="form-control" id="user_password">
-                  </div>
-
-                  <div class="col-12 mt--30 text-center">
-                    <div class="check-box">
-                      <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('google_key') ?>"></div>
-                    </div>
-
-                    <span class="text-black"><a class="" onclick="grecaptcha.reset()" id="refresh_button" style="cursor: pointer;color:#96c952">
-                        Refresh Captcha
-                        <i class="fas fa-sync" aria-hidden="true"></i></a></span>
-                  </div>
-
-
-                </div>
-                <div class="row">
-                  <div class="col-md-12 p-2">
-                    <button class="btn btn-primary btn-100  d-grid" href="<?= base_url() ?>assets/users/#">Sign In</button>
-                  </div>
-
-                </div>
-
-                <?php echo form_close(); ?>
-
-
-
-
-              </div>
-
-            </div>
-
-            <div class="mt-4">
-              <fieldset>
-                <legend class="px-2">Login or Sign up with</legend>
-                <div class="social-login">
-                  <ul class="list-unstyled d-flex mb-0">
-
-
-                    <li class="google text-center">
-                      <a class="text-white" onclick="alert('You dont have this feature')"> <i class="fab fa-google me-4"></i>Login with Google</a>
-                    </li>
-
-                  </ul>
-                </div>
-              </fieldset>
-            </div>
-
+  <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+    <div class="mobile-header-wrapper-inner">
+      <div class="mobile-header-content-area">
+        <div class="perfect-scroll">
+          <div class="mobile-search mobile-header-border mb-30">
+            <form action="#">
+              <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
+            </form>
           </div>
+          <div class="mobile-menu-wrap mobile-header-border">
+            <!-- mobile menu start-->
+            <nav>
+              <ul class="mobile-menu font-heading">
+                <li class="has-children"><a class="active" href="index.html">Home</a>
+                  <ul class="sub-menu">
+                    <li><a href="index.html">Home 1</a></li>
+                    <li><a href="index-2.html">Home 2</a></li>
+                    <li><a href="index-3.html">Home 3</a></li>
+                    <li><a href="index-4.html">Home 4</a></li>
+                    <li><a href="index-5.html">Home 5</a></li>
+                    <li><a href="index-6.html">Home 6</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="jobs-grid.html">Find a Job</a>
+                  <ul class="sub-menu">
+                    <li><a href="jobs-grid.html">Jobs Grid</a></li>
+                    <li><a href="jobs-list.html">Jobs List</a></li>
+                    <li><a href="job-details.html">Jobs Details </a></li>
+                    <li><a href="job-details-2.html">Jobs Details 2 </a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="companies-grid.html">Recruiters</a>
+                  <ul class="sub-menu">
+                    <li><a href="companies-grid.html">Recruiters</a></li>
+                    <li><a href="company-details.html">Company Details</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="candidates-grid.html">Candidates</a>
+                  <ul class="sub-menu">
+                    <li><a href="candidates-grid.html">Candidates Grid</a></li>
+                    <li><a href="candidate-details.html">Candidate Details</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="blog-grid.html">Pages</a>
+                  <ul class="sub-menu">
+                    <li><a href="page-about.html">About Us</a></li>
+                    <li><a href="page-pricing.html">Pricing Plan</a></li>
+                    <li><a href="page-contact.html">Contact Us</a></li>
+                    <li><a href="page-register.html">Register</a></li>
+                    <li><a href="page-signin.html">Signin</a></li>
+                    <li><a href="page-reset-password.html">Reset Password</a></li>
+                    <li><a href="page-content-protected.html">Content Protected</a></li>
+                  </ul>
+                </li>
+                <li class="has-children"><a href="blog-grid.html">Blog</a>
+                  <ul class="sub-menu">
+                    <li><a href="blog-grid.html">Blog Grid</a></li>
+                    <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
+                    <li><a href="blog-details.html">Blog Single</a></li>
+                  </ul>
+                </li>
+                <li><a href="page-contact.html">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="mobile-account">
+            <h6 class="mb-10">Your Account</h6>
+            <ul class="mobile-menu font-heading">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Work Preferences</a></li>
+              <li><a href="#">Account Settings</a></li>
+              <li><a href="#">Go Pro</a></li>
+              <li><a href="page-signin.html">Sign Out</a></li>
+            </ul>
+          </div>
+          <div class="site-copyright">Copyright 2022 &copy; JobBox. <br>Designed by AliThemes.</div>
         </div>
       </div>
     </div>
-  </section>
-  <!--=================================
-Signin -->
+  </div>
 
-
-
-  <!--=================================
-footer-->
-  <footer class="footer bg-light">
-
-
-    <div class="footer-bottom bg-dark mt-5">
+  
+  <main class="main">
+    <section class="pt-100 login-register">
       <div class="container">
-        <div class="row">
-          <div class="col-md-6 ">
-            <div class="d-flex justify-content-md-start justify-content-center">
-              <ul class="list-unstyled d-flex mb-0">
-                <li><a href="<?= base_url() ?>assets/users/#">Privacy Policy</a></li>
-                <li><a href="<?= base_url() ?>assets/users/about.html">About</a></li>
-                <li><a href="<?= base_url() ?>assets/users/#">Team</a></li>
-                <li><a href="<?= base_url() ?>assets/users/contact-us.html">Contact</a></li>
-              </ul>
+        <div class="row login-register-cover">
+          <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
+            <div class="text-center">
+              <p class="font-sm text-brand-2">Welcome back! </p>
+              <h2 class="mt-10 mb-5 text-brand-1">Admin Login</h2>
+              <p class="font-sm text-muted mb-30">Sign in with your email and password.</p>
+            
             </div>
+
+
+            <?php echo form_open(base_url('admin/save_login'), 'class="login-register text-start mt-20" id="login-forms" autocomplete="off" '); ?>
+
+            <div id="alert-message-div" style="display: none; padding: 0% 3%;">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-1">Email address *</label>
+              <input class="form-control" id="user_email" type="email" required="" name="user_email" placeholder="abc@gmail.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-4">Password *</label>
+              <input class="form-control" id="user_password" type="password" required="" name="user_password" placeholder="************">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="input-4">Captcha *</label>
+
+              <div class="col-12 mt--30 text-center">
+                <div class="check-box">
+                  <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('google_key') ?>"></div>
+                </div>
+                <span class="text-black"><a class="" onclick="grecaptcha.reset()" id="refresh_button" style="cursor: pointer;color:#96c952">
+                    Refresh Captcha
+                    <i class="fas fa-sync" aria-hidden="true"></i></a></span>
+              </div>
+            </div>
+
+            <div class="login_footer form-group d-flex justify-content-between">
+              <label class="cb-container">
+                <input type="checkbox"><span class="text-small">Remenber me</span><span class="checkmark"></span>
+              </label><a class="text-muted" href="page-contact.html">Forgot Password</a>
+            </div>
+
+            <div class="progress mb-3 progress-lg" style="display: none;">
+              <div class="progress-bar bg-custom" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-brand-1 hover-up w-100 login-btn" name="login">Login</button>
+            </div>
+            <div class="text-muted text-center">Don't have an Account? <a href="page-signin.html">Sign up</a></div>
+
+
+            <?php echo form_close(); ?>
+
+
+
+
           </div>
-          <div class="col-md-6 text-center text-md-end mt-4 mt-md-0">
-            <p class="mb-0"> &copy;Copyright <span id="copyright">
-                <script>
-                  document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-                </script>
-              </span> <a href="<?= base_url() ?>assets/users/#"> Nexcode </a>-<?= APP_NAME ?> Admin portal . All Rights Reserved </p>
+          <div class="img-1 d-none d-lg-block"><img class="shape-1" src="<?= base_url() ?>assets/users/imgs/page/login-register/img-4.svg" alt="JobBox"></div>
+          <div class="img-2"><img src="<?= base_url() ?>assets/users/imgs/page/login-register/img-3.svg" alt="JobBox"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer mt-50">
+    <div class="container">
+      <div class="row">
 
-            <span> Page loaded in <?= page_speed() . ' seconds' ?> </span>
+        <div class="footer-col-6 col-md-6 col-sm-12"><a href="index.html"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a>
+          <div class="mt-20 mb-20 font-xs color-text-paragraph-2">JobBox is the heart of the design community and the best resource to discover and connect with designers and jobs worldwide.</div>
+          <div class="footer-social"><a class="icon-socials icon-facebook" href="#"></a><a class="icon-socials icon-twitter" href="#"></a><a class="icon-socials icon-linkedin" href="#"></a></div>
+        </div>
+
+        <div class="footer-col-2 col-md-2 col-xs-6">
+          <h6 class="mb-20">Resources</h6>
+          <ul class="menu-footer">
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
 
 
+        <div class="footer-col-5 col-md-2 col-xs-6">
+          <h6 class="mb-20">More</h6>
+          <ul class="menu-footer">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+      <div class="footer-bottom mt-50">
+        <div class="row">
+          <div class="col-md-6"><span class="font-xs color-text-paragraph">Copyright &copy; 2022. Nexcode all right reserved</span></div>
+          <div class="col-md-6 text-md-end text-start">
+            <div class="footer-social"><a class="font-xs color-text-paragraph" href="#">Privacy Policy</a><a class="font-xs color-text-paragraph mr-30 ml-30" href="#">Terms &amp; Conditions</a><a class="font-xs color-text-paragraph" href="#">Security</a></div>
           </div>
         </div>
       </div>
     </div>
   </footer>
-  <!--=================================
-footer-->
 
 
+  <script src="<?= base_url() ?>assets/users/js/vendor/jquery-3.6.0.min.js"></script>
 
 
-  <!--=================================
-Back To Top-->
-  <div id="back-to-top" class="back-to-top">
-    <i class="fas fa-angle-up"></i>
-  </div>
-  <!--=================================
-Back To Top-->
-
-
-  <!--=================================
-Javascript -->
-
-  <!-- JS Global Compulsory (Do not remove)-->
-  <script src="<?= base_url() ?>assets/users/js/jquery-3.6.0.min.js"></script>
-  <script src="<?= base_url() ?>assets/users/js/popper/popper.min.js"></script>
-  <script src="<?= base_url() ?>assets/users/js/bootstrap/bootstrap.min.js"></script>
-
-  <!-- Template Scripts (Do not remove)-->
   <script src="<?= base_url() ?>assets/users/js/custom.js"></script>
   <script src="<?= base_url() ?>assets/auth/scripts.js"></script>
 
 
 
-  <style>
-    .internet-connection-status {
-      display: none;
-      position: fixed;
-      background-color: transparent;
-      width: 100%;
-      height: 32px;
-      z-index: 99999;
-      text-align: center;
-      color: #ffffff;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      line-height: 32px;
-      font-weight: 700;
-      font-size: 12px;
-    }
-  </style>
 
+  <script src="<?= base_url() ?>assets/users/js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/waypoints.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/wow.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/magnific-popup.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/select2.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/isotope.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/scrollup.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/plugins/swiper-bundle.min.js"></script>
+  <script src="<?= base_url() ?>assets/users/js/main.js"></script>
 
 </body>
 

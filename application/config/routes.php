@@ -66,6 +66,20 @@ $route['upload'] = "admin/CkEditor/upload";
 /************
  * 
  * 
+ * Authentication for users
+ * 
+ * *********/
+$route['users/register'] = 'auth/users/register';
+
+$route['users/auth'] = 'auth/users/login';
+$route['users/login'] = 'auth/users/login';
+$route['users/save_login'] = 'auth/users/login/login';
+
+
+
+/************
+ * 
+ * 
  * Authentication for admin
  * 
  * *********/
@@ -81,7 +95,6 @@ $route['auth/change_password_post'] = 'auth/admin/login/change_password_post';
 $route['save_registration'] = 'auth/admin/register/register_user';
 
 $route['admin/save_login'] = 'auth/admin/login/login';
-$route['patients/save_login'] = 'auth/patients_login/patients_login';
 
 $route['validate_registration'] = 'auth/register/validate_register_form';
 $route['change_captcha'] = 'auth/login/refresh_captcha';

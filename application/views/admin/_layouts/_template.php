@@ -16,7 +16,7 @@
     <div class="internet-connection-status" id="internetStatus" style="display: block;"></div>
 
 
-    <script src="<?= base_url() ?>assets/admin/scripts/common.js"></script>
+    <script src="<?= base_url() ?>assets/users/scripts/common.js"></script>
 
 
 </head>
