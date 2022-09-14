@@ -5,7 +5,7 @@
 
 
 let captcha_url = 'change_captcha';
-let alert_message = '';
+var alert_message = '';
 $(document).on('submit', '#login-forms', function (e) {
   e.preventDefault();
 
@@ -76,6 +76,8 @@ $(document).on('submit', '#register-forms', function (e) {
   e.preventDefault();
 
 
+  if (validate_form(false, true, false))
+  return false;
   // device_type = getDeviceType();
   // $('#device_type').val(device_type);
 
@@ -138,7 +140,7 @@ $(document).on('submit', '#register-forms', function (e) {
 $(document).on("keyup", "#full_name", function (e) {
   e.preventDefault();
   let full_name = $(this).val();
-  full_name = full_name.replace(/ /g, "_");
+  full_name = full_name.replace(/ /g, "_").toLowerCase();
   $("#user_name").val(full_name)
 });
 

@@ -36,8 +36,9 @@ class Register extends CI_Controller
     public function save_register()
     {
         $this->form_validation->set_rules('full_name', 'Full name', 'required|min_length[3]|max_length[30]');
+        $this->form_validation->set_rules('user_name', 'User name', 'required|min_length[3]|max_length[30]');
         $this->form_validation->set_rules('user_email', 'Email address', 'required|valid_email|min_length[10]|max_length[30]');
-        $this->form_validation->set_rules('user_mobile', 'Mobile number', 'required|numeric|min_length[9]|max_length[12]');
+        $this->form_validation->set_rules('user_mobile', 'Mobile number', 'numeric|min_length[9]|max_length[12]');
         $this->form_validation->set_rules('user_password', 'Password', 'required|min_length[5]|max_length[15]');
         $this->form_validation->set_rules('retyped_password', 'Confirm Password', 'required|min_length[5]|max_length[15]');
         $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required');
@@ -121,6 +122,7 @@ class Register extends CI_Controller
 
         $data_insert = array(
             'user_password' => md5($this->input->post('user_password', TRUE)),
+            'user_name' => $this->input->post('user_name', TRUE),
             'full_name' => $this->input->post('full_name', TRUE),
             'user_email' => $this->input->post('user_email', TRUE),
             'user_mobile' => $this->input->post('user_mobile', TRUE),
@@ -144,7 +146,7 @@ class Register extends CI_Controller
         if ($qry_response > 0) :
             //$mail_response = $this->send_email($data->user_email, $message, 'Sanjeevini patients_login Attempt');
 
-            $data = array('status' => 'success', 'msg' => 'Successfully registered -<a class="btn btn-sm btn-primary" href="'.base_url().'users/login?_='.$this->input->post("user_email").'">Click to login</a>');
+            $data = array('status' => 'success', 'msg' => 'Successfully registered -<a class="btn btn-sm btn-custom" href="'.base_url().'users/login?_='.$this->input->post("user_email").'">Click to login</a>');
             echo json_encode($data);
             exit();
         endif;
@@ -166,8 +168,8 @@ class Register extends CI_Controller
         $this->form_validation->set_rules('user_email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('user_mobile', 'Mobile', 'trim|required|numeric');
         $this->form_validation->set_rules('user_name', 'Username', 'trim|required');
-        $this->form_validation->set_rules('user_password', 'Password', 'trim|required');
-        $this->form_validation->set_rules('user_retyped_password', 'Retyped Password', 'trim|required');
+        $this->form_validation->set_rules('user_password', 'Password', 'trim|required|min_length[5]|max_length[15]');
+        $this->form_validation->set_rules('user_retyped_password', 'Retyped Password', 'trim|required|min_length[5]|max_length[15]');
 
         if ($this->form_validation->run() == FALSE) :
             $message['status'] = 'error';

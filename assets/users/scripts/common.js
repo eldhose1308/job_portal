@@ -2,7 +2,7 @@ const base_url = document.getElementsByTagName("constants")[0].dataset.base;
 
 let dashboard_menus = base_url + 'admin/home/dashboard_menus';
 let shortcut_url = base_url + 'keyboard_shortcuts';
-let alert_message = '';
+var alert_message = '';
 
 
 
@@ -599,6 +599,7 @@ $(document).on('input', '#search-dashboard', function (e) {
 
 
 function AlertandToast(status, message, alert = true, toast = true) {
+    //alert(333);
     if (toast) {
         var Toast = Swal.mixin({
             toast: true,

@@ -11,7 +11,7 @@
   <!-- css -->
   <?php echo @$_css; ?>
 
-  <constants data-base="<?= base_url() ?>">
+  <constants data-base="<?= base_url() ?>" />
 
     <div class="internet-connection-status" id="internetStatus" style="display: block;"></div>
 
