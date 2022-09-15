@@ -58,8 +58,8 @@
         </div>
         <div class="header-right">
           <div class="block-signin">
-            <a class="text-link-bd-btom hover-up" href="<?= base_url() ?>admin/profile">Username</a>
-            <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>admin/logout"> Sign out <i class="fa fa-sign-out"></i></a>
+            <a class="text-link-bd-btom hover-up" href="<?= base_url() ?>users/profile">Username</a>
+            <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>users/logout"> Sign out <i class="fa fa-sign-out"></i></a>
           </div>
         </div>
       </div>

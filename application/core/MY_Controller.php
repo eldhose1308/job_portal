@@ -201,7 +201,7 @@ class MY_Controller extends CI_Controller
 */
 
 
-class Home_Controller extends CI_Controller
+class US_Controller extends CI_Controller
 
 {
     function __construct()
@@ -215,11 +215,14 @@ class Home_Controller extends CI_Controller
 
         date_default_timezone_set("Asia/Kolkata");
 
+        user_auth_check();
 
+        $this->load->model('M_candidates');
         $this->load->model('Common_model');
         $this->load->model('M_site');
 
 
+        $this->data = array();
 
 
         /***
@@ -227,22 +230,6 @@ class Home_Controller extends CI_Controller
          * Common arrays
          * 
          * **/
-
-
-        $this->data['show_breadcrumb'] = TRUE;
-        $clientDetails = $this->data['clientDetails'] = $this->Common_model->select_single('site_settings');
-        $this->data['socialMediaLinks'] = $this->Common_model->select_all('ci_social_media');
-
-        $this->data['quickLinks'] = $this->Common_model->select_all('ci_quick_links');
-        $this->data['topMenu'] = $this->M_site->get_top_menu();
-
-        $this->check_exists($clientDetails);
-
-        $phone = explode(",", $clientDetails->contact_numbers);
-        $email = explode(",", $clientDetails->email_address);
-        $this->data["clientDetails"]->phone_number = (empty($phone)) ? '0000000000' : $phone[0];
-        $this->data["clientDetails"]->email = (empty($email)) ? '0000000000' : $email[0];
-
 
         //exit();
     }

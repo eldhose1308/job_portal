@@ -126,13 +126,13 @@ if (!function_exists('auth_check')) {
         // }
     }
 }
-if (!function_exists('patients_auth_check')) {
-    function patients_auth_check()
+if (!function_exists('user_auth_check')) {
+    function user_auth_check()
     {
         // Get a reference to the controller object
         $ci = &get_instance();
-        if (!$ci->session->has_userdata('patients_login_status')) {
-            redirect('login', 'refresh');
+        if (!$ci->session->has_userdata('user_login_status')) {
+            redirect('users/login', 'refresh');
         }
 
         // if (!check_for_token()) {

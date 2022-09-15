@@ -21,7 +21,7 @@ class Login extends CI_Controller
 
     public function index()
     {
-        if ($this->session->has_userdata('login_status')) {
+        if ($this->session->has_userdata('user_login_status')) {
             redirect('usershome', 'refresh');
         }
         $data= array();
@@ -243,7 +243,7 @@ class Login extends CI_Controller
             'user_mobile' => $data->user_mobile,
             'enc_token' => $tokenEnc,
             'userdata' => $data,
-            'login_status' => "1"
+            'user_login_status' => "1"
         ];
         $this->session->set_userdata($session);
 
@@ -286,10 +286,10 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        $token_destroy = $this->M_users->updatetoken('', en_func($this->session->userdata('user_id'), 'd'));
+       // $token_destroy = $this->M_users->updatetoken('', en_func($this->session->userdata('user_id'), 'd'));
 
         $this->session->sess_destroy();
-        redirect('admin/login');
+        redirect('users/login');
     }
 
 

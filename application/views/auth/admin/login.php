@@ -293,7 +293,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="input-4">Password *</label>
-              <input class="form-control" id="user_password" type="password" required="" name="user_password" placeholder="************">
+              <input class="form-control" id="user_password1" type="password" required="" name="user_password" placeholder="************">
             </div>
 
             <div class="form-group">

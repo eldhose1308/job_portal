@@ -77,6 +77,11 @@ $route['users/login'] = 'auth/users/login';
 $route['users/save_login'] = 'auth/users/login/login';
 
 
+$route['users/logout'] = 'auth/users/login/logout';
+
+
+$route['usershome'] = 'users/home';
+
 
 /************
  * 
@@ -106,10 +111,9 @@ $route['keyboard_shortcuts'] = 'admin/keyboard/keyboard_shortcuts';
 
 $route['admin/logout'] = 'auth/admin/login/logout';
 
-
-
 $route['adminhome'] = 'admin/home';
-$route['patientshome'] = 'patients/home';
+
+
 
 
 $route['profile'] = 'admin/profile';
