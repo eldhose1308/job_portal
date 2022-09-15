@@ -14,6 +14,7 @@ class Login extends CI_Controller
         $this->load->library('user_agent');
 
         $this->load->model('M_users');
+        $this->load->model('M_candidates');
 
         date_default_timezone_set("Asia/Kolkata");
     }
@@ -145,6 +146,7 @@ class Login extends CI_Controller
 
 
 
+    // User logs to do
     public function login()
     {
         $this->form_validation->set_rules('user_email', 'Email', 'required|min_length[2]|max_length[30]');
@@ -195,7 +197,7 @@ class Login extends CI_Controller
         $password = trim($this->input->post('user_password', TRUE));
         // $device_type = trim($this->input->post('device_type', TRUE));
         $device_type = 'Desktop';
-        $data = $this->M_users->login($user_email, $password);
+        $data = $this->M_candidates->candidate_login($user_email, $password);
 
 
         if ($data == false) {
@@ -211,7 +213,7 @@ class Login extends CI_Controller
                 'login_browser'  => $agent
             );
 
-            $log_info = $this->M_users->add_failed_user_log($log_data);
+            // $log_info = $this->M_candidates->add_failed_user_log($log_data);
 
 
             $data = array('status' => 'error', 'msg' => 'Email or password is wrong');
@@ -228,13 +230,12 @@ class Login extends CI_Controller
             'login_browser'  => $agent
         );
 
-        $log_info = $this->M_users->add_user_log($log_data);
+        // $log_info = $this->M_candidates->add_user_log($log_data);
 
         $token = rand(100000, 9999999);
         $tokenEnc = md5($token);
         $session = [
             'user_id' => en_func($data->user_id, 'e'),
-            'user_type_display' => $data->user_type,
             'full_name' => $data->full_name,
             'user_name' => $data->user_name,
             'user_photo' => $data->user_photo,

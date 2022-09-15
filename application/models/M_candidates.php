@@ -139,12 +139,12 @@ class M_candidates extends CI_Model
 		}
 	}
 
-	public function patients_login($user, $pass)
+	public function candidate_login($user, $pass)
 	{
-		$this->db->select('ci_patients.*');
-		$this->db->from('ci_patients');
-		$this->db->where('ci_patients.user_name', $user);
-		$this->db->where('ci_patients.user_password', md5($pass));
+		$this->db->select('ci_candidates.*');
+		$this->db->from('ci_candidates');
+		$this->db->where('ci_candidates.user_email', $user);
+		$this->db->where('ci_candidates.user_password', md5($pass));
 		$data = $this->db->get();
 
 		if ($data->num_rows() == 1) {

@@ -332,7 +332,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="input-4">Password *</label>
-              <input class="form-control" id="user_password" type="password" required="" name="user_password" placeholder="************">
+              <input class="form-control" id="user_password1" type="password" required="" name="user_password" placeholder="************">
             </div>
 
             <div class="form-group">
@@ -350,7 +350,7 @@
 
             <div class="login_footer form-group d-flex justify-content-between">
               <label class="cb-container">
-                <input type="checkbox"><span class="text-small">Remenber me</span><span class="checkmark"></span>
+                <input type="checkbox"><span class="text-small">Remember me</span><span class="checkmark"></span>
               </label><a class="text-muted" href="<?= base_url() ?>users/forgot_password">Forgot Password</a>
             </div>
 
