@@ -69,6 +69,7 @@ $route['upload'] = "admin/CkEditor/upload";
  * Authentication for users
  * 
  * *********/
+$route['users'] = 'auth/users/login';
 $route['users/register'] = 'auth/users/register';
 $route['users/save_register'] = 'auth/users/register/save_register';
 
@@ -89,6 +90,7 @@ $route['usershome'] = 'users/home';
  * Authentication for admin
  * 
  * *********/
+$route['admin'] = 'auth/admin/login';
 $route['admin/auth'] = 'auth/admin/login';
 $route['admin/login'] = 'auth/admin/login';
 

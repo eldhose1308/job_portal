@@ -50,13 +50,20 @@ $(document).on('submit', '#login-forms', function (e) {
     $(".login-btn").toggle();
     $(".progress-md").toggle();
 
-    refresh_captcha();
+    var parameterList = new URLSearchParams(window.location.search);
+    if (parameterList.has('redirect'))
+      window.location.href = parameterList.get('redirect');
+
+
     var out = jQuery.parseJSON(data);
     alertMessage(out.status, out.msg);
     $('.login-btn').show();
 
     if (out.status == 'success')
       reload_page();
+
+    refresh_captcha();
+
   });
 
   usertype_xhr.fail(function () {

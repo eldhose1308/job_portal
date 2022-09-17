@@ -9,7 +9,7 @@ if (!function_exists('page_speed')) {
         $time_end = microtime(true);
 
         $execution_time = ($time_end - TIME_START);
-        return round($execution_time,3); 
+        return round($execution_time, 3);
     }
 }
 
@@ -117,7 +117,7 @@ if (!function_exists('auth_check')) {
         // Get a reference to the controller object
         $ci = &get_instance();
         if (!$ci->session->has_userdata('login_status')) {
-            redirect('admin/login', 'refresh');
+            redirect('admin/login?redirect=' . current_url(), 'refresh');
         }
 
         // if (!check_for_token()) {
@@ -132,7 +132,7 @@ if (!function_exists('user_auth_check')) {
         // Get a reference to the controller object
         $ci = &get_instance();
         if (!$ci->session->has_userdata('user_login_status')) {
-            redirect('users/login', 'refresh');
+            redirect('users/login?redirect=' . current_url(), 'refresh');
         }
 
         // if (!check_for_token()) {
