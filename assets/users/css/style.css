@@ -9356,7 +9356,7 @@ ul li:last-child .card-list-4 {
 .bs-canvas {
   top: 0;
   width: 0;
-  z-index: 1110;
+  z-index: 999999;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -9376,4 +9376,13 @@ ul li:last-child .card-list-4 {
   -ms-transition: all .4s ease-out;
 }
 
+
+
+.bs-canvas-close {
+  background: transparent;
+  border: none;
+  margin-right: 3%;
+  color: white;
+  font-size: 20px;
+}
 /* Off Canvas */

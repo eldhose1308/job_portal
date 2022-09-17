@@ -76,24 +76,15 @@
 
 
 
-
-<!-- Off-canvas sidebar markup, left/right or both. -->
-<div id="bs-canvas-left" class="bs-canvas bs-canvas-anim bs-canvas-left position-fixed bg-light h-100">
-    <header class="bs-canvas-header p-3 bg-success">
-        <h4 class="d-inline-block text-light mb-0">Canvas Header</h4>
-        <button type="button" class="bs-canvas-close close" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span></button>
-    </header>
-    <div class="bs-canvas-content px-3 py-5">
-        ...
-    </div>
-</div>
-
 <div id="bs-canvas-right" class="bs-canvas bs-canvas-anim bs-canvas-right position-fixed bg-light h-100">
     <header class="bs-canvas-header p-3 bg-primary overflow-auto">
-        <button type="button" class="bs-canvas-close float-left close" aria-label="Close"><span aria-hidden="true" class="text-light">&times;</span></button>
-        <h4 class="d-inline-block text-light mb-0 float-right">Canvas Header</h4>
+        <button type="button" class="bs-canvas-close float-left close" aria-label="Close" style="background: transparent; border: none;">
+            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+        </button>
+        <h5 class="d-inline-block text-light mb-0 float-righ offcanvas-heading">Canvas Header</h5>
+        <p class="mt-10 ml-50 offcanvas-subheading text-white">Subheading</p>
     </header>
-    <div class="bs-canvas-content px-3 py-5">
+    <div class="bs-canvas-content px-3 py-5 offcanvas-content">
         ...
     </div>
 </div>
@@ -102,13 +93,21 @@
 
 
 <script>
-
-
-
-
-
     $(document).on('click', '.open-offcanvas', function(e) {
+        $('.offcanvas-heading').html('');
+        $('.offcanvas-content').html('');
         showOffCanvas("#bs-canvas-right");
+        let form_url = $(this).attr("data-url");
+
+        $.get(form_url, function(data, status) {
+            var out = jQuery.parseJSON(data);
+            out = out.data;
+
+            $('.offcanvas-heading').html(out.heading);
+            $('.offcanvas-subheading').html(out.sub_heading);
+            $('.offcanvas-content').html(out.content);
+
+        });
 
 
     });

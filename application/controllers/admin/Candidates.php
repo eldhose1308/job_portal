@@ -21,7 +21,7 @@ class candidates extends MY_Controller
         $data = $this->data;
         $data["status"] = $this->Common_model->select_status();
         $data["genders"] = $this->Common_model->select_all("ci_gender");
-       
+
 
         $this->template->views('admin/candidates/index', $data);
     }
@@ -32,56 +32,61 @@ class candidates extends MY_Controller
         $data["operation"] = 'add';
         $data["status"] = $this->Common_model->select_status();
 
-        $this->template->views('admin/candidates/add_candidates', $data);
+        $this->load->view('admin/candidates/add_candidates', $data);
     }
 
-    public function edit_candidates($link_id = 0)
+    public function edit_candidates($user_id = 0)
     {
         $data = $this->data;
         $data["operation"] = 'edit';
-        $data["link_id"] = $link_id;
+        $data["user_id"] = $user_id;
 
-        $link_id = en_func($link_id, 'd');
+        $user_id = en_func($user_id, 'd');
 
-        $data["candidatesDetails"] = $this->Common_model->select_by_id('ci_candidates', $link_id, 'link_id');
+        $data["candidatesDetails"] = $this->Common_model->select_by_id('ci_candidates', $user_id, 'user_id');
         $data["status"] = $this->Common_model->select_status();
 
         $this->check_exists($data["candidatesDetails"]);
 
-        $this->template->views('admin/candidates/add_candidates', $data);
+        
+        $records["content"] = $this->load->view('admin/candidates/add_candidates', $data, true);
+        $records["heading"] = "Edit Candidates details";
+        $records["sub_heading"] = "Edit Candidates details which are registered in the portal";
+
+        $this->response(200,$records);
     }
 
-    public function view_candidates($link_id = 0)
+    public function view_candidates($user_id = 0)
     {
 
         $data = $this->data;
         $data["operation"] = 'view';
 
-        $link_id = en_func($link_id, 'd');
+        $user_id = en_func($user_id, 'd');
 
-        $data["candidatesDetails"] = $this->Common_model->select_by_id('ci_candidates', $link_id, 'link_id');
+        $data["candidatesDetails"] = $this->Common_model->select_by_id('ci_candidates', $user_id, 'user_id');
         $data["status"] = $this->Common_model->select_status();
 
         $this->check_exists($data["candidatesDetails"]);
 
-        $this->template->views('admin/candidates/add_candidates', $data);
+        $this->load->view('admin/candidates/add_candidates', $data);
     }
 
     public function update_candidates()
     {
-        $link_id = $this->input->post('link_id');
-        $this->save_candidates('update', $link_id);
+        $user_id = $this->input->post('user_id');
+        $this->save_candidates('update', $user_id);
     }
 
 
-    public function save_candidates($func = 'add', $link_id = 0)
+    public function save_candidates($func = 'add', $user_id = 0)
     {
         $this->form_validation->set_rules('link_title', 'Link title', 'trim|required');
         $this->form_validation->set_rules('link_url', 'Link url', 'trim|required');
         $this->form_validation->set_rules('sort_order', 'Sort order', 'trim|required|numeric');
 
         if ($func == 'update')
-            $this->form_validation->set_rules('link_id', 'candidates ID', 'trim|required');
+            $this->form_validation->set_rules('user_id', 'candidates ID', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
             $data = array('status' => 'error', 'msg' => validation_errors());
@@ -105,11 +110,11 @@ class candidates extends MY_Controller
 
         );
 
-        $link_id =  en_func($link_id, 'd');
+        $user_id =  en_func($user_id, 'd');
 
         if ($func == 'update') :
             unset($data_insert['created_at']);
-            $qry_response = $this->Common_model->update_table($data_insert, $link_id, 'ci_candidates', 'link_id');
+            $qry_response = $this->Common_model->update_table($data_insert, $user_id, 'ci_candidates', 'user_id');
             $this->add_activity_log("Updated quicklink");
         else :
             $qry_response = $this->Common_model->insert_table($data_insert, 'ci_candidates');
@@ -152,18 +157,17 @@ class candidates extends MY_Controller
 
                 '
                 <div class="col-3 datacard_btns">
-                                            <a class="btn btn-tags-sm mb-10 text-white bg-custom"> Edit</a>
-                                        </div>
-                                        <div class="col-3">
-                                            <a class="btn btn-tags-sm mb-10 text-white bg-info">View</a>
-                                        </div>
-                                        <div class="col-3">
-                                            <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <a class="btn btn-tags-sm mb-10 open-offcanvas">Resume</a>
-                                        </div>
+                    <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/candidates/edit_candidates/' . $user_id . '">Edit</a>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-tags-sm mb-10 text-white bg-info open-offcanvas" data-url="' . base_url() . 'admin/candidates/view_candidates/' . $user_id . '">View</a>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-tags-sm mb-10 open-offcanvas" data-url="' . base_url() . 'admin/candidates/show_resume">Resume</a>
+                </div>
                 '
 
             );
@@ -172,14 +176,28 @@ class candidates extends MY_Controller
     }
 
 
-    public function delete_candidates($link_id)
+    public function delete_candidates($user_id)
     {
-        $link_id = en_func($link_id, 'd');
-        $response = $this->Common_model->delete_table($link_id, 'ci_candidates', 'link_id');
+        $user_id = en_func($user_id, 'd');
+        $response = $this->Common_model->delete_table($user_id, 'ci_candidates', 'user_id');
         if ($response > 0)
             $this->session->set_flashdata('success', 'Quick link has been deleted successfully!');
         else
             $this->session->set_flashdata('errors', 'Quick link could not be deleted!');
         redirect(base_url('admin/candidates'));
+    }
+
+
+
+
+
+    public function show_resume()
+    {
+        $records = array();
+
+        $records['heading'] = 'Resume';
+        $records['content'] = 'Resume here';
+
+        $this->response(200, $records);
     }
 }
