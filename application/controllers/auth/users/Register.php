@@ -23,7 +23,7 @@ class Register extends CI_Controller
 
     public function index()
     {
-        if ($this->session->has_userdata('login_status')) {
+        if ($this->session->has_userdata('user_login_status')) {
             redirect('usershome', 'refresh');
         }
         $data = array();

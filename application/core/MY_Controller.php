@@ -37,8 +37,21 @@ class MY_Controller extends CI_Controller
          * 
          * **/
 
+        $this->data["sortBys"][0] = array(
+            "sort_id" => 1,
+            "sorting_by" => "Latest"
+        );
+        $this->data["sortBys"][1] = array(
+            "sort_id" => 2,
+            "sorting_by" => "Oldest"
+        );
+
+
+
+
+
         if (empty($this->session->userdata()["menus"]))
-            redirect(base_url() .'admin/logout', 'refresh');
+            redirect(base_url() . 'admin/logout', 'refresh');
 
         $this->data['unallocated_menus'] = $this->session->userdata()['menus']['unallocated'];
         $this->data['allocated_menus'] = $this->session->userdata()['menus']['allocated'];
@@ -144,7 +157,7 @@ class MY_Controller extends CI_Controller
         $img_file = $imagePath . $image_name;
         // $im = imageCreateFromString($bin);
         // imagejpeg($im, $img_file, 80);
-        $up_response = file_put_contents($imagePath.$image_name, $im_data);
+        $up_response = file_put_contents($imagePath . $image_name, $im_data);
         return $image_name;
     }
 
@@ -301,10 +314,10 @@ class US_Controller extends CI_Controller
             redirect_to_404();
     }
 
-    function check_id_real($id){
+    function check_id_real($id)
+    {
         if ((int) en_func($id, 'd') < 1) {
             redirect_to_404();
-
         }
     }
 

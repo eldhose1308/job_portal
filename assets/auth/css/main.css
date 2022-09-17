@@ -4302,6 +4302,30 @@ body.dark .dropdown-menu .dropdown-item.text-danger {
 }
 /*# sourceMappingURL=main.css.map */
 
+.bg-custom{
+  background-color: #05264e !important;
+}
+.btn-custom{
+  background-color: #05264e !important;
+  color: #ffffff !important;
+}
+
+.error-input {
+  border: 1px solid #ff6a6a;
+}
+
 #login-forms{
   padding: 0% 3%;
+}
+
+.error-detail p {
+  font-size: 13px;
+  line-height: 13px;
+  color: red;
+  text-align: left;
+}
+
+
+.error-detail{
+  padding: 1% 0%;
 }

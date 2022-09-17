@@ -20,6 +20,8 @@ class candidates extends MY_Controller
 
         $data = $this->data;
         $data["status"] = $this->Common_model->select_status();
+        $data["genders"] = $this->Common_model->select_all("ci_gender");
+       
 
         $this->template->views('admin/candidates/index', $data);
     }
@@ -136,16 +138,33 @@ class candidates extends MY_Controller
         $data = array();
         $i = 0;
         foreach ($records['data']   as $row) {
-            $link_id  = en_func($row->link_id, 'e');
+            $user_id  = en_func($row->user_id, 'e');
             $data[] = array(
                 ++$i,
-                $row->link_title,
-                $row->link_url,
-                $row->sort_order,
-                '<div class="btn-group btn-group-sm">
-        <a href="' . base_url() . 'admin/candidates/edit_candidates/' . $link_id  . '" title="Edit candidates" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
-        <a href="' . base_url() . 'admin/candidates/view_candidates/' . $link_id  . '" title="View candidates" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-        <a href="' . base_url() . 'admin/candidates/delete_candidates/' . $link_id  . '" title="Delete candidates"  onclick="return confirm(\'Do you want to delete ?\')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>'
+                ++$i,
+                '<a>
+                    <h5>' . $row->full_name . '</h5>
+                </a>',
+                '<span class="font-sm text-primary">' . $row->user_email . '</span>',
+                '<span class="font-sm color-text-mutted">' . $row->user_mobile . '</span>',
+                '<img class="" src="' . base_url() . 'assets/users/imgs/page/candidates/verified.png" alt="Nexcode">',
+                '<p class="font-xs color-text-paragraph-2">Short note</p>',
+
+                '
+                <div class="col-3 datacard_btns">
+                                            <a class="btn btn-tags-sm mb-10 text-white bg-custom"> Edit</a>
+                                        </div>
+                                        <div class="col-3">
+                                            <a class="btn btn-tags-sm mb-10 text-white bg-info">View</a>
+                                        </div>
+                                        <div class="col-3">
+                                            <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <a class="btn btn-tags-sm mb-10 open-offcanvas">Resume</a>
+                                        </div>
+                '
 
             );
         }
@@ -156,7 +175,7 @@ class candidates extends MY_Controller
     public function delete_candidates($link_id)
     {
         $link_id = en_func($link_id, 'd');
-        $response = $this->Common_model->delete_table($link_id,'ci_candidates','link_id');
+        $response = $this->Common_model->delete_table($link_id, 'ci_candidates', 'link_id');
         if ($response > 0)
             $this->session->set_flashdata('success', 'Quick link has been deleted successfully!');
         else

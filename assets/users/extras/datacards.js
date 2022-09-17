@@ -12,7 +12,7 @@ var trimStart;
 var trimEnd;
 //buildCard()
 
-function getData(tableData_param, state_param = { 'querySet': tableData, 'page': 1, 'rows': 5, 'window': 5 }, datacard_param = "#na_datacard") {
+function getData(tableData_param, state_param = { 'querySet': tableData, 'page': 1, 'rows': 2, 'window': 5 }, datacard_param = "#na_datacard") {
     datacard = datacard_param;
     state_param.querySet = tableData_param;
 
@@ -24,6 +24,10 @@ function getData(tableData_param, state_param = { 'querySet': tableData, 'page':
     tableData = tableData_param;
     createCard();
     buildCard();
+
+    let page = parameterList.has('page') ? parameterList.get("page") : 1;
+    $('.pagination-button[aria-page="' + page + '"]').trigger('click');
+
 }
 
 function pagination(querySet, page, rows) {
@@ -107,14 +111,15 @@ function pageButtons(pages, Fliteredstate) {
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-7">
-                            <div class="dataTables_paginate paging_simple_numbers" id="na_datatable_paginate">
-                                <ul class="pagination">
+                            <div class="dataTables_paginate paginations" id="na_datatable_paginate">
+                                <ul class="pager float-end">
                                 #PAGINATION#
                                 </ul>
                             </div>
                         </div>
                     </div>`;
 
+    $(".datacard-search-results-count").html(`Showing <strong>${trimStart + 1} - ${last_index} </strong>of <strong>${total_count} </strong>entries`);
     var clicked_page = state.page;
 
     var maxLeft = (state.page - Math.floor(state.window / 2))
@@ -138,22 +143,27 @@ function pageButtons(pages, Fliteredstate) {
     $('#pagination-wrapper').html('');
 
     let pagination_li = '';
-
-    pagination_li += `<li class="paginate_button page-item previous ${(clicked_page == 1) ? 'disabled' : ''}" id="na_datatable_previous"><a role="button" value=${1} aria-controls="na_datatable" class="page-link pagination-button">Previous</a></li>`;
+    pagination_li += `<li><a role="button" value=${clicked_page - 1} aria-controls="na_datatable" class="pagination-button pager-prev ${(clicked_page == 1) ? 'd-none' : ''}"></a></li>`;
     for (var temp_page = maxLeft; temp_page <= maxRight; temp_page++) {
-        pagination_li += `<li class="paginate_button page-item ${(clicked_page == temp_page) ? 'active' : ''}"><a role="button" aria-controls="na_datatable" value=${temp_page} class="page-link pagination-button">${temp_page}</a></li>`;
+        pagination_li += `<li><a role="button" aria-controls="na_datatable" aria-page=${temp_page} value=${temp_page} class="pagination-button pager-number ${(clicked_page == temp_page) ? 'active' : ''}">${temp_page}</a></li>`;
     }
 
-    pagination_li += `<li class="paginate_button page-item next ${(clicked_page == maxRight) ? 'disabled' : ''}" id="na_datatable_next"><a role="button" value=${pages} aria-controls="na_datatable" class="page-link pagination-button">Next</a></li>`;
+    pagination_li += `<li><a role="button" value=${clicked_page + 1} aria-controls="na_datatable" class="pagination-button pager-next ${(clicked_page == maxRight) ? 'd-none' : ''}"></a></li>`;
 
 
     bottom_nav = bottom_nav.replace("#PAGINATION#", pagination_li);
     $('#pagination-wrapper').html(bottom_nav);
 
-    $('.pagination-button').on('click', function () {
+    // parameterList = new URLSearchParams(address);
+
+
+
+    $(document).on('click', '.pagination-button', function () {
         $("#datacard-body").empty()
 
         state.page = Number($(this).attr('value'))
+        // alert(state.page);
+        add_getParameters("page", state.page);
         buildCard()
     })
 
@@ -201,59 +211,86 @@ function buildCard(Fliteredstate = '') {
 
     let arr_length;
 
-    let div_datacard_body, div_container, data_div, data_img_div, data_details_div, action_div;
+    let div_datacard_body, div_container, data_div, data_div2, data_info_and_btn, data_btn, data_img_div, data_details_div, action_div;
 
     let classLists = $("#na_datacard").attr('data-class');
 
     div_datacard_body = document.createElement("div");
     div_datacard_body.setAttribute("class", classLists);
 
+    let limit = 5;
 
     $.each(myList, function (index, item) {
         arr_length = item.length;
 
+        limit = (limit < 5) ? arr_length - 1 : limit;
 
         div_container = document.createElement("div");
-        div_container.classList.add('col');
-        div_container.classList.add('datacard-elements');
+        div_container.classList.add('col-xl-4');
+        div_container.classList.add('col-lg-4');
+        div_container.classList.add('col-md-6');
 
         data_div = document.createElement("div");
-        data_div.classList.add('card');
-        data_div.classList.add('card-product-grid');
+        data_div.classList.add('card-grid-2');
+        data_div.classList.add('hover-up');
+
+
+        data_div2 = document.createElement("div");
+        data_div2.classList.add('card-grid-2-image-left');
 
 
         // data_img_div.innerHTML = `<img src="${item[1]}" alt="${item[2]}">`;
 
 
         data_details_div = document.createElement("div");
-        data_details_div.classList.add('info-wrap');
+        data_details_div.classList.add('card-profile');
+        data_details_div.classList.add('pt-10');
 
-        if (item[1].includes('datacard_img')) {
-            data_img_div = document.createElement("div");
-            data_img_div.classList.add('img-wrap');
+        data_info_and_btn = document.createElement("div");
+        data_info_and_btn.classList.add('card-block-info');
 
-            data_img_div.innerHTML = `${item[1]}`;
+        data_btn = document.createElement("div");
+        data_btn.classList.add('employers-info');
+        data_btn.classList.add('mt-15');
+        data_btn.classList.add('row');
 
-            data_div.appendChild(data_img_div);
+        // if (item[1].includes('datacard_img')) {
+        //     data_img_div = document.createElement("div");
+        //     data_img_div.classList.add('img-wrap');
 
+        //     data_img_div.innerHTML = `${item[1]}`;
+
+        //     data_div.appendChild(data_img_div);
+
+        // }
+
+
+        for (var i = 2; i < limit; i++) {
+            data_details_div.innerHTML += `<p class="title">${item[i]}</p>`;
         }
 
-
-        data_details_div.innerHTML += `<p class="font-weight-bold title text-truncate">${(item[2]) ? item[2] : ''}</p>`;
-
-        for (var i = 3; i < arr_length - 1; i++)
-            data_details_div.innerHTML += `<p class="title">${item[i]}</p>`;
+        for (; i < arr_length; i++) {
 
 
-        data_details_div.innerHTML += `${item[i]}`;
+            if (item[i].includes('datacard_btns')) {
+                data_btn.innerHTML += `${item[i]}`;
+
+            } else {
+                data_info_and_btn.innerHTML += `${item[i]}`;
+            }
+        }
+
 
         // action_div = document.createElement("div");
         // action_div.classList.add('action-buttons');
         // action_div.innerHTML = item[i];
 
+        data_div.appendChild(data_div2);
+        data_info_and_btn.appendChild(data_btn);
+        data_div.appendChild(data_info_and_btn);
 
-        data_div.appendChild(data_details_div);
-       // data_div.appendChild(action_div);
+        data_div2.appendChild(data_details_div);
+        // data_div.appendChild(action_div);
 
         div_datacard_body.appendChild(div_container);
         div_container.appendChild(data_div);

@@ -34,7 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+function showOffCanvas(canvas){
+    $(canvas).css('width', '50%');  
+    $('.bs-canvas-overlay').addClass('show');
+    return false;
+}
 
+
+$(document).on('click','.bs-canvas-close, .bs-canvas-overlay', function() {
+    $('.bs-canvas').css('width', '0%');
+    $('.bs-canvas-overlay').removeClass('show');
+    return false;
+});
 
 
 function hide_preloader() {
@@ -215,6 +226,7 @@ function load_datatable(parameters, form_url) {
 
 /******** Loads Datacard Json data ********/
 
+/*
 function load_datacard_list() {
     if ($('.datacard-list').length > 0)
         $(".datacard-list").submit();
@@ -257,8 +269,90 @@ function load_datacard(parameters, form_url) {
     });
 }
 
+*/
+
+
+function load_datacard_list() {
+    if ($('.datacard-list').length > 0)
+        $(".datacard-list").submit();
+}
+
+
+
+$(document).on('click', '.datacard-list .filter .dropdown-item', function (e) {
+    e.preventDefault();
+
+    let ids = $(this).parent().parent()[0].id;
+    let value = $(this).attr("data-value");
+
+    add_getParameters(ids, value);
+
+
+
+    if ($('.datacard-list').length > 0)
+        $(".datacard-list").submit();
+});
+
+
+
+$(document).on('submit', '.datacard-list', function (e) {
+    e.preventDefault();
+    var datacard_loader = `<center><i class="datacard-loader fa fa-circle-o-notch fa-spin"></i></center>`;
+    $("#na_datacard").html(datacard_loader);
+
+    var parameters = {};
+    let current_parameters = getParameters();
+
+    for (const [key, value] of current_parameters.entries()) {
+        parameters[key] = value;
+    }
+
+    load_datacard(parameters, $(this).attr('action'));
+});
+
+
+function load_datacard(parameters, form_url) {
+
+    $.get(form_url, parameters, function (data, status) {
+        var out = jQuery.parseJSON(data);
+        tableData = out.data;
+
+        getData(tableData);
+
+    });
+}
+
 
 /******** Loads Datacard Json data ********/
+
+
+
+/******** Loads GET Parameters data ********/
+
+
+function add_getParameters(ids, value) {
+    let current_parameters = getParameters();
+
+    if (current_parameters.has(ids))
+        current_parameters.set(ids, value);
+    else
+        current_parameters.append(ids, value);
+
+    window.history.replaceState(null, null, "?" + current_parameters);
+
+}
+
+
+function getParameters() {
+    address = window.location.search;
+    parameterList = new URLSearchParams(address);
+    return parameterList;
+}
+
+
+/******** Loads GET Parameters data ********/
+
+
 
 
 /******** Submits form and shows alert ********/
@@ -601,17 +695,17 @@ $(document).on('input', '#search-dashboard', function (e) {
 function AlertandToast(status, message, alert = true, toast = true) {
     //alert(333);
     if (toast) {
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
+        // var Toast = Swal.mixin({
+        //     toast: true,
+        //     position: 'top-end',
+        //     showConfirmButton: false,
+        //     timer: 3000
+        // });
 
-        Toast.fire({
-            icon: status,
-            title: message
-        });
+        // Toast.fire({
+        //     icon: status,
+        //     title: message
+        // });
     }
 
     if (alert)

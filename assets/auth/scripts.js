@@ -76,8 +76,8 @@ $(document).on('submit', '#register-forms', function (e) {
   e.preventDefault();
 
 
-  if (validate_form(false, true, false))
-  return false;
+  if (validate_form(true, false, true))
+    return false;
   // device_type = getDeviceType();
   // $('#device_type').val(device_type);
 
@@ -121,7 +121,7 @@ $(document).on('submit', '#register-forms', function (e) {
     alertMessage(out.status, out.msg);
     $('.login-btn').show();
 
-    
+
   });
 
   usertype_xhr.fail(function () {
