@@ -34,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function showOffCanvas(canvas){
+function showOffCanvas(canvas) {
     let offCanvas_loader = `<center><i style="font-size:35px;color: #05264e;" class="fa fa-spinner fa-spin"></i></center>`;
-    $(canvas).css('width', '50%');  
+    $(canvas).css('width', '65%');
     $('.bs-canvas-overlay').addClass('show');
     $('.offcanvas-heading').html('Header');
     $('.offcanvas-content').html(offCanvas_loader);
@@ -44,7 +44,12 @@ function showOffCanvas(canvas){
 }
 
 
-$(document).on('click','.bs-canvas-close, .bs-canvas-overlay', function() {
+function closeOffCanvas() {
+   $('.bs-canvas-close').trigger('click');
+}
+
+
+$(document).on('click', '.bs-canvas-close, .bs-canvas-overlay', function () {
     $('.bs-canvas').css('width', '0%');
     $('.bs-canvas-overlay').removeClass('show');
 
@@ -373,7 +378,7 @@ $(document).on('submit', '#add-form', function (e) {
     // validations = validation_fields('sort_order', 'required|numeric', 'Sort order');
 
 
-    if (validate_form(true, true, false))
+    if (validate_form(true, false, true))
         return false;
 
 
@@ -417,7 +422,9 @@ $(document).on('submit', '#add-form', function (e) {
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
             AlertandToast(out.status, out.msg, false, true);
-            go_to_backpage();
+            // go_to_backpage();
+            // closeOffCanvas();
+            load_datacard_list();
         }
         else
             AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
@@ -722,6 +729,7 @@ function AlertandToast(status, message, alert = true, toast = true) {
 
 
 function alertMessage(status, message) {
+    $('.alert-message-div').html('');
 
     $('body,html').animate({
         scrollTop: 0
@@ -736,8 +744,8 @@ function alertMessage(status, message) {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>`;
 
-    $('#alert-message-div').html(alert_message);
-    $('#alert-message-div').show(1200);
+    $('.alert-message-div').html(alert_message);
+    $('.alert-message-div').show(1200);
 
 
 

@@ -9386,3 +9386,10 @@ ul li:last-child .card-list-4 {
   font-size: 20px;
 }
 /* Off Canvas */
+
+.fa-success{
+  color: #28a745 !important;
+}
+.fa-danger{
+  color: #dc3545 !important;
+}

@@ -32,7 +32,11 @@ class candidates extends MY_Controller
         $data["operation"] = 'add';
         $data["status"] = $this->Common_model->select_status();
 
-        $this->load->view('admin/candidates/add_candidates', $data);
+        $records["content"] = $this->load->view('admin/candidates/add_candidates', $data, true);
+        $records["heading"] = "Add Candidates details";
+        $records["sub_heading"] = "Add Candidates details which are registered in the portal";
+
+        $this->response(200,$records);
     }
 
     public function edit_candidates($user_id = 0)
@@ -61,6 +65,7 @@ class candidates extends MY_Controller
 
         $data = $this->data;
         $data["operation"] = 'view';
+        $data["user_id"] = $user_id;
 
         $user_id = en_func($user_id, 'd');
 
@@ -69,7 +74,12 @@ class candidates extends MY_Controller
 
         $this->check_exists($data["candidatesDetails"]);
 
-        $this->load->view('admin/candidates/add_candidates', $data);
+        
+        $records["content"] = $this->load->view('admin/candidates/add_candidates', $data, true);
+        $records["heading"] = "View Candidates details";
+        $records["sub_heading"] = "View Candidates details which are registered in the portal";
+
+        $this->response(200,$records);
     }
 
     public function update_candidates()
@@ -81,9 +91,10 @@ class candidates extends MY_Controller
 
     public function save_candidates($func = 'add', $user_id = 0)
     {
-        $this->form_validation->set_rules('link_title', 'Link title', 'trim|required');
-        $this->form_validation->set_rules('link_url', 'Link url', 'trim|required');
-        $this->form_validation->set_rules('sort_order', 'Sort order', 'trim|required|numeric');
+        $this->form_validation->set_rules('full_name', 'Full name', 'trim|required');
+        $this->form_validation->set_rules('user_email', 'Email address', 'trim|required');
+        $this->form_validation->set_rules('user_mobile', 'Mobile number', 'trim|required|numeric');
+        $this->form_validation->set_rules('email_verified', 'Email verfied', 'trim|required|numeric');
 
         if ($func == 'update')
             $this->form_validation->set_rules('user_id', 'candidates ID', 'trim|required');
@@ -95,41 +106,44 @@ class candidates extends MY_Controller
         }
 
 
-        $user_id = $this->user_id;
+        // $user_id = $this->user_id;
 
 
 
         $data_insert = array(
-            'link_title' => $this->input->post('link_title'),
-            'link_url' => $this->input->post('link_url'),
-            'sort_order' => $this->input->post('sort_order'),
+            'full_name' => $this->input->post('full_name'),
+            'user_email' => $this->input->post('user_email'),
+            'user_mobile' => $this->input->post('user_mobile'),
+            'email_verified' => $this->input->post('email_verified'),
             'created_at' => date("Y-m-d h:i:s"),
             'updated_at' => date("Y-m-d h:i:s"),
-            'added_by' => $user_id,
             'status' => en_func($this->input->post('status'), 'd')
 
         );
 
         $user_id =  en_func($user_id, 'd');
 
+
         if ($func == 'update') :
+            $msg = "Candidate details successfully updated !";
             unset($data_insert['created_at']);
             $qry_response = $this->Common_model->update_table($data_insert, $user_id, 'ci_candidates', 'user_id');
-            $this->add_activity_log("Updated quicklink");
+            $this->add_activity_log("Updated candidate details");
         else :
+            $msg = "New Candidate successfully added !";
             $qry_response = $this->Common_model->insert_table($data_insert, 'ci_candidates');
-            $this->add_activity_log("Added quicklink");
+            $this->add_activity_log("Added candidate details");
         endif;
 
         //lq();
 
         if ($qry_response > 0) :
-            $data = array('status' => 'success', 'msg' => 'Quick link link successfully added !');
+            $data = array('status' => 'success', 'msg' => $msg);
             echo json_encode($data);
             exit();
         endif;
 
-        $data = array('status' => 'error', 'msg' => 'Quick link link could not be added !');
+        $data = array('status' => 'error', 'msg' => 'Candidate details could not be added !');
         echo json_encode($data);
         exit();
     }
@@ -144,15 +158,15 @@ class candidates extends MY_Controller
         $i = 0;
         foreach ($records['data']   as $row) {
             $user_id  = en_func($row->user_id, 'e');
+            $email_verified = ( $row->email_verified == 1 ) ? '<i class="fa fa-check fa-success" aria-hidden="true"></i>' : '<i class="fa fa-times fa-danger" aria-hidden="true"></i>';
             $data[] = array(
                 ++$i,
                 ++$i,
                 '<a>
                     <h5>' . $row->full_name . '</h5>
                 </a>',
-                '<span class="font-sm text-primary">' . $row->user_email . '</span>',
+                '<span class="font-sm text-primary">' . $row->user_email . $email_verified .'</span>',
                 '<span class="font-sm color-text-mutted">' . $row->user_mobile . '</span>',
-                '<img class="" src="' . base_url() . 'assets/users/imgs/page/candidates/verified.png" alt="Nexcode">',
                 '<p class="font-xs color-text-paragraph-2">Short note</p>',
 
                 '

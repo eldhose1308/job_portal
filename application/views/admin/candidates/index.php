@@ -5,10 +5,10 @@
 
             <div class="box-filters-job">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-5"><span class="text-small text-showing datacard-search-results-count">
+                    <div class="col-xl-3 col-lg-3"><span class="text-small text-showing datacard-search-results-count">
                             Showing <strong>0-60 </strong>of <strong>130 </strong>entries
                         </span></div>
-                    <div class="col-xl-6 col-lg-7 text-lg-end mt-sm-15">
+                    <div class="col-xl-6 col-lg-6 text-lg-end mt-sm-15">
                         <div class="display-flex2">
 
                             <form action="<?= base_url() ?>admin/candidates/candidates_json" class="datacard-list">
@@ -51,8 +51,15 @@
 
                             </form>
 
+
+
                         </div>
                     </div>
+
+                    <div class="col-xl-3 col-lg-3 text-end">
+                        <button class="btn btn-sm btn-custom open-offcanvas" data-url="<?= base_url() ?>admin/candidates/add_candidates">Add</button>
+                    </div>
+
                 </div>
             </div>
 
@@ -74,20 +81,6 @@
 
 
 
-
-
-<div id="bs-canvas-right" class="bs-canvas bs-canvas-anim bs-canvas-right position-fixed bg-light h-100">
-    <header class="bs-canvas-header p-3 bg-primary overflow-auto">
-        <button type="button" class="bs-canvas-close float-left close" aria-label="Close" style="background: transparent; border: none;">
-            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-        </button>
-        <h5 class="d-inline-block text-light mb-0 float-righ offcanvas-heading">Canvas Header</h5>
-        <p class="mt-10 ml-50 offcanvas-subheading text-white">Subheading</p>
-    </header>
-    <div class="bs-canvas-content px-3 py-5 offcanvas-content">
-        ...
-    </div>
-</div>
 
 
 
