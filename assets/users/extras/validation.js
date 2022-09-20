@@ -309,3 +309,14 @@ function _check_valid_email(value) {
 
 
 
+$(document).on('keyup','.error-input', function(e){
+    e.preventDefault();
+
+    if (validate_form(false, false, true)){
+        // here it means that there are no errors in validations
+    }
+        
+    // $(this).removeClass('error-input');
+    // $(this).parent().find('.error-detail').remove();
+})
+
