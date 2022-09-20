@@ -170,6 +170,7 @@ class candidates extends MY_Controller
                 '<p class="font-xs color-text-paragraph-2">Short note</p>',
 
                 '
+                <div class="employers-info mt-15 row">
                 <div class="col-3 datacard_btns">
                     <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/candidates/edit_candidates/' . $user_id . '">Edit</a>
                 </div>
@@ -181,6 +182,7 @@ class candidates extends MY_Controller
                 </div>
                 <div class="col-3">
                     <a class="btn btn-tags-sm mb-10 open-offcanvas" data-url="' . base_url() . 'admin/candidates/show_resume">Resume</a>
+                </div>
                 </div>
                 '
 

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-header">
       <div class="header-left">
-        <div class="header-logo"><a class="d-flex" href="index.html"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a></div>
+        <div class="header-logo"><a class="d-flex" href="<?= base_url() ?>"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a></div>
       </div>
       <div class="header-nav">
         <nav class="nav-main-menu">
@@ -14,6 +14,14 @@
             <li class="has-children"><a href="#0">Candidates</a>
               <ul class="sub-menu">
                 <li><a href="<?= base_url() ?>admin/candidates">Candidates list</a></li>
+              </ul>
+            </li>
+
+            <li class="has-children"><a href="#0">Jobs</a>
+              <ul class="sub-menu">
+                <li><a href="<?= base_url() ?>admin/jobs">Jobs list</a></li>
+                <li><a href="<?= base_url() ?>admin/jobs/countries">Jobs Countries</a></li>
+                <li><a href="<?= base_url() ?>admin/jobs/types">Jobs types</a></li>
               </ul>
             </li>
 
@@ -54,6 +62,14 @@
                 </ul>
               </li>
 
+              <li class="has-children"><a href="#0">Jobs</a>
+                <ul class="sub-menu">
+                  <li><a href="<?= base_url() ?>admin/jobs">Jobs list</a></li>
+                  <li><a href="<?= base_url() ?>admin/jobs/countries">Jobs Countries</a></li>
+                  <li><a href="<?= base_url() ?>admin/jobs/types">Jobs types</a></li>
+                </ul>
+              </li>
+
               <li><a href="<?= base_url() ?>admin/contact_messages">Contact queries</a></li>
 
 
@@ -89,6 +105,14 @@
               <li class="has-children"><a href="#0">Candidates</a>
                 <ul class="sub-menu">
                   <li><a href="<?= base_url() ?>admin/candidates">Candidates list</a></li>
+                </ul>
+              </li>
+
+              <li class="has-children"><a href="#0">Jobs</a>
+                <ul class="sub-menu">
+                  <li><a href="<?= base_url() ?>admin/jobs">Jobs list</a></li>
+                  <li><a href="<?= base_url() ?>admin/jobs/countries">Jobs Countries</a></li>
+                  <li><a href="<?= base_url() ?>admin/jobs/types">Jobs types</a></li>
                 </ul>
               </li>
 

@@ -266,18 +266,19 @@ function buildCard(Fliteredstate = '') {
 
 
         for (var i = 2; i < limit; i++) {
-            data_details_div.innerHTML += `<p class="title">${item[i]}</p>`;
+            if (item[i] != undefined)
+                data_details_div.innerHTML += `<p class="title">${item[i]}</p>`;
         }
 
         for (; i < arr_length; i++) {
 
 
-            if (item[i].includes('datacard_btns')) {
-                data_btn.innerHTML += `${item[i]}`;
+            // if (item[i].includes('datacard_btns')) {
+            //     data_btn.innerHTML += `${item[i]}`;
 
-            } else {
-                data_info_and_btn.innerHTML += `${item[i]}`;
-            }
+            // } else {
+            data_info_and_btn.innerHTML += `${item[i]}`;
+            //     }
         }
 
 
@@ -286,7 +287,7 @@ function buildCard(Fliteredstate = '') {
         // action_div.innerHTML = item[i];
 
         data_div.appendChild(data_div2);
-        data_info_and_btn.appendChild(data_btn);
+        // data_info_and_btn.appendChild(data_btn);
         data_div.appendChild(data_info_and_btn);
 
         data_div2.appendChild(data_details_div);
