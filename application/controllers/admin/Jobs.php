@@ -182,6 +182,7 @@ class jobs extends MY_Controller
 
                 '
                 <div class="employers-info mt-15 row">
+                
                 <div class="col-3 datacard_btns">
                     <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/jobs/edit_jobs/' . $job_id . '">Edit</a>
                 </div>
@@ -191,9 +192,7 @@ class jobs extends MY_Controller
                 <div class="col-3">
                     <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
                 </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 open-offcanvas" data-url="' . base_url() . 'admin/jobs/show_resume">Resume</a>
-                </div>
+                
                 </div>
                 '
 

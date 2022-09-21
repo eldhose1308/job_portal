@@ -25,6 +25,12 @@
               </ul>
             </li>
 
+            <li class="has-children"><a href="#0">Applications</a>
+              <ul class="sub-menu">
+                <li><a href="<?= base_url() ?>admin/applications">Jobs applications</a></li>
+              </ul>
+            </li>
+
             <li><a href="<?= base_url() ?>admin/contact_messages">Contact queries</a></li>
 
           </ul>
@@ -67,6 +73,12 @@
                   <li><a href="<?= base_url() ?>admin/jobs">Jobs list</a></li>
                   <li><a href="<?= base_url() ?>admin/jobs/countries">Jobs Countries</a></li>
                   <li><a href="<?= base_url() ?>admin/jobs/types">Jobs types</a></li>
+                </ul>
+              </li>
+
+              <li class="has-children"><a href="#0">Applications</a>
+                <ul class="sub-menu">
+                  <li><a href="<?= base_url() ?>admin/applications">Jobs applications</a></li>
                 </ul>
               </li>
 
@@ -113,6 +125,12 @@
                   <li><a href="<?= base_url() ?>admin/jobs">Jobs list</a></li>
                   <li><a href="<?= base_url() ?>admin/jobs/countries">Jobs Countries</a></li>
                   <li><a href="<?= base_url() ?>admin/jobs/types">Jobs types</a></li>
+                </ul>
+              </li>
+
+              <li class="has-children"><a href="#0">Applications</a>
+                <ul class="sub-menu">
+                  <li><a href="<?= base_url() ?>admin/applications">Jobs applications</a></li>
                 </ul>
               </li>
 
