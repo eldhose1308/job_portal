@@ -181,20 +181,9 @@ $route['visits'] = 'ajax/visits';
 $route['donate'] = 'donations/donate';
 
 $route['contact_us'] = 'home/contact_us';
-$route['photo_gallery'] = 'home/photo_gallery';
-$route['video_gallery'] = 'home/video_gallery';
+$route['jobs'] = 'home/jobs';
+
 $route['about_us'] = 'home/about_us';
-$route['mission_and_vision'] = 'home/mission_and_vision';
-$route['administration'] = 'home/administration';
-
-
-$route['news'] = 'home/news';
-$route['news_details/(:any)'] = 'home/news_details/$1';
-$route['inner_page/(:any)/(:any)'] = 'home/inner_page/$1/$2';
-
-$route['events'] = 'home/events';
-$route['events_details/(:any)'] = 'home/events_details/$1';
-
 
 $route['privacy_policy'] = 'home/privacy_policy';
 $route['terms_and_conditions'] = 'home/terms_and_conditions';

@@ -20,5 +20,34 @@ class home extends CI_Controller
 
 
 
+    public function about_us()
+    {
+        $data = array();
+
+        $this->template->home_views('home/about_us', $data);
+    }
+
+
+
+    public function contact_us()
+    {
+        $data = array();
+
+        $this->template->home_views('home/contact_us', $data);
+    }
+
+
+
+
+
+    public function jobs()
+    {
+        $data = array();
+
+        $this->template->home_views('home/jobs', $data);
+    }
+
+
+
 
 }
