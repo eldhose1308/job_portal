@@ -154,6 +154,7 @@ class M_candidates extends CI_Model
 		}
 	}
 
+
 	public function check_candidate_exists($user)
 	{
 		$this->db->select('ci_candidates.*');
@@ -252,14 +253,14 @@ class M_candidates extends CI_Model
 	public function update_profile($data, $id)
 	{
 		$this->db->where('user_id', $id);
-		$result = $this->db->update('users', $data);
+		$result = $this->db->update('ci_candidates', $data);
 		return $this->db->affected_rows();
 	}
 
 	public function update_patient_profile($data, $id)
 	{
-		$this->db->where('patient_id', $id);
-		$result = $this->db->update('ci_patients', $data);
+		$this->db->where('user_id', $id);
+		$result = $this->db->update('ci_candidates', $data);
 		return $this->db->affected_rows();
 	}
 

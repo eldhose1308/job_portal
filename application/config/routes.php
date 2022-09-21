@@ -78,6 +78,13 @@ $route['users/login'] = 'auth/users/login';
 $route['users/save_login'] = 'auth/users/login/login';
 
 
+$route['users/google_login'] = 'auth/users/login/google_login';
+$route['users/google_register'] = 'auth/users/register/google_register';
+
+$route['users/setup_profile'] = 'auth/users/register/setup_profile';
+$route['users/complete_profile'] = 'auth/users/register/complete_profile';
+
+
 $route['users/logout'] = 'auth/users/login/logout';
 
 

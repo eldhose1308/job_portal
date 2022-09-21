@@ -24,12 +24,138 @@ class Login extends CI_Controller
         if ($this->session->has_userdata('user_login_status')) {
             redirect('usershome', 'refresh');
         }
-        $data= array();
-       
+        $data = array();
+
+        require_once 'vendor/autoload.php';
+
+        $clientID = $this->config->item('client_id');
+        $clientSecret = $this->config->item('client_secret');
+        $redirectUri = base_url() . 'users/google_login';
+
+
+        $client = new Google_Client();
+        $client->setClientId($clientID);
+        $client->setClientSecret($clientSecret);
+        $client->setRedirectUri($redirectUri);
+
+        $client->addScope("email");
+        $client->addScope("profile");
+
+
+        $data["googleAuth"] = $client->createAuthUrl();
+
 
         $this->load->view('auth/users/login', $data);
         remove_flashdata();
     }
+
+
+
+
+    /***
+     * 
+     * Google Auth
+     * 
+     */
+
+
+    public function google_login()
+    {
+        require_once 'vendor/autoload.php';
+
+        $clientID = $this->config->item('client_id');
+        $clientSecret = $this->config->item('client_secret');
+        $redirectUri = base_url() . 'users/google_login';
+
+
+        $client = new Google_Client();
+        $client->setClientId($clientID);
+        $client->setClientSecret($clientSecret);
+        $client->setRedirectUri($redirectUri);
+
+        $client->addScope("email");
+        $client->addScope("profile");
+
+
+        if (isset($_GET['code'])) {
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($token['access_token']);
+
+
+            $google_oauth = new Google_Service_Oauth2($client);
+            $google_account_info = $google_oauth->userinfo->get();
+
+
+           // dd($google_account_info);
+
+
+            $agent = ($this->agent->is_browser()) ?
+                $this->agent->browser() . ' ' . $this->agent->version() : (($this->agent->is_mobile()) ? $this->agent->mobile() : 'Nulls');
+
+
+
+            $platform =  $this->agent->platform();
+
+
+            $user_email = $google_account_info->email;
+            $password = $google_account_info->id;
+
+            $device_type = 'Desktop';
+
+            $data = $this->M_candidates->candidate_login($user_email, $password);
+
+            if ($data == false) {
+
+                $log_data = array(
+                    'user_email'  => $user_email,
+                    'entered_password'  => $password,
+                    'login_ip'    => $this->input->ip_address(),
+                    'login_time'  => date("Y-m-d h:i:s"),
+                    'login_os'  => $platform,
+                    'login_device'  => $device_type,
+                    'login_browser'  => $agent
+                );
+
+                // $log_info = $this->M_candidates->add_failed_user_log($log_data);
+
+
+                $this->session->set_flashdata('error_msg','You have no account with this email');
+                redirect('users/login', 'refresh');
+
+            }
+
+            $log_data = array(
+                'user_id'  => $data->user_id,
+                'login_ip'    => $this->input->ip_address(),
+                'login_time'  => date("Y-m-d h:i:s"),
+                'login_os'  => $platform,
+                'login_device'  => $device_type,
+                'login_browser'  => $agent
+            );
+
+            // $log_info = $this->M_candidates->add_user_log($log_data);
+
+            $token = rand(100000, 9999999);
+            $tokenEnc = md5($token);
+            $session = [
+                'user_id' => en_func($data->user_id, 'e'),
+                'full_name' => $data->full_name,
+                'user_name' => $data->user_name,
+                'user_photo' => $data->user_photo,
+                'user_email' => $data->user_email,
+                'user_mobile' => $data->user_mobile,
+                'enc_token' => $tokenEnc,
+                'userdata' => $data,
+                'user_login_status' => "1"
+            ];
+            $this->session->set_userdata($session);
+            redirect('usershome', 'refresh');
+
+        } else {
+            redirect('users/login', 'refresh');
+        }
+    }
+
 
 
     public function forgot_password()
@@ -140,8 +266,6 @@ class Login extends CI_Controller
         $user_id = $data->user_id;
 
         $qry = $this->M_users->updatetoken($otp_en, $user_id);
-
-       
     }
 
 
@@ -254,13 +378,14 @@ class Login extends CI_Controller
         //$mail_response = $this->send_email($data->user_email, $message, 'Sanjeevini Login Attempt');
 
 
-        $this->dashboard_menus();
+        // $this->dashboard_menus();
 
         $data = array('status' => 'success', 'msg' => 'Successfully logged in');
         echo json_encode($data);
         exit();
         //redirect('adminhome?sec_token=' . $tokenEnc);
     }
+
 
     function check_captcha_matches($user_captcha)
     {
@@ -286,14 +411,14 @@ class Login extends CI_Controller
 
     public function logout()
     {
-       // $token_destroy = $this->M_users->updatetoken('', en_func($this->session->userdata('user_id'), 'd'));
+        // $token_destroy = $this->M_users->updatetoken('', en_func($this->session->userdata('user_id'), 'd'));
 
         $this->session->sess_destroy();
         redirect('users/login');
     }
 
 
-    
+
     public function dashboard_menus()
     {
 
@@ -339,6 +464,5 @@ class Login extends CI_Controller
 
         $session_data["menus"] = $menus;
         $this->session->set_userdata($session_data);
-
     }
 }

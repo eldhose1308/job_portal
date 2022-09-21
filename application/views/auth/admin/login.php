@@ -270,7 +270,7 @@
 
   
   <main class="main">
-    <section class="pt-100 login-register">
+    <section class="pt-55 login-register">
       <div class="container">
         <div class="row login-register-cover">
           <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">

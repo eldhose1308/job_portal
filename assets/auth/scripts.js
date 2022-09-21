@@ -193,7 +193,9 @@ $(document).on("click", ".change-captcha", function (e) {
 
 
 function refresh_captcha() {
-  grecaptcha.reset();
+  if ($("div.g-recaptcha").length > 0) {
+    grecaptcha.reset();
+  }
 }
 
 

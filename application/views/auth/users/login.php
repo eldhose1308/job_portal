@@ -222,7 +222,7 @@
               <li><a href="page-signin.html">Sign Out</a></li>
             </ul>
           </div>
-          <div class="site-copyright">Copyright 2022 &copy; Nexcode. <br>Designed by AliThemes.</div>
+          <div class="site-copyright">Copyright 2022 &copy; Nexcode.</div>
         </div>
       </div>
     </div>
@@ -302,13 +302,13 @@
               <li><a href="page-signin.html">Sign Out</a></li>
             </ul>
           </div>
-          <div class="site-copyright">Copyright 2022 &copy; Nexcode. <br>Designed by AliThemes.</div>
+          <div class="site-copyright">Copyright 2022 &copy; Nexcode.</div>
         </div>
       </div>
     </div>
   </div>
   <main class="main">
-    <section class="pt-100 login-register">
+    <section class="pt-55 login-register">
       <div class="container">
         <div class="row login-register-cover">
           <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
@@ -316,12 +316,26 @@
               <p class="font-sm text-brand-2">Welcome back! </p>
               <h2 class="mt-10 mb-5 text-brand-1">Member Login</h2>
               <p class="font-sm text-muted mb-30">Access to all features. No credit card required.</p>
-              <button class="btn social-login hover-up mb-20"><img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-google.svg" alt="Nexcode"><strong>Sign in with Google</strong></button>
+              <a href="<?= $googleAuth ?>" class="btn social-login hover-up mb-20">
+                <img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-google.svg" alt="Nexcode"><strong>Sign in with Google</strong>
+              </a>
               <div class="divider-text-center"><span>Or continue with</span></div>
             </div>
 
 
             <?php echo form_open(base_url('users/save_login'), 'class="login-register text-start mt-20" id="login-forms" autocomplete="off" '); ?>
+
+
+            <!--print error messages-->
+            <?php if ($this->session->flashdata('error_msg')) : ?>
+
+              <div class="alert alert-danger alert-dismissable">
+                <?= $this->session->flashdata('error_msg') ?>
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+
+            <?php endif; ?>
+
 
             <div id="alert-message-div" style="display: none; padding: 0% 3%;">
             </div>

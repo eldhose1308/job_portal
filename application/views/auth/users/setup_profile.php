@@ -16,16 +16,14 @@
     <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>assets/users/imgs/template/favicon.svg">
     <link href="<?= base_url() ?>assets/users/css/style.css" rel="stylesheet">
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
 
-    <title><?= APP_NAME ?> | Login </title>
+    <title><?= APP_NAME ?> | Setup Profile </title>
 
 </head>
 
 <body>
 
     <constants data-base="<?= base_url() ?>" />
-
 
 
     <div id="preloader-active">
@@ -35,7 +33,51 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="ModalApplyJobForm" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content apply-job-form">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body pl-30 pr-30 pt-50">
+                    <div class="text-center">
+                        <p class="font-sm text-brand-2">Job Application </p>
+                        <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Start your career today</h2>
+                        <p class="font-sm text-muted mb-30">Please fill in your information and send it to the employer. </p>
+                    </div>
+                    <form class="login-register text-start mt-20 pb-30" action="#">
+                        <div class="form-group">
+                            <label class="form-label" for="input-1">Full Name *</label>
+                            <input class="form-control" id="input-1" type="text" required="" name="fullname" placeholder="Steven Job">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-2">Email *</label>
+                            <input class="form-control" id="input-2" type="email" required="" name="emailaddress" placeholder="stevenjob@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="number">Contact Number *</label>
+                            <input class="form-control" id="number" type="text" required="" name="phone" placeholder="(+01) 234 567 89">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="des">Description</label>
+                            <input class="form-control" id="des" type="text" required="" name="Description" placeholder="Your description...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="file">Upload Resume</label>
+                            <input class="form-control" id="file" name="resume" type="file">
+                        </div>
+                        <div class="login_footer form-group d-flex justify-content-between">
+                            <label class="cb-container">
+                                <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span class="checkmark"></span>
+                            </label><a class="text-muted" href="page-contact.html">Lean more</a>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default hover-up w-100" type="submit" name="login">Apply Job</button>
+                        </div>
+                        <div class="text-muted text-center">Do you need support? <a href="page-contact.html">Contact Us</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <header class="header sticky-bar">
         <div class="container">
             <div class="main-header">
@@ -270,112 +312,47 @@
     </div>
 
 
+
     <main class="main">
         <section class="pt-55 login-register">
             <div class="container">
-                <div class="row login-register-cover">
+                <div class="row login-register-cover pb-250">
                     <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
-                        <div class="text-center">
-                            <p class="font-sm text-brand-2">Register </p>
-                            <h2 class="mt-10 mb-5 text-brand-1">Start for free Today</h2>
-                            <p class="font-sm text-muted mb-30">Access to all features. No credit card required.</p>
-                            <a href="<?= $googleAuth ?>" class="btn social-login hover-up mb-20">
-                                <img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-google.svg" alt="Nexcode"><strong>Sign up with Google</strong>
-                            </a>
-                            <div class="divider-text-center"><span>Or continue with</span></div>
+                        <div class="text-center"><img src="<?= base_url() ?>assets/users/imgs/user_avatar.png" alt="Nexcode">
+                            <h2 class="mt-10 mb-5 text-brand-1">Complete Profile</h2>
+                            <p class="font-sm text-muted mb-30">
+                                Please fill your phone number as this can be used for further communications.
+                            </p>
                         </div>
-
-
-                        <?php echo form_open(base_url('users/save_register'), 'class="login-register text-start mt-20" id="register-forms" autocomplete="off" '); ?>
-
-
-                        <!--print error messages-->
-                        <?php if ($this->session->flashdata('error_msg')) : ?>
-
-                            <div class="alert alert-danger alert-dismissable">
-                                <?= $this->session->flashdata('error_msg') ?>
-                                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-
-                        <?php endif; ?>
+                        <?php echo form_open(base_url('users/complete_profile'), 'class="login-register text-start mt-20" id="login-forms" autocomplete="off" '); ?>
 
                         <div id="alert-message-div" style="display: none; padding: 0% 3%;">
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="input-1">Full Name *</label>
-                            <input class="form-control" data-validation="required|alpha" id="full_name" type="text" name="full_name" placeholder="ABC XYZ">
-                        </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="input-2">Email *</label>
-                            <input class="form-control" data-validation="required|valid_email" id="user_email" type="email" name="user_email" placeholder="abc@gmail.com">
+                            <label class="form-label" for="input-1">Your Full Name *</label>
+                            <input data-validation="required|alpha" value="<?= $full_name ?>" class="form-control" id="full_name" type="text" name="full_name">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="input-2">Mobile </label>
-                            <input class="form-control" data-validation="required|numeric|exact_length-10" id="user_mobile" type="text" name="user_mobile" placeholder="1234567890" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <label class="form-label" for="input-1">Your Mobile number *</label>
+                            <input data-validation="required|numeric|exact_length-10" class="form-control" id="user_mobile" type="text" name="user_mobile">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="input-3">Username *</label>
-                            <input class="form-control" data-validation="required" id="user_name" type="text" name="user_name" placeholder="abc">
+                            <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit</button>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="input-4">Password *</label>
-                            <input class="form-control" data-validation="required|min_length-5|max_length-15" id="user_password" type="password" name="user_password" placeholder="************">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="input-5">Re-Password *</label>
-                            <input class="form-control" data-validation="required|min_length-5|max_length-15" id="retyped_password" type="password" name="retyped_password" placeholder="************">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="input-4">Captcha *</label>
-
-                            <div class="col-12 mt--30 text-center">
-                                <div class="check-box">
-                                    <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('google_key') ?>"></div>
-                                </div>
-                                <span class="text-black"><a class="" onclick="grecaptcha.reset()" id="refresh_button" style="cursor: pointer;color:#96c952">
-                                        Refresh Captcha
-                                        <i class="fas fa-sync" aria-hidden="true"></i></a></span>
-                            </div>
-                        </div>
-
-
-
-                        <div class="login_footer form-group d-flex justify-content-between">
-                            <label class="cb-container">
-                                <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span class="checkmark"></span>
-                            </label><a class="text-muted" href="page-contact.html">Lean more</a>
-                        </div>
-
-
-                        <div class="progress mb-3 progress-lg" style="display: none;">
-                            <div class="progress-bar bg-custom" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit &amp; Register</button>
-                        </div>
-                        <div class="text-muted text-center">Already have an account? <a href="<?= base_url() ?>users/login">Sign in</a></div>
 
                         <?php echo form_close(); ?>
 
 
-
-
                     </div>
-                    <div class="img-1 d-none d-lg-block"><img class="shape-1" src="<?= base_url() ?>assets/users/imgs/page/login-register/img-1.svg" alt="Nexcode"></div>
-                    <div class="img-2"><img src="<?= base_url() ?>assets/users/imgs/page/login-register/img-2.svg" alt="Nexcode"></div>
                 </div>
             </div>
         </section>
     </main>
+
 
 
 
@@ -427,14 +404,11 @@
     <script src="<?= base_url() ?>assets/users/js/vendor/jquery-3.6.0.min.js"></script>
 
 
-
-
     <script src="<?= base_url() ?>assets/users/js/custom.js"></script>
     <script src="<?= base_url() ?>assets/auth/scripts.js"></script>
 
     <script src="<?= base_url() ?>assets/users/scripts/common.js"></script>
     <script src="<?= base_url() ?>assets/users/extras/validation.js"></script>
-
 
 
 
