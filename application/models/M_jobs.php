@@ -5,15 +5,34 @@ class M_jobs extends CI_Model
 {
 
 
-
-    public function select_all_jobs($limit, $start, $page = 1, $status = 1)
+     /*
+     * 
+     * 
+     * Count for Pagination
+     * 
+     * 
+     */
+    function select_all_jobs_count($category = 0)
     {
-        $multiplewhere = array(
-            'ci_jobs.status' => $status,
+        $where = array(
+            'ci_jobs.status' => '1'
         );
 
-        if ($status == 0)
-            unset($multiplewhere['ci_jobs.status']);
+        $this->db->where($where);
+
+        $query = $this->db->get("ci_jobs");
+        return $query->num_rows();
+    }
+
+
+
+    public function select_all_jobs($limit, $start, $page = 1)
+    {
+        $multiplewhere = array(
+            'ci_jobs.status' => 1,
+        );
+
+       
 
         $this->db->select('ci_jobs.*,ci_countries.country_name');
         $this->db->where($multiplewhere);

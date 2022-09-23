@@ -57,7 +57,7 @@ class home extends CI_Controller
       
         $per_page = 10;
         $start = ($page - 1) * $per_page;
-        $total_rows = 50;
+        $total_rows = $this->M_jobs->select_all_jobs_count();
 
 
         $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start, $page); 
