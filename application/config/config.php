@@ -31,24 +31,6 @@ $config['base_url'] = $url;
 $config['email_address'] = 'developer@smcim.com';
 
 
-/*
-|
-| Google Recaptcha keys
-|
-*/
-$config['google_key'] = '6Lcx4xYgAAAAAI9TPRJ9wxfvMN3YxySZS3ArJH-P';
-$config['google_secret'] = '6Lcx4xYgAAAAAJBFI6zOn3Qt8GaeKgTTGjbcQ3g5';
-
-
-
-/*
-|
-| Google Auth keys
-|
-*/
-$config['client_id'] = '698476889487-m8nic9dkcgrsi0vkj6v15iggg1ld4d57.apps.googleusercontent.com';
-$config['client_secret'] = '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';
-
 
 
 
