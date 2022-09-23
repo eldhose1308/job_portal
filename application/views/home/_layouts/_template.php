@@ -3,7 +3,7 @@
 
 <head>
 
-  <title><?= APP_NAME ?> | Dashboard</title>
+  <title><?= APP_NAME ?> | Home</title>
 
   <!-- meta -->
   <?php echo @$_meta; ?>

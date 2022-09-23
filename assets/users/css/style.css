@@ -9393,3 +9393,13 @@ ul li:last-child .card-list-4 {
 .fa-danger{
   color: #dc3545 !important;
 }
+
+.pager .pages{
+  cursor: pointer;
+}
+
+
+.jobsdatacard-loader {
+  color: #3c65f5;
+  font-size: 50px !important;
+}

@@ -20,4 +20,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
 
-<script src="<?= base_url() ?>assets/users/js/validation.js"></script>
+
+<script src="<?= base_url() ?>assets/users/extras/datacards.js"></script>
+<script src="<?= base_url() ?>assets/users/extras/validation.js"></script>

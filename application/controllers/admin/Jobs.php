@@ -97,6 +97,7 @@ class jobs extends MY_Controller
         $this->form_validation->set_rules('job_title', 'Job title', 'trim|required');
         $this->form_validation->set_rules('brief_description', 'Brief description', 'trim|required');
         $this->form_validation->set_rules('job_description', 'Full description', 'trim|required');
+        $this->form_validation->set_rules('job_openings', 'Job openings', 'trim|required|numeric');
         $this->form_validation->set_rules('job_location', 'Job location', 'trim|required');
         $this->form_validation->set_rules('min_experience', 'Minimum Experience', 'trim|required|numeric');
         $this->form_validation->set_rules('max_experience', 'Max Experience', 'trim|required|numeric');
@@ -122,6 +123,7 @@ class jobs extends MY_Controller
             'brief_description' => $this->input->post('brief_description'),
             'job_description' => $this->input->post('job_description'),
             'job_location' => en_func($this->input->post('job_location'),'d'),
+            'job_openings' => $this->input->post('job_openings'),
             'min_experience' => $this->input->post('min_experience'),
             'max_experience' => $this->input->post('max_experience'),
             'min_salary' => $this->input->post('min_salary'),

@@ -188,6 +188,8 @@ function createCard() {
 
 }
 
+
+
 function buildCard(Fliteredstate = '') {
 
     var datatable = `<div id="datacard-body"></div>`;
@@ -226,8 +228,8 @@ function buildCard(Fliteredstate = '') {
         limit = (limit < 5) ? arr_length - 1 : limit;
 
         div_container = document.createElement("div");
-        div_container.classList.add('col-xl-4');
-        div_container.classList.add('col-lg-4');
+        div_container.classList.add('col-xl-6');
+        div_container.classList.add('col-lg-6');
         div_container.classList.add('col-md-6');
 
         data_div = document.createElement("div");

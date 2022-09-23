@@ -49,6 +49,11 @@
                         </textarea>
                     </div>
 
+                    <div class="form-group">
+                        <label for="inputName">Job openings</label>
+                        <input data-validation="required|numeric" <?= ($operation == 'view') ? 'disabled' : '' ?> value="<?= (!empty($jobsDetails)) ? $jobsDetails->job_openings : ''; ?>" type="text" class="form-control" name="job_openings" id="job_openings">
+                    </div>
+
                     
                     <div class="form-group">
                         <label for="inputName">Location</label>
