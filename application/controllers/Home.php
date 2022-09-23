@@ -56,11 +56,11 @@ class home extends CI_Controller
         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
       
         $per_page = 10;
-        $start = ($page - 1) * $per_page;
+        $start_index = ($page - 1) * $per_page;
         $total_rows = $this->M_jobs->select_all_jobs_count();
 
 
-        $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start, $page); 
+        $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start_index, $page); 
 
        
 
@@ -100,6 +100,13 @@ class home extends CI_Controller
         }
 
         $data['jobs'] = $responses;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows ) ? $total_rows : $start_index + $per_page;
+
 
         $data['page_limit'] = ceil($total_rows / $per_page);
         $data['current_page'] = $page;

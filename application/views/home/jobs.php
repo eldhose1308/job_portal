@@ -26,7 +26,9 @@
                     <div class="content-page">
                         <div class="box-filters-job">
                             <div class="row">
-                                <div class="col-xl-6 col-lg-5"><span class="text-small text-showing">Showing <strong>41-60 </strong>of <strong>944 </strong>jobs</span></div>
+                                <div class="col-xl-6 col-lg-5">
+                                    <span class="text-small text-showing pagination-details">Showing <strong>0-0 </strong>of <strong>0 </strong>jobs</span>
+                                </div>
                                 <div class="col-xl-6 col-lg-7 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
 

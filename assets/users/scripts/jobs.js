@@ -101,6 +101,15 @@ function buildJobsCard(myList) {
     let current_page = (myList.current_page == undefined) ? 1 : myList.current_page;
     let nums_limit = (myList.nums_limit == undefined) ? 1 : myList.nums_limit;
 
+    let start_index = (myList.start_index == undefined) ? 0 : myList.start_index;
+    let per_page = (myList.per_page == undefined) ? 0 : myList.per_page;
+    let total_rows = (myList.total_rows == undefined) ? 0 : myList.total_rows;
+    let ending_index = (myList.total_rows == undefined) ? 0 : myList.ending_index;
+
+
+    let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>jobs`
+    $(".pagination-details").html(pagination_details);
+
     buildJobsPagination(page_limit, current_page, nums_limit);
 
 }
