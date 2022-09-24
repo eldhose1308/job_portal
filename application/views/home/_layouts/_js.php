@@ -1,4 +1,3 @@
-<script src="<?= base_url() ?>assets/users/js/custom.js"></script>
 
 
 

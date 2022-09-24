@@ -27,9 +27,7 @@ $(document).on('submit', '.jobs_datacard-list', function (e) {
 
     load_jobs_datacard(parameters, $(this).attr('action'));
 
-    $('body,html').animate({
-        scrollTop: 0
-    }, 500);
+
 });
 
 
@@ -116,6 +114,13 @@ function buildJobsCard(myList) {
 
 
 $(document).on('click', '.jobs-paginations .pages', function (e) {
+    e.preventDefault();
+
+    $('body,html').animate({
+        scrollTop: 0
+    }, 500);
+
+
     let page = $(this).attr('data-id');
     add_getParameters("page", page);
 
@@ -138,7 +143,7 @@ function buildJobsPagination(page_limit, current_page, nums_limit) {
         count++;
     }
 
-    if(count > page_limit){
+    if (count > page_limit) {
         pagination_btns += `<li><a>...</a></li>`;
     }
 
