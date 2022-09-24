@@ -3,14 +3,14 @@
         <div class="container">
             <div class="banner-hero banner-single banner-single-bg">
                 <div class="block-banner text-center">
-                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2">22 Jobs</span> Available Now</h3>
+                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">22</span> Jobs</span> Available Now</h3>
                     <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero repellendus magni, <br class="d-none d-xl-block">atque delectus molestias quis?</div>
                     <div class="form-find text-start mt-40 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                        <form>
+                        <form class="jobs-search-form">
 
-
-                            <input class="form-input input-keysearch mr-10" type="text" placeholder="Your keyword... ">
+                            <input class="form-input input-keysearch mr-10 q" type="text" placeholder="Your keyword... ">
                             <button class="btn btn-default btn-find font-sm">Search</button>
+
                         </form>
                     </div>
                 </div>
@@ -36,21 +36,21 @@
 
                                             <div class="box-border mr-10"><span class="text-sortby">Show:</span>
                                                 <div class="dropdown dropdown-sort">
-                                                    <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>12</span><i class="fi-rr-angle-small-down"></i></button>
-                                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                        <li><a class="dropdown-item active" href="#">10</a></li>
-                                                        <li><a class="dropdown-item" href="#">12</a></li>
-                                                        <li><a class="dropdown-item" href="#">20</a></li>
+                                                    <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>10</span><i class="fi-rr-angle-small-down"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-light filter" id="per_page" aria-labelledby="dropdownSort">
+                                                        <li><a data-value="10" class="dropdown-item active" href="#">10</a></li>
+                                                        <li><a data-value="20" class="dropdown-item" href="#">20</a></li>
+                                                        <li><a data-value="30" class="dropdown-item" href="#">30</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             <div class="box-border"><span class="text-sortby">Sort by:</span>
                                                 <div class="dropdown dropdown-sort">
                                                     <button class="btn dropdown-toggle" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>Newest Post</span><i class="fi-rr-angle-small-down"></i></button>
-                                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
-                                                        <li><a class="dropdown-item active" href="#">Newest Post</a></li>
-                                                        <li><a class="dropdown-item" href="#">Oldest Post</a></li>
-                                                        <li><a class="dropdown-item" href="#">Rating Post</a></li>
+                                                    <ul class="dropdown-menu dropdown-menu-light filter" id="sortby" aria-labelledby="dropdownSort2">
+                                                        <?php foreach ($sortBys as $sortBy) : ?>
+                                                            <li><a data-value="<?= $sortBy['sort_id'] ?>" class="dropdown-item" href="#"><?= $sortBy['sorting_by'] ?></a></li>
+                                                        <?php endforeach; ?>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -80,7 +80,7 @@
 
                     <div class="jobs-paginations float-end paginations">
                         <ul class="pager" id="job-pagination_btns">
-                            
+
                         </ul>
                     </div>
 
@@ -387,5 +387,9 @@
     </section>
 
 </main>
+
+
+
+
 
 <script src="<?= base_url() ?>assets/users/scripts/jobs.js"></script>

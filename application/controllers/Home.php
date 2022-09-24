@@ -12,6 +12,15 @@ class home extends CI_Controller
 
         $this->load->model('Common_model');
         $this->load->model('M_jobs');
+
+        $this->data["sortBys"][0] = array(
+            "sort_id" => "desc",
+            "sorting_by" => "Latest"
+        );
+        $this->data["sortBys"][1] = array(
+            "sort_id" => "asc",
+            "sorting_by" => "Oldest"
+        );
     }
 
     public function index()
@@ -45,7 +54,7 @@ class home extends CI_Controller
 
     public function jobs()
     {
-        $data = array();
+        $data = $this->data;
 
         $this->template->home_views('home/jobs', $data);
     }
@@ -54,15 +63,16 @@ class home extends CI_Controller
     {
 
         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
-      
-        $per_page = 10;
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ( $this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+
         $start_index = ($page - 1) * $per_page;
         $total_rows = $this->M_jobs->select_all_jobs_count();
 
 
-        $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start_index, $page); 
+        $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start_index, $page, $sortby);
 
-       
+
 
         $data = array();
         $i = 0;
@@ -105,7 +115,7 @@ class home extends CI_Controller
         $data['per_page'] = $per_page;
         $data['total_rows'] = $total_rows;
 
-        $data['ending_index'] = (($start_index + $per_page) > $total_rows ) ? $total_rows : $start_index + $per_page;
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
 
 
         $data['page_limit'] = ceil($total_rows / $per_page);

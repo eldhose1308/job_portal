@@ -5,7 +5,7 @@ class M_jobs extends CI_Model
 {
 
 
-     /*
+    /*
      * 
      * 
      * Count for Pagination
@@ -26,19 +26,24 @@ class M_jobs extends CI_Model
 
 
 
-    public function select_all_jobs($limit, $start, $page = 1)
+    public function select_all_jobs($limit, $start, $page = 1, $sortby = "desc")
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1,
         );
 
-       
+
 
         $this->db->select('ci_jobs.*,ci_countries.country_name');
         $this->db->where($multiplewhere);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location ', 'left');
         $this->db->limit($limit, $start);
-        $this->db->order_by("ci_jobs.job_id", "desc");
+
+        if ($sortby == "desc")
+            $this->db->order_by("ci_jobs.job_id", "desc");
+        else
+            $this->db->order_by("ci_jobs.job_id", "asc");
+
 
         return $this->db->get('ci_jobs')->result();
     }

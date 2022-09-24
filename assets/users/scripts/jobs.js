@@ -13,10 +13,40 @@ function load_jobs() {
 
 
 
+$(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (e) {
+    e.preventDefault();
+
+    let ids = $(this).parent().parent()[0].id;
+    let value = $(this).attr("data-value");
+
+    add_getParameters(ids, value);
+
+    load_jobs();
+});
+
+
+
+$(document).on('submit', '.jobs-search-form', function (e) {
+    e.preventDefault();
+
+    let ids = "q";
+    let value = $(".jobs-search-form .q").val();
+
+    add_getParameters(ids, value);
+
+    load_jobs();
+});
+
+
+function getParameters_toDOM(){
+
+}
+
 $(document).on('submit', '.jobs_datacard-list', function (e) {
     e.preventDefault();
     $("#jobs-na_datacard").html(jobs_loader);
 
+    getParameters_toDOM();
 
     var parameters = {};
     let current_parameters = getParameters();
@@ -34,6 +64,8 @@ $(document).on('submit', '.jobs_datacard-list', function (e) {
 
 function load_jobs_datacard(parameters, form_url) {
 
+    circular_loader_get('show');
+
     $.get(form_url, parameters, function (data, status) {
         var out = jQuery.parseJSON(data);
         tableData = out.data;
@@ -42,9 +74,41 @@ function load_jobs_datacard(parameters, form_url) {
 
 
     });
+   // circular_loader_get('hide');
+
 }
 
 
+function circular_loader_get(action = 'hide') {
+    $("#loader-overlay").show();
+
+    var width = 0;
+    if (action == 'hide') {
+        $("#circular-progress-value").html('0%');
+        $("#loader-overlay").hide();
+    }
+
+    var prg = setInterval(function () {
+        if (width >= 100) {
+            $("#circular-progress-value").html('0%');
+            clearInterval(prg);
+            $("#loader-overlay").hide();
+
+        } else {
+            $("#circular-progress-value").html(width + '%');
+            $("#circular-progressbar").removeClass();
+            width++;
+            $("#circular-progressbar").addClass('progress-circle');
+            if (width >= 50)
+                $("#circular-progressbar").addClass('over50');
+
+            $("#circular-progressbar").addClass('p' + width);
+
+        }
+    }, 1);
+
+
+}
 
 
 
@@ -107,7 +171,7 @@ function buildJobsCard(myList) {
 
     let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>jobs`
     $(".pagination-details").html(pagination_details);
-
+    $(".total_jobs").html(total_rows);
     buildJobsPagination(page_limit, current_page, nums_limit);
 
 }
