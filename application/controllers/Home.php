@@ -21,6 +21,9 @@ class home extends CI_Controller
             "sort_id" => "asc",
             "sorting_by" => "Oldest"
         );
+
+        date_default_timezone_set("Asia/Kolkata");
+
     }
 
     public function index()
@@ -56,6 +59,8 @@ class home extends CI_Controller
     {
         $data = $this->data;
 
+        $data["countries"] = $this->Common_model->select_all("ci_countries");
+
         $this->template->home_views('home/jobs', $data);
     }
 
@@ -64,7 +69,7 @@ class home extends CI_Controller
 
         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
         $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
-        $sortby = ( $this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
 
         $start_index = ($page - 1) * $per_page;
         $total_rows = $this->M_jobs->select_all_jobs_count();
@@ -78,6 +83,16 @@ class home extends CI_Controller
         $i = 0;
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
+
+            $updated_at = $row->updated_at;
+
+            $timeFirst  = strtotime($updated_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+            // $quiz_time_left = $quiz_time - $differenceInSeconds;
+
             $responses[] = array(
                 ++$i,
                 '_id' => $job_id,
@@ -88,6 +103,7 @@ class home extends CI_Controller
                 'min_salary' => $row->min_salary,
                 'max_salary' => $row->max_salary,
                 'job_openings' => $row->job_openings,
+                'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
 
                 '

@@ -11,7 +11,11 @@ function load_jobs() {
         $(".jobs_datacard-list").submit();
 }
 
+$(document).on('click','.show-filters', function(e){
+    e.preventDefault();
+    showOffCanvas("#bs-canvas-bottom-filter",false);
 
+});
 
 $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (e) {
     e.preventDefault();
@@ -38,7 +42,7 @@ $(document).on('submit', '.jobs-search-form', function (e) {
 });
 
 
-function getParameters_toDOM(){
+function getParameters_toDOM() {
 
 }
 
@@ -72,16 +76,15 @@ function load_jobs_datacard(parameters, form_url) {
 
         buildJobsCard(tableData);
 
+        circular_loader_get('hide');
 
     });
-   // circular_loader_get('hide');
 
 }
 
 
 function circular_loader_get(action = 'hide') {
     $("#loader-overlay").show();
-
     var width = 0;
     if (action == 'hide') {
         $("#circular-progress-value").html('0%');
@@ -128,24 +131,29 @@ function buildJobsCard(myList) {
                             <div class="card-grid-2-image-left">
                                     <div class="right-info">
                                     <h4><a href="#">${item.job_title}</a></h4>
-                                    <span class="location-small">${item.job_location}</span></div>
+                                    <span class="location-small text-black">${item.job_location}</span></div>
                                     </div>
                                 </div>
                                
                             </div>
                                 <div class="card-block-info">
                                     <div class="mt-5">
-                                    <span class="card-briefcase">${item.job_openings} Openings</span>
-                                    <span class="card-time"><span>4</span><span> mins ago</span></span></div>
-                                        <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
+                                    <span class="card-briefcase text-black">${item.job_openings} Openings</span>
+                                    <span class="card-time text-black"><span>${item.posted_before}</span></span></div>
+                                    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                                        Experience ${item.min_experience} - ${item.max_experience} years
+                                    </a>  
+                                    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                                        INR ${item.min_salary} - ${item.max_salary} / Month
+                                    </a>
                                         <div class="card-2-bottom mt-20">
                                             <div class="row">
                                                 <div class="col-lg-7 col-7">
-                                                <p class="font-sm text-custom">${item.min_experience} - ${item.max_experience} years experience </p>
-                                                    <span class="card-text-price">₹ ${item.min_salary} - ₹ ${item.max_salary}</span><span class="text-muted">/Month</span>
+                                                <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
+
                                                 </div>
                                                     <div class="col-lg-5 col-5 text-end">
-                                                    <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
+                                                    <a class="btn btn-apply-now load-btn" href="${base_url + 'usershome'}">Apply now</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,7 +190,7 @@ $(document).on('click', '.jobs-paginations .pages', function (e) {
 
     $('body,html').animate({
         scrollTop: 0
-    }, 500);
+    }, 100);
 
 
     let page = $(this).attr('data-id');

@@ -83,6 +83,37 @@ if (!function_exists('magic_function')) {
     }
 }
 
+if (!function_exists('seconds2format')) {
+    function seconds2format($seconds)
+    {
+        $sec = $seconds % 60;
+        $min = floor(($seconds % 3600) / 60);
+        $hour = floor(($seconds % 86400) / 3600);
+        $day = floor(($seconds % 2592000) / 86400);
+        $month = floor($seconds / 2592000);
+
+
+        $time_reponse = "";
+        if ($sec > 0)
+            $time_reponse = $min . " seconds ";
+        if ($min > 0)
+            $time_reponse = $min . " mins ";
+        if ($hour > 0)
+            $time_reponse = $hour . " hours ";
+        if ($day > 0)
+            $time_reponse = $day . " days ";
+        if ($month > 0)
+            $time_reponse = $month . " months";
+
+
+
+
+
+        return $time_reponse;
+    }
+}
+
+
 if (!function_exists('lq')) {
     function lq($db_instance = 'db')
     {
