@@ -3,6 +3,7 @@ const jobs_loader = `<center><i class="jobsdatacard-loader fa fa-circle-o-notch 
 
 document.addEventListener("DOMContentLoaded", () => {
     load_jobs();
+
 });
 
 
@@ -11,9 +12,9 @@ function load_jobs() {
         $(".jobs_datacard-list").submit();
 }
 
-$(document).on('click','.show-filters', function(e){
+$(document).on('click', '.show-filters', function (e) {
     e.preventDefault();
-    showOffCanvas("#bs-canvas-bottom-filter",false);
+    showOffCanvas("#bs-canvas-bottom-filter", false);
 
 });
 
@@ -41,6 +42,23 @@ $(document).on('submit', '.jobs-search-form', function (e) {
     load_jobs();
 });
 
+
+$(document).on('click', '.filter-tablinks', function (e) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("filter-tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("filter-tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        $('.filter-tablinks').removeClass('active');
+    }
+    let sel_elem = "#" + ($(this).attr('data-target'));
+
+    $(sel_elem).show();
+    $(this).addClass('active');
+});
 
 function getParameters_toDOM() {
 

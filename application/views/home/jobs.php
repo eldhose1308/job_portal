@@ -216,7 +216,7 @@
 
 
                 <!--- Bottom canvas -->
-                <div id="bs-canvas-bottom-filter" class="bs-canvas bs-canvas-anim bs-canvas-right position-fixed bg-light h-100">
+                <div id="bs-canvas-bottom-filter" style="display: none;" class="bs-canvas bs-canvas-anim bs-canvas-bottom position-fixed bg-light w-100">
                     <header class="bs-canvas-header p-3 bg-primary overflow-auto">
                         <button type="button" class="bs-canvas-close float-left close" aria-label="Close" style="background: transparent; border: none;">
                             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
@@ -225,27 +225,39 @@
                     </header>
 
 
-                    <div class="bs-canvas-content px-3 offcanvas-content mt-10">
+                    <div class="bs-canvas-content px-3 mt-10">
 
 
 
                         <div class="sidebar-shadow none-shadow mb-30">
-                            <div class="sidebar-filters">
-                                <div class="filter-block head-border mb-30">
-                                    <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
-                                </div>
-                                <div class="filter-block mb-30">
-                                    <div class="form-group select-style select-style-icon">
-                                        <select class="form-control form-icons">
-                                            <?php foreach ($countries as $country) : ?>
-                                                <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
-                                            <?php endforeach; ?>
-                                        </select><i class="fi-rr-marker"></i>
-                                    </div>
-                                </div>
 
+                            <div class="filter-block head-border mb-30">
+                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
+                            </div>
+
+                            <div class="filter-block mb-30">
+                                <div class="form-group select-style select-style-icon">
+                                    <select class="form-control form-icons">
+                                        <?php foreach ($countries as $country) : ?>
+                                            <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
+                                        <?php endforeach; ?>
+                                    </select><i class="fi-rr-marker"></i>
+                                </div>
+                            </div>
+
+                            <!---->
+
+                            <div class="filter-tab">
+                                <button class="filter-tablinks active" data-target="Posted_Time">Posted time</button>
+                                <button class="filter-tablinks" data-target="Job_Type">Job type</button>
+                                <button class="filter-tablinks" data-target="Salary">Salary</button>
+                                <button class="filter-tablinks" data-target="Experience">Experience</button>
+                            </div>
+
+                            <!---->
+
+                            <div id="Posted_Time" class="filter-tabcontent">
                                 <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Job Posted</h5>
                                     <div class="form-group">
                                         <ul class="list-checkbox">
                                             <li>
@@ -271,10 +283,12 @@
                                         </ul>
                                     </div>
                                 </div>
+                            </div>
+                            <!---->
 
-
+                            <!---->
+                            <div id="Job_Type" class="filter-tabcontent" style="display: none;">
                                 <div class="filter-block mb-20">
-                                    <h5 class="medium-heading mb-15">Industry</h5>
                                     <div class="form-group">
                                         <ul class="list-checkbox">
                                             <li>
@@ -310,47 +324,57 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="filter-block mb-20">
-                                    <h5 class="medium-heading mb-25">Salary Range</h5>
-                                    <div class="list-checkbox pb-20">
-                                        <div class="row position-relative mt-10 mb-20">
-                                            <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
-                                            </div>
-
-                                        </div>
-                                        <div class="box-number-money">
-                                            <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Experience Level</h5>
-                                    <div class="list-checkbox pb-20">
-                                        <div class="row position-relative mt-10 mb-20">
-                                            <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
-                                            </div>
-
-                                        </div>
-                                        <div class="box-number-money">
-                                            <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
                             </div>
+                            <!---->
+
+                            <!---->
+                            <div id="Salary" class="filter-tabcontent" style="display: none;">
+                                <div class="filter-block mb-20">
+                                    <div class="list-checkbox pb-20">
+                                        <div class="row position-relative mt-10 mb-20">
+                                            <div class="col-sm-12 box-slider-range">
+                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            </div>
+
+                                        </div>
+                                        <div class="box-number-money">
+                                            <div class="row mt-30">
+                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
+                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!---->
+
+                            <!---->
+                            <div id="Experience" class="filter-tabcontent" style="display: none;">
+                            <div class="filter-block mb-30">
+                                    <div class="list-checkbox pb-20">
+                                        <div class="row position-relative mt-10 mb-20">
+                                            <div class="col-sm-12 box-slider-range">
+                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            </div>
+
+                                        </div>
+                                        <div class="box-number-money">
+                                            <div class="row mt-30">
+                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
+                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---->
+
+
+                         
+                            <!---->
+
+
                         </div>
 
 

@@ -38,6 +38,8 @@ function showOffCanvas(canvas, show_loader = true) {
     let offCanvas_loader = `<center><i style="font-size:35px;color: #05264e;" class="fa fa-spinner fa-spin"></i></center>`;
     $(canvas).css('width', '65%');
     $('.bs-canvas-overlay').addClass('show');
+    $('.bs-canvas').show();
+
     // $('.offcanvas-heading').html('Header');
     if (show_loader)
         $('.offcanvas-content').html(offCanvas_loader);
@@ -52,6 +54,7 @@ function closeOffCanvas() {
 
 $(document).on('click', '.bs-canvas-close, .bs-canvas-overlay', function () {
     $('.bs-canvas').css('width', '0%');
+    $('.bs-canvas').hide();
     $('.bs-canvas-overlay').removeClass('show');
 
     $('.offcanvas-heading').html('');
