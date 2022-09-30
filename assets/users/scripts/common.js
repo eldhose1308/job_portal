@@ -38,7 +38,7 @@ function showOffCanvas(canvas, show_loader = true) {
     let offCanvas_loader = `<center><i style="font-size:35px;color: #05264e;" class="fa fa-spinner fa-spin"></i></center>`;
     $(canvas).css('width', '65%');
     $('.bs-canvas-overlay').addClass('show');
-    $('.bs-canvas').show();
+    $(canvas).show();
 
     // $('.offcanvas-heading').html('Header');
     if (show_loader)
@@ -372,6 +372,83 @@ function getParameters() {
 
 
 
+/******** Submits form without csrf and shows alert ********/
+
+$(document).on('submit', '#add-form-without-csrf', function (e) {
+    e.preventDefault();
+
+
+    // let validations = validation_fields('category_name', 'required', 'Category name');
+    // validations = validation_fields('sort_order', 'required|numeric', 'Sort order');
+
+
+    if (validate_form(true, false, true))
+        return false;
+
+
+
+    var formData = new FormData($("#add-form-without-csrf")[0]);
+    formData.append('_token', $('input[name="_token"]').val())
+
+    var form_url = $('#add-form-without-csrf').attr('action');
+    var result_xhr = $.ajax({
+        url: form_url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+                    $(".progress-bar").width(percentComplete + '%');
+                    $(".progress-bar").html(percentComplete + '%');
+                    circular_loader_post('show',percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
+        beforeSend: function () {
+            $(".progress-bar").width('0%');
+            $(".progress").show();
+            circular_loader_post('hide',0);
+
+        }
+    })
+
+    result_xhr.done(function (data) {
+        $(".progress-bar").width('0%');
+        $(".progress").hide();
+        // circular_loader_post('hide',0);
+
+
+        var out = jQuery.parseJSON(data);
+        if (out.status == 'success') {
+            // AlertandToast(out.status, out.msg, false, true);
+            // go_to_backpage();
+            // closeOffCanvas();
+            // load_datacard_list();
+        }
+        else
+            // AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
+
+
+        // AlertandToast(out.status, out.msg, true, false);
+        $('.submit-form').show();
+
+    });
+
+    result_xhr.fail(function () {
+        AlertandToast('error', 'Page has expired, try later !');
+    });
+});
+
+
+
+/******** Submits form without csrf and shows alert ********/
+
+
 /******** Submits form and shows alert ********/
 
 $(document).on('submit', '#add-form', function (e) {
@@ -386,11 +463,6 @@ $(document).on('submit', '#add-form', function (e) {
         return false;
 
 
-
-
-
-    var this_btn_elem = $($(('.submit-form')));
-    loading_btn(this_btn_elem);
 
     var formData = new FormData($("#add-form")[0]);
     var form_url = $('#add-form').attr('action');
@@ -421,7 +493,6 @@ $(document).on('submit', '#add-form', function (e) {
         $(".progress-bar").width('0%');
         $(".progress").hide();
 
-        loading_btn();
 
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
@@ -435,23 +506,16 @@ $(document).on('submit', '#add-form', function (e) {
 
 
         AlertandToast(out.status, out.msg, true, false);
-        $('.submit-form').show();
 
     });
 
     result_xhr.fail(function () {
         AlertandToast('error', 'Page has expired, try later !');
-        loading_btn();
     });
 });
 
 
 
-function go_to_backpage() {
-    setTimeout(function () {
-        window.history.go(-1);
-    }, 3000);
-}
 
 /******** Submits form and shows alert ********/
 

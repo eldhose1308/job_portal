@@ -41,7 +41,7 @@
                                     <div class="display-flex2">
 
 
-                                        <form action="<?= base_url() ?>home/jobs_json" class="jobs_datacard-list float-right">
+                                        <form action="<?= base_url() ?>users/jobs/saved_jobs_json" class="jobs_datacard-list float-right">
 
 
                                             <div class="box-border mr-10"><span class="text-sortby">Show:</span>

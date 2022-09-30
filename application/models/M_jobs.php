@@ -26,17 +26,28 @@ class M_jobs extends CI_Model
 
 
 
-    public function select_all_jobs($limit, $start, $page = 1, $sortby = "desc")
+    public function select_all_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1,
+            'ci_jobs_wishlist.candidate_id' => NULL
         );
 
+        if ($this->session->has_userdata('user_login_status')) {
+            $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
+        }
 
+        if ($query != '') {
+            $this->db->or_like('job_title', $query);
+            $this->db->or_like('brief_description', $query);
+            $this->db->or_like('job_description', $query);
+        }
 
-        $this->db->select('ci_jobs.*,ci_countries.country_name');
+        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.job_id as wishlist');
         $this->db->where($multiplewhere);
-        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location ', 'left');
+        $this->db->or_where($or_multiplewhere);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
         $this->db->limit($limit, $start);
 
         if ($sortby == "desc")
@@ -49,45 +60,79 @@ class M_jobs extends CI_Model
     }
 
 
-    public function select_submenus_by_id($mm_id)
+
+    public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
     {
         $multiplewhere = array(
-            'ci_main_menu.mm_id' => $mm_id
+            'ci_jobs.status' => 1
+        );
+
+        if ($this->session->has_userdata('user_login_status')) {
+            $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
+        }
+
+        if ($query != '') {
+            $this->db->or_like('job_title', $query);
+            $this->db->or_like('brief_description', $query);
+            $this->db->or_like('job_description', $query);
+        }
+
+        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.job_id as wishlist');
+        $this->db->where($multiplewhere);
+        $this->db->where($or_multiplewhere);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
+        $this->db->limit($limit, $start);
+
+        if ($sortby == "desc")
+            $this->db->order_by("ci_jobs.job_id", "desc");
+        else
+            $this->db->order_by("ci_jobs.job_id", "asc");
+
+
+        return $this->db->get('ci_jobs')->result();
+    }
+
+    public function select_all_jobs($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
+    {
+        $multiplewhere = array(
+            'ci_jobs.status' => 1
         );
 
 
-        $this->db->select('ci_main_menu.*,ci_top_menu.top_menu_name');
-        $this->db->where($multiplewhere);
-        $this->db->join('ci_top_menu', 'ci_top_menu.tm_id   = ci_main_menu.top_menu ', 'left');
+        if ($query != '') {
+            $this->db->or_like('job_title', $query);
+            $this->db->or_like('brief_description', $query);
+            $this->db->or_like('job_description', $query);
+        }
 
-        return $this->db->get('ci_main_menu')->row();
+        $this->db->select('ci_jobs.*,ci_countries.country_name');
+        $this->db->where($multiplewhere);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
+        $this->db->limit($limit, $start);
+
+        if ($sortby == "desc")
+            $this->db->order_by("ci_jobs.job_id", "desc");
+        else
+            $this->db->order_by("ci_jobs.job_id", "asc");
+
+
+        return $this->db->get('ci_jobs')->result();
     }
 
 
-
-    public function get_topmenus_list($status = 1)
+    public function add_job_to_wishlist($data)
     {
-        $multiplewhere = array(
-            'ci_top_menu.status' => $status
-        );
-
-
-        $this->db->select('ci_top_menu.*');
-        $this->db->where($multiplewhere);
-        return $this->db->get('ci_top_menu')->result();
+        $this->db->insert('ci_jobs_wishlist', $data);
+        return $this->db->affected_rows();
     }
 
-
-
-    public function select_topmenu_by_id($tm_id)
+    public function remove_job_from_wishlist($job_id, $candidate_id)
     {
-        $multiplewhere = array(
-            'ci_top_menu.tm_id' => $tm_id
-        );
-
-
-        $this->db->select('ci_top_menu.*');
+        $multiplewhere = array('ci_jobs_wishlist.job_id' => $job_id, 'ci_jobs_wishlist.candidate_id' => $candidate_id);
         $this->db->where($multiplewhere);
-        return $this->db->get('ci_top_menu')->row();
+        $this->db->delete('ci_jobs_wishlist');
+        return $this->db->affected_rows();
     }
 }

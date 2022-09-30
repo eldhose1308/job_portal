@@ -50,8 +50,8 @@ class MY_Controller extends CI_Controller
 
 
 
-        if (empty($this->session->userdata()["menus"]))
-            redirect(base_url() . 'admin/logout', 'refresh');
+        // if (empty($this->session->userdata()["menus"]))
+        //     redirect(base_url() . 'admin/logout', 'refresh');
 
         $this->data['unallocated_menus'] = $this->session->userdata()['menus']['unallocated'];
         $this->data['allocated_menus'] = $this->session->userdata()['menus']['allocated'];
@@ -243,7 +243,16 @@ class US_Controller extends CI_Controller
          * Common arrays
          * 
          * **/
+        $this->data["sortBys"][0] = array(
+            "sort_id" => "desc",
+            "sorting_by" => "Latest"
+        );
+        $this->data["sortBys"][1] = array(
+            "sort_id" => "asc",
+            "sorting_by" => "Oldest"
+        );
 
+        
         //exit();
     }
 

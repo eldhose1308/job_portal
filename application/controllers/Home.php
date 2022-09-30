@@ -11,6 +11,7 @@ class home extends CI_Controller
         $this->load->helper('url');
 
         $this->load->model('Common_model');
+        $this->load->model('M_candidates');
         $this->load->model('M_jobs');
 
         $this->data["sortBys"][0] = array(
@@ -22,8 +23,11 @@ class home extends CI_Controller
             "sorting_by" => "Oldest"
         );
 
-        date_default_timezone_set("Asia/Kolkata");
 
+        $this->user_id = (int) en_func($this->session->userdata('user_id'), 'd');
+
+
+        date_default_timezone_set("Asia/Kolkata");
     }
 
     public function index()
@@ -71,15 +75,17 @@ class home extends CI_Controller
         $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
         $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
 
+        $query = $this->input->get('query');
+
         $start_index = ($page - 1) * $per_page;
         $total_rows = $this->M_jobs->select_all_jobs_count();
 
 
-        $records['data'] = $this->M_jobs->select_all_jobs($per_page, $start_index, $page, $sortby);
-
+        $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby);
 
 
         $data = array();
+        $responses = array();
         $i = 0;
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
@@ -105,22 +111,8 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-
-                '
-                <div class="employers-info mt-15 row">
-                
-                <div class="col-3 datacard_btns">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/jobs/edit_jobs/' . $job_id . '">Edit</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-info open-offcanvas" data-url="' . base_url() . 'admin/jobs/view_jobs/' . $job_id . '">View</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
-                </div>
-                
-                </div>
-                '
+                'wishlist' => $row->wishlist ? true : false,
+     
 
             );
         }
@@ -142,6 +134,101 @@ class home extends CI_Controller
     }
 
 
+    public function apply_job($job_id = 0)
+    {
+        $data = $this->data;
+        $job_id = en_func($job_id, 'd');
+
+        $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
+        $data["status"] = $this->Common_model->select_status();
+
+        $this->check_exists($data["jobDetails"]);
+
+        if (!$this->session->has_userdata('user_login_status')) {
+            require_once 'vendor/autoload.php';
+
+            $clientID = $this->config->item('client_id');
+            $clientSecret = $this->config->item('client_secret');
+            $redirectUri = base_url() . 'users/google_login';
+
+
+            $client = new Google_Client();
+            $client->setClientId($clientID);
+            $client->setClientSecret($clientSecret);
+            $client->setRedirectUri($redirectUri);
+
+            $client->addScope("email");
+            $client->addScope("profile");
+
+
+            $data["googleAuth"] = $client->createAuthUrl();
+
+            $records["content"] = $this->load->view('users/auth/login_offcanvas', $data, true);
+            $records["heading"] = "Login to continue";
+            $records["sub_heading"] = "To apply to a job,you must log in first";
+        } else {
+
+            $candidate_id = $this->user_id;
+
+            $data["candidateDetails"] = $this->M_candidates->select_candidate_by_id($candidate_id);
+
+
+            $records["content"] = $this->load->view('users/jobs/jobs_apply', $data, true);
+            $records["heading"] = "Apply for jobs";
+            $records["sub_heading"] = "Please review your details before applying for the job";
+        }
+
+        $this->response(200, $records);
+    }
+
+
+
+    public function add_to_wishlist($job_id = 0)
+    {
+        $data = $this->data;
+        $job_id = en_func($job_id, 'd');
+        
+        $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
+        $data["status"] = $this->Common_model->select_status();
+
+        $this->check_exists($data["jobDetails"]);
+
+        $wishlist_status = (int) $this->input->post('wishlist_status', TRUE);
+
+
+        $candidate_id = $this->user_id;
+        $data_insert = array(
+            'job_id' => $job_id,
+            'candidate_id' => $candidate_id,
+            'added_by' => $candidate_id,
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s"),
+            'status' => 1
+        );
+
+        $addToWishlist = ($wishlist_status) ? $this->M_jobs->add_job_to_wishlist($data_insert) : $this->M_jobs->remove_job_from_wishlist($job_id, $candidate_id);
+
+        //lq();
+        if ($addToWishlist == 0) :
+            $data = array('status' => 'error', 'msg' => 'Job could not be added to wishlist , Please try again !');
+            echo json_encode($data);
+            exit();
+        endif;
+
+        $message = ($wishlist_status) ? "Added to Wishlist" : "Removed from Wishlist";
+
+        $data = array('status' => 'success', 'msg' => $message);
+        echo json_encode($data);
+        exit();
+    }
+
+
+
+    function check_exists($data_arr)
+    {
+        if (empty($data_arr))
+            redirect_to_404();
+    }
 
     function response($status, $data)
     {

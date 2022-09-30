@@ -12,6 +12,11 @@ function load_jobs() {
         $(".jobs_datacard-list").submit();
 }
 
+$(document).on('click', '.btn-apply-now', function (e) {
+    e.preventDefault();
+    add_getParameters('job-no', $(this).attr('data-no'));
+});
+
 $(document).on('click', '.show-filters', function (e) {
     e.preventDefault();
     showOffCanvas("#bs-canvas-bottom-filter", false);
@@ -34,8 +39,8 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
 $(document).on('submit', '.jobs-search-form', function (e) {
     e.preventDefault();
 
-    let ids = "q";
-    let value = $(".jobs-search-form .q").val();
+    let ids = "query";
+    let value = $(".jobs-search-form .query").val();
 
     add_getParameters(ids, value);
 
@@ -77,6 +82,7 @@ $(document).on('submit', '.jobs_datacard-list', function (e) {
         parameters[key] = value;
     }
 
+
     load_jobs_datacard(parameters, $(this).attr('action'));
 
 
@@ -101,6 +107,52 @@ function load_jobs_datacard(parameters, form_url) {
 }
 
 
+
+
+$(document).on('click', '.open-bottom-offcanvas', function (e) {
+    $('.offcanvas-heading').html('');
+    $('.offcanvas-content').html('');
+    showOffCanvas("#bs-canvas-right");
+    let form_url = $(this).attr("data-url");
+
+    $.get(form_url, function (data, status) {
+        var out = jQuery.parseJSON(data);
+        out = out.data;
+
+        $('.offcanvas-heading').html(out.heading);
+        $('.offcanvas-subheading').html(out.sub_heading);
+        $('.offcanvas-content').html(out.content);
+
+    });
+
+
+});
+
+
+
+$(document).on('click', '.open-right-offcanvas', function (e) {
+    $('.offcanvas-heading').html('');
+    $('.offcanvas-content').html('');
+    showOffCanvas("#bs-canvas-right");
+    let form_url = $(this).attr("data-url");
+
+    $.get(form_url, function (data, status) {
+        var out = jQuery.parseJSON(data);
+        out = out.data;
+
+        $('.offcanvas-heading').html(out.heading);
+        $('.offcanvas-subheading').html(out.sub_heading);
+        $('.offcanvas-content').html(out.content);
+
+    });
+
+
+});
+
+
+
+
+
 function circular_loader_get(action = 'hide') {
     $("#loader-overlay").show();
     var width = 0;
@@ -108,6 +160,7 @@ function circular_loader_get(action = 'hide') {
         $("#circular-progress-value").html('0%');
         $("#loader-overlay").hide();
     }
+
 
     var prg = setInterval(function () {
         if (width >= 100) {
@@ -133,6 +186,42 @@ function circular_loader_get(action = 'hide') {
 
 
 
+
+function circular_loader_post(action = 'hide', progress = 0) {
+    $("#loader-overlay").show();
+    var width = 0;
+    if (action == 'hide') {
+        $("#circular-progress-value").html('0%');
+        $("#loader-overlay").hide();
+    }
+
+
+    var prg = setInterval(function () {
+        if (progress >= 100) {
+            $("#circular-progress-value").html('0%');
+            clearInterval(prg);
+            $("#loader-overlay").hide();
+
+        } else {
+            $("#circular-progress-value").html(progress + '%');
+            $("#circular-progressbar").removeClass();
+            // width++;
+            $("#circular-progressbar").addClass('progress-circle');
+            if (progress >= 50)
+                $("#circular-progressbar").addClass('over50');
+
+            $("#circular-progressbar").addClass('p' + progress);
+
+        }
+    }, 1);
+
+
+
+}
+
+
+
+
 function buildJobsCard(myList) {
 
     let datacard_element = ``;
@@ -142,42 +231,51 @@ function buildJobsCard(myList) {
     $.each(jobsData, function (index, item) {
 
         datacard_element += `
-        <div class="col-xl-12 col-12 mt-15">
-                <div class="card-grid-2 hover-up">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="card-grid-2-image-left">
+        
+                    <div class="col-xl-12 col-12 mt-15">
+                    <div class="card-grid-2 hover-up">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="card-grid-2-image-left">
                                     <div class="right-info">
-                                    <h4><a href="#">${item.job_title}</a></h4>
-                                    <span class="location-small text-black">${item.job_location}</span></div>
+                                        <h4><a href="#">${item.job_title}</a></h4>
+                                        <span class="location-small text-black">${item.job_location}</span>
                                     </div>
                                 </div>
-                               
                             </div>
-                                <div class="card-block-info">
-                                    <div class="mt-5">
-                                    <span class="card-briefcase text-black">${item.job_openings} Openings</span>
-                                    <span class="card-time text-black"><span>${item.posted_before}</span></span></div>
-                                    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                        Experience ${item.min_experience} - ${item.max_experience} years
-                                    </a>  
-                                    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                        INR ${item.min_salary} - ${item.max_salary} / Month
-                                    </a>
-                                        <div class="card-2-bottom mt-20">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-7">
-                                                <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
 
-                                                </div>
-                                                    <div class="col-lg-5 col-5 text-end">
-                                                    <a class="btn btn-apply-now load-btn" href="${base_url + 'usershome'}">Apply now</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                        </div>
+                        <div class="card-block-info">
+                            <div class="mt-5">
+                                <span class="card-briefcase text-black">${item.job_openings} Openings</span>
+                                <span class="card-time text-black"><span>${item.posted_before}</span></span>
+                            </div>
+                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                                Experience ${item.min_experience} - ${item.max_experience} years
+                            </a>
+                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                                INR ${item.min_salary} - ${item.max_salary} / Month
+                            </a>
+                            <div class="card-2-bottom mt-20">
+                                <div class="row">
+                                    <div class="col-lg-12 col-12">
+                                        <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
+                                    </div>
+                                    <div class="col-lg-7 col-7">
+                                    </div>
+                                    <div class="col-lg-5 col-5 text-end">
+                                        <form id="" action="${base_url}home/add_to_wishlist">
+                                        <button title="Wishlist" class="btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
+                                        <input type="hidden" name="job_id" class="job_id" value="${item._id}">
+                                        <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
+                                        <a data-no="${index}" class="btn btn-apply-now open-right-offcanvas" data-url="${base_url + 'home/apply_job/' + item._id}">Apply now</a>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    </div>
         `;
 
     });
@@ -201,6 +299,81 @@ function buildJobsCard(myList) {
     buildJobsPagination(page_limit, current_page, nums_limit);
 
 }
+
+
+
+
+$(document).on('click', '.add-to-wishlist', function (e) {
+    e.preventDefault();
+
+    var $this = $(this);
+
+    $this.toggleClass('active');
+
+    let active = $this.hasClass('active');
+
+
+    $this.parent().children('.wishlist_status').val(active ? 1 : 0);
+    $this.children('.wishlisted-text').text((active) ? ' Remove from Wishlist' : ' Add to Wishlist');
+
+    if (add_to_wishlist($this))
+        return;
+
+    
+
+});
+
+
+
+function add_to_wishlist($this) {
+    let wishlist_status = $this.parent().children('.wishlist_status').val();
+
+    var formData = new FormData($("#dummy-forms")[0]);
+    formData.append('_token', $('input[name="_token"]').val());
+    formData.append('wishlist_status', wishlist_status);
+
+    var form_url = $('#job_wishlist-forms').attr('action') + $this.parent().children('.job_id').val();
+    var result_xhr = $.ajax({
+        url: form_url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+                    circular_loader_post('show', percentComplete);
+                }
+            }, false);
+            return xhr;
+        },
+        beforeSend: function () {
+            circular_loader_post('hide', 0);
+
+        }
+    })
+
+    result_xhr.done(function (data) {
+        // circular_loader_post('hide',0);
+
+
+        var out = jQuery.parseJSON(data);
+        if (out.status == 'success') {
+            return true;
+        }
+
+    });
+
+    result_xhr.fail(function () {
+        return false;
+        AlertandToast('error', 'Page has expired, try later !');
+    });
+
+
+}
+
 
 
 $(document).on('click', '.jobs-paginations .pages', function (e) {

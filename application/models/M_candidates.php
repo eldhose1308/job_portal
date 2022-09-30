@@ -22,21 +22,18 @@ class M_candidates extends CI_Model
 
 
 
-	public function select_user_by_id($user_id)
+	public function select_candidate_by_id($candidate_id)
 	{
 		$multiplewhere = array(
-			'users.user_status' => 1,
-			'users.user_type !=' => 1,
-			'user_types.status' => 1
+			'ci_candidates.status' => 1,
+			'ci_candidates.user_id' => $candidate_id
 		);
 
-		if ($user_id > 0)
-			$multiplewhere = array('users.user_id' => $user_id);
+	
 
-		$this->db->select('users.*,users.user_type as type,user_types.user_type');
+		$this->db->select('ci_candidates.*');
 		$this->db->where($multiplewhere);
-		$this->db->join('user_types', 'user_types.ut_id = users.user_type', 'left');
-		return $this->db->get('users')->row();
+		return $this->db->get('ci_candidates')->row();
 	}
 
 
@@ -145,6 +142,21 @@ class M_candidates extends CI_Model
 		$this->db->from('ci_candidates');
 		$this->db->where('ci_candidates.user_email', $user);
 		$this->db->where('ci_candidates.user_password', md5($pass));
+		$data = $this->db->get();
+
+		if ($data->num_rows() == 1) {
+			return $data->row();
+		} else {
+			return false;
+		}
+	}
+
+
+	public function candidate_google_login($user, $pass)
+	{
+		$this->db->select('ci_candidates.*');
+		$this->db->from('ci_candidates');
+		$this->db->where('ci_candidates.user_email', $user);
 		$data = $this->db->get();
 
 		if ($data->num_rows() == 1) {

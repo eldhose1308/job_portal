@@ -102,7 +102,7 @@ class Login extends CI_Controller
 
             $device_type = 'Desktop';
 
-            $data = $this->M_candidates->candidate_login($user_email, $password);
+            $data = $this->M_candidates->candidate_google_login($user_email, $password);
 
             if ($data == false) {
 
@@ -118,7 +118,7 @@ class Login extends CI_Controller
 
                 // $log_info = $this->M_candidates->add_failed_user_log($log_data);
 
-
+                
                 $this->session->set_flashdata('error_msg','You have no account with this email');
                 redirect('users/login', 'refresh');
 
@@ -148,6 +148,7 @@ class Login extends CI_Controller
                 'userdata' => $data,
                 'user_login_status' => "1"
             ];
+
             $this->session->set_userdata($session);
             redirect('usershome', 'refresh');
 
