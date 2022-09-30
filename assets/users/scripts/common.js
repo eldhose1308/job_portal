@@ -446,6 +446,15 @@ $(document).on('submit', '#add-form-without-csrf', function (e) {
 
 
 
+function BottomToast(message = 'Welcome !') {
+    $("#snackbar").remove();
+    let snackbar_html = `<div id="snackbar" class="show">${message}</div>`;
+    $('body').append(snackbar_html);
+    setTimeout(function(){ $("#snackbar").removeClass("show");    $("#snackbar").remove();
+}, 3000);
+  }
+
+
 /******** Submits form without csrf and shows alert ********/
 
 
@@ -778,6 +787,7 @@ $(document).on('input', '#search-dashboard', function (e) {
 function AlertandToast(status, message, alert = true, toast = true) {
     //alert(333);
     if (toast) {
+        BottomToast(message);
         // var Toast = Swal.mixin({
         //     toast: true,
         //     position: 'top-end',

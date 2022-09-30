@@ -305,7 +305,6 @@ function buildJobsCard(myList) {
 
 $(document).on('click', '.add-to-wishlist', function (e) {
     e.preventDefault();
-
     var $this = $(this);
 
     $this.toggleClass('active');
@@ -360,6 +359,8 @@ function add_to_wishlist($this) {
 
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
+            BottomToast(out.msg);
+
             load_jobs();
             return true;
         }
@@ -367,8 +368,9 @@ function add_to_wishlist($this) {
     });
 
     result_xhr.fail(function () {
+        BottomToast('Something wrong, Try again');
         return false;
-        AlertandToast('error', 'Page has expired, try later !');
+
     });
 
 

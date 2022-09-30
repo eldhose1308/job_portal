@@ -82,7 +82,7 @@ class home extends CI_Controller
 
 
         $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby);
-        
+
         $candidate_id = $this->user_id;
 
         $data = array();
@@ -91,7 +91,7 @@ class home extends CI_Controller
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
 
-         
+
 
             $updated_at = $row->updated_at;
 
@@ -114,8 +114,8 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => ($row->candidate_id == $candidate_id) ? ( $row->wishlist ? true : false) : false,
-     
+                'wishlist' => ($row->candidate_id == $candidate_id) ? ($row->wishlist ? true : false) : false,
+
 
             );
         }
@@ -192,7 +192,14 @@ class home extends CI_Controller
     {
         $data = $this->data;
         $job_id = en_func($job_id, 'd');
-        
+
+        if (!$this->session->has_userdata('user_login_status')) {
+
+            $data = array('status' => 'success', 'msg' => "Unauthorised");
+            echo json_encode($data);
+            exit();
+        }
+
         $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
         $data["status"] = $this->Common_model->select_status();
 
