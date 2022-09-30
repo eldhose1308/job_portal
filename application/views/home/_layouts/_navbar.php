@@ -17,6 +17,15 @@
 
           </ul>
         </nav>
+
+        <?php if (!$this->session->has_userdata('user_login_status')) : ?>
+
+          <div class="wishlist-div">
+            <a class="btn-sm btn-primary" href="<?= base_url() ?>users/login">Sign In <i class="fa fa-sign-in"></i></a>
+          </div>
+
+        <?php endif; ?>
+
         <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
       </div>
       <div class="header-right">
@@ -126,7 +135,7 @@
               <li><a href="<?= base_url() ?>users/login">Sign in</a></li>
 
             <?php endif; ?>
-            
+
           </ul>
         </div>
         <div class="site-copyright">Copyright 2022 &copy; Nexcode.</div>

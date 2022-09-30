@@ -29,13 +29,10 @@ class M_jobs extends CI_Model
     public function select_all_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
     {
         $multiplewhere = array(
-            'ci_jobs.status' => 1,
-            'ci_jobs_wishlist.candidate_id' => NULL
+            'ci_jobs.status' => 1
         );
 
-        if ($this->session->has_userdata('user_login_status')) {
-            $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
-        }
+
 
         if ($query != '') {
             $this->db->or_like('job_title', $query);
@@ -43,9 +40,8 @@ class M_jobs extends CI_Model
             $this->db->or_like('job_description', $query);
         }
 
-        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.job_id as wishlist');
+        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.candidate_id,ci_jobs_wishlist.job_id as wishlist');
         $this->db->where($multiplewhere);
-        $this->db->or_where($or_multiplewhere);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
         $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
         $this->db->limit($limit, $start);

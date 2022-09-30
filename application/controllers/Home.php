@@ -34,7 +34,7 @@ class home extends CI_Controller
     {
         $data = array();
 
-        $this->template->home_views('home/home', $data);
+        $this->template->users_views('home/home', $data);
     }
 
 
@@ -43,7 +43,7 @@ class home extends CI_Controller
     {
         $data = array();
 
-        $this->template->home_views('home/about_us', $data);
+        $this->template->users_views('home/about_us', $data);
     }
 
 
@@ -52,7 +52,7 @@ class home extends CI_Controller
     {
         $data = array();
 
-        $this->template->home_views('home/contact_us', $data);
+        $this->template->users_views('home/contact_us', $data);
     }
 
 
@@ -65,7 +65,7 @@ class home extends CI_Controller
 
         $data["countries"] = $this->Common_model->select_all("ci_countries");
 
-        $this->template->home_views('home/jobs', $data);
+        $this->template->users_views('home/jobs', $data);
     }
 
     public function jobs_json()
@@ -82,13 +82,16 @@ class home extends CI_Controller
 
 
         $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby);
-
+        
+        $candidate_id = $this->user_id;
 
         $data = array();
         $responses = array();
         $i = 0;
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
+
+         
 
             $updated_at = $row->updated_at;
 
@@ -111,11 +114,13 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => $row->wishlist ? true : false,
+                'wishlist' => ($row->candidate_id == $candidate_id) ? ( $row->wishlist ? true : false) : false,
      
 
             );
         }
+
+        // dd($responses);
 
         $data['jobs'] = $responses;
 

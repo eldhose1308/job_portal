@@ -319,7 +319,6 @@ $(document).on('click', '.add-to-wishlist', function (e) {
     if (add_to_wishlist($this))
         return;
 
-    
 
 });
 
@@ -361,6 +360,7 @@ function add_to_wishlist($this) {
 
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
+            load_jobs();
             return true;
         }
 
