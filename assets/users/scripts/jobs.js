@@ -32,6 +32,41 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
 });
 
 
+/***
+ * 
+ * Side Filters
+ * 
+ * * */
+
+$(document).on('change', '.checkbox-filters', function (e) {
+    $(this).parent().parent().parent().find('.checkbox-filters').not(this).prop('checked', false);
+    
+    let ids = $(this).parent().parent().parent()[0].id;
+    let value = $(this).attr("data-value");
+
+    add_getParameters(ids, value);
+
+    load_jobs();
+});
+
+$(document).on('change', '.dropdown-filters', function (e) {
+    
+    let ids = $(this)[0].id;
+    let value = $(this).val();
+    add_getParameters(ids, value);
+
+    load_jobs();
+});
+
+
+/***
+ * 
+ * Side Filters
+ * 
+ * * */
+
+
+
 
 $(document).on('submit', '.jobs-search-form', function (e) {
     e.preventDefault();
@@ -262,10 +297,10 @@ function buildJobsCard(myList) {
                                     </div>
                                     <div class="col-lg-5 col-5 text-end">
                                         <form id="" action="${base_url}home/add_to_wishlist">
-                                        <button title="Wishlist" class="btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
+                                        <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
                                         <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter':'btn-apply-now'}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸':'Apply now'}</a>
+                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter' : 'btn-apply-now'}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
                                         </form>
                                     </div>
                                 </div>

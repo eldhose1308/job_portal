@@ -3,7 +3,7 @@
         <div class="container">
             <div class="banner-hero banner-single banner-single-bg">
                 <div class="block-banner text-center">
-                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">22</span> Jobs</span> Available Now</h3>
+                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">00</span> Jobs</span> Available Now</h3>
                     <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero repellendus magni, <br class="d-none d-xl-block">atque delectus molestias quis?</div>
                     <div class="form-find text-start mt-40 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                         <form class="jobs-search-form">
@@ -48,7 +48,7 @@
                                                 <div class="dropdown dropdown-sort">
                                                     <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>10</span><i class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light filter" id="per_page" aria-labelledby="dropdownSort">
-                                                        <li><a data-value="10" class="dropdown-item active" href="#">10</a></li>
+                                                        <li><a data-identifier="default-value" data-value="10" class="dropdown-item active" href="#">10</a></li>
                                                         <li><a data-value="20" class="dropdown-item" href="#">20</a></li>
                                                         <li><a data-value="30" class="dropdown-item" href="#">30</a></li>
                                                     </ul>
@@ -59,7 +59,7 @@
                                                     <button class="btn dropdown-toggle" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>Newest Post</span><i class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light filter" id="sortby" aria-labelledby="dropdownSort2">
                                                         <?php foreach ($sortBys as $sortBy) : ?>
-                                                            <li><a data-value="<?= $sortBy['sort_id'] ?>" class="dropdown-item" href="#"><?= $sortBy['sorting_by'] ?></a></li>
+                                                            <li><a data-identifier="default-value" data-value="<?= $sortBy['sort_id'] ?>" class="dropdown-item" href="#"><?= $sortBy['sorting_by'] ?></a></li>
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div>
@@ -99,7 +99,8 @@
                             </div>
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
-                                    <select class="form-control form-icons">
+                                    <select id="job_location" class="form-control form-icons dropdown-filters">
+                                        <option data-identifier="default-value" value="-1">All Countries</option>
                                         <?php foreach ($countries as $country) : ?>
                                             <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
                                         <?php endforeach; ?>
@@ -110,25 +111,25 @@
                             <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-10">Job Posted</h5>
                                 <div class="form-group">
-                                    <ul class="list-checkbox">
+                                    <ul class="list-checkbox" id="posted_date">
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
+                                                <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                     </ul>
@@ -142,32 +143,32 @@
                                     <ul class="list-checkbox">
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label><span class="number-item">180</span>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
+                                                <input data-identifier="default-value" class="checkbox-filters" data-value="0" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="cb-container">
+                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                     </ul>
@@ -241,7 +242,8 @@
 
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
-                                    <select class="form-control form-icons">
+                                <select id="job_location" class="form-control form-icons dropdown-filters">
+                                        <option data-identifier="default-value" value="-1">All Countries</option>
                                         <?php foreach ($countries as $country) : ?>
                                             <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
                                         <?php endforeach; ?>
@@ -263,28 +265,28 @@
                             <div id="Posted_Time" class="filter-tabcontent">
                                 <div class="filter-block mb-30">
                                     <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                        </ul>
+                                    <ul class="list-checkbox" id="posted_date">
+                                        <li>
+                                            <label class="cb-container">
+                                                <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="cb-container">
+                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="cb-container">
+                                                <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label class="cb-container">
+                                                <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
                                     </div>
                                 </div>
                             </div>

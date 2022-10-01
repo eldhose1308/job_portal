@@ -51,7 +51,7 @@ class jobs extends US_Controller
         $query = $this->input->get('query');
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_all_jobs_count();
+        $total_rows = $this->M_jobs->select_saved_jobs_count($query, $per_page, $start_index, $page, $sortby);
 
 
         $records['data'] = $this->M_jobs->select_all_saved_jobs_users($query, $per_page, $start_index, $page, $sortby);
@@ -63,9 +63,9 @@ class jobs extends US_Controller
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
 
-            $updated_at = $row->updated_at;
+            $created_at = $row->created_at;
 
-            $timeFirst  = strtotime($updated_at);
+            $timeFirst  = strtotime($created_at);
             $timeSecond = strtotime(date("Y-m-d h:i:s"));
 
             $differenceInSeconds = $timeSecond - $timeFirst;
@@ -85,6 +85,7 @@ class jobs extends US_Controller
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
                 'wishlist' => $row->wishlist ? true : false,
+                'show_wishlist' => true
 
 
             );
@@ -118,7 +119,7 @@ class jobs extends US_Controller
         $query = $this->input->get('query');
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_all_jobs_count();
+        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby);
 
 
         $records['data'] = $this->M_jobs->select_all_applied_jobs_users($query, $per_page, $start_index, $page, $sortby, $job_status);
@@ -130,9 +131,9 @@ class jobs extends US_Controller
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
 
-            $updated_at = $row->updated_at;
+            $created_at = $row->created_at;
 
-            $timeFirst  = strtotime($updated_at);
+            $timeFirst  = strtotime($created_at);
             $timeSecond = strtotime(date("Y-m-d h:i:s"));
 
             $differenceInSeconds = $timeSecond - $timeFirst;
@@ -151,11 +152,10 @@ class jobs extends US_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => $row->wishlist ? true : false,
                 'applied' => $row->applied ? true : false,
                 'job_status' => $row->status_name,
                 'job_status_badge' => ($row->job_status == 1) ? 'custom' : ($row->job_status == 2 ? 'success' : 'danger'),
-
+                'show_wishlist' => false
 
             );
         }
