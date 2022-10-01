@@ -12,10 +12,7 @@ function load_jobs() {
         $(".jobs_datacard-list").submit();
 }
 
-$(document).on('click', '.btn-apply-now', function (e) {
-    e.preventDefault();
-    add_getParameters('job-no', $(this).attr('data-no'));
-});
+
 
 $(document).on('click', '.show-filters', function (e) {
     e.preventDefault();
@@ -227,10 +224,9 @@ function buildJobsCard(myList) {
     let datacard_element = ``;
     let jobsData = myList.jobs;
 
-
     $.each(jobsData, function (index, item) {
-
-        datacard_element += `
+        if (myList.user_type != "admin") {
+            datacard_element += `
         
                     <div class="col-xl-12 col-12 mt-15">
                     <div class="card-grid-2 hover-up">
@@ -239,7 +235,8 @@ function buildJobsCard(myList) {
                                 <div class="card-grid-2-image-left">
                                     <div class="right-info">
                                         <h4><a href="#">${item.job_title}</a></h4>
-                                        <span class="location-small text-black">${item.job_location}</span>
+                                        <span class="location-small text-black">${item.job_location}</span> <br>
+                                        <span class="badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +265,7 @@ function buildJobsCard(myList) {
                                         <button title="Wishlist" class="btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
                                         <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="btn btn-apply-now open-right-offcanvas" data-url="${base_url + 'home/apply_job/' + item._id}">Apply now</a>
+                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter':'btn-apply-now'}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸':'Apply now'}</a>
                                         </form>
                                     </div>
                                 </div>
@@ -277,7 +274,52 @@ function buildJobsCard(myList) {
                     </div>
                     </div>
         `;
+        } else {
+            datacard_element += `
+        
+        <div class="col-xl-12 col-12 mt-15">
+        <div class="card-grid-2 hover-up">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card-grid-2-image-left">
+                        <div class="right-info">
+                            <h4><a href="#">${item.job_title}</a></h4>
+                            <span class="location-small text-black">${item.job_location}</span>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+            <div class="card-block-info">
+                <div class="mt-5">
+                    <span class="card-briefcase text-black">${item.job_openings} Openings</span>
+                    <span class="card-time text-black"><span>${item.posted_before}</span></span>
+                </div>
+                <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                    Experience ${item.min_experience} - ${item.max_experience} years
+                </a>
+                <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                    INR ${item.min_salary} - ${item.max_salary} / Month
+                </a>
+                <div class="card-2-bottom mt-20">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
+                        </div>
+                        <div class="col-lg-7 col-7">
+                        </div>
+                        <div class="col-lg-5 col-5 text-end">
+                            <a class="btn btn-tags-sm mb-10 text-white bg-custom open-right-offcanvas" data-url="${base_url}admin/jobs/edit_jobs/${item._id}">Edit</a>                           
+                            <a class="btn btn-tags-sm mb-10 text-white bg-info open-right-offcanvas" data-url="${base_url}admin/jobs/view_jobs/${item._id}">View</a>                           
+                            <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+`;
+        }
     });
 
     $("#jobs-na_datacard").html(datacard_element)
@@ -361,7 +403,7 @@ function add_to_wishlist($this) {
         if (out.status == 'success') {
             BottomToast(out.msg);
 
-            load_jobs();
+            // load_jobs();
             return true;
         }
 

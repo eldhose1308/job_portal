@@ -14,7 +14,7 @@
             <?php if ($this->session->has_userdata('user_login_status')) : ?>
 
               <li><a href="<?= base_url() ?>usershome">Dashboard</a></li>
-              <li><a href="<?= base_url() ?>users/applications">Jobs applications</a></li>
+              <li><a href="<?= base_url() ?>users/jobs/job_applications">Jobs applications</a></li>
             <?php endif; ?>
 
             <li><a href="<?= base_url() ?>jobs">Jobs</a></li>
@@ -76,7 +76,7 @@
               <li><a href="<?= base_url() ?>usershome">Dashboard</a></li>
 
               <li><a href="<?= base_url() ?>jobs">Jobs</a></li>
-              <li><a href="<?= base_url() ?>users/applications">Jobs applications</a></li>
+              <li><a href="<?= base_url() ?>users/jobs/job_applications">Jobs applications</a></li>
 
               <li><a href="<?= base_url() ?>contact_us">Contact us</a></li>
 
@@ -111,7 +111,7 @@
               <li><a href="<?= base_url() ?>usershome">Dashboard</a></li>
 
               <li><a href="<?= base_url() ?>jobs">Jobs</a></li>
-              <li><a href="<?= base_url() ?>users/applications">Jobs applications</a></li>
+              <li><a href="<?= base_url() ?>users/jobs/job_applications">Jobs applications</a></li>
 
               <li><a href="<?= base_url() ?>contact_us">Contact us</a></li>
 

@@ -10130,16 +10130,16 @@ ul li:last-child .card-list-4 {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
-  background-color: #333;
+  background-color: #101010bd;
   color: #fff;
   text-align: center;
   border-radius: 2px;
-  padding: 16px;
+  padding: 11px;
   position: fixed;
   z-index: 1;
   left: 50%;
   bottom: 30px;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 #snackbar.show {

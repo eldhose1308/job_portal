@@ -404,7 +404,7 @@ $(document).on('submit', '#add-form-without-csrf', function (e) {
                     var percentComplete = parseInt((evt.loaded / evt.total) * 100);
                     $(".progress-bar").width(percentComplete + '%');
                     $(".progress-bar").html(percentComplete + '%');
-                    circular_loader_post('show',percentComplete);
+                    circular_loader_post('show', percentComplete);
                 }
             }, false);
             return xhr;
@@ -412,7 +412,7 @@ $(document).on('submit', '#add-form-without-csrf', function (e) {
         beforeSend: function () {
             $(".progress-bar").width('0%');
             $(".progress").show();
-            circular_loader_post('hide',0);
+            circular_loader_post('hide', 0);
 
         }
     })
@@ -434,8 +434,8 @@ $(document).on('submit', '#add-form-without-csrf', function (e) {
             // AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
 
 
-        // AlertandToast(out.status, out.msg, true, false);
-        $('.submit-form').show();
+            // AlertandToast(out.status, out.msg, true, false);
+            $('.submit-form').show();
 
     });
 
@@ -450,9 +450,10 @@ function BottomToast(message = 'Welcome !') {
     $("#snackbar").remove();
     let snackbar_html = `<div id="snackbar" class="show">${message}</div>`;
     $('body').append(snackbar_html);
-    setTimeout(function(){ $("#snackbar").removeClass("show");    $("#snackbar").remove();
-}, 3000);
-  }
+    setTimeout(function () {
+        $("#snackbar").removeClass("show"); $("#snackbar").remove();
+    }, 3000);
+}
 
 
 /******** Submits form without csrf and shows alert ********/
@@ -462,10 +463,6 @@ function BottomToast(message = 'Welcome !') {
 
 $(document).on('submit', '#add-form', function (e) {
     e.preventDefault();
-
-
-    // let validations = validation_fields('category_name', 'required', 'Category name');
-    // validations = validation_fields('sort_order', 'required|numeric', 'Sort order');
 
 
     if (validate_form(true, false, true))
@@ -486,25 +483,24 @@ $(document).on('submit', '#add-form', function (e) {
             xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
                     var percentComplete = parseInt((evt.loaded / evt.total) * 100);
-                    $(".progress-bar").width(percentComplete + '%');
-                    $(".progress-bar").html(percentComplete + '%');
+                    circular_loader_post('show', percentComplete);
+
                 }
             }, false);
             return xhr;
         },
         beforeSend: function () {
-            $(".progress-bar").width('0%');
-            $(".progress").show();
+            circular_loader_post('hide', 0);
+
         }
     })
 
     result_xhr.done(function (data) {
-        $(".progress-bar").width('0%');
-        $(".progress").hide();
-
+        circular_loader_post('hide', 0);
 
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
+            closeOffCanvas();
             AlertandToast(out.status, out.msg, false, true);
             // go_to_backpage();
             // closeOffCanvas();
@@ -514,12 +510,13 @@ $(document).on('submit', '#add-form', function (e) {
             AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
 
 
-        AlertandToast(out.status, out.msg, true, false);
+        AlertandToast(out.status, out.msg, false, true);
 
     });
 
     result_xhr.fail(function () {
-        AlertandToast('error', 'Page has expired, try later !');
+        circular_loader_post('hide', 0);
+        AlertandToast('error', 'Page has expired, try later !', false, true);
     });
 });
 

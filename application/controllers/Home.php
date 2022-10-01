@@ -43,7 +43,7 @@ class home extends CI_Controller
     {
         $data = array();
 
-        $this->template->users_views('home/about_us', $data);
+        $this->template->users_views('users/about_us', $data);
     }
 
 
@@ -52,7 +52,7 @@ class home extends CI_Controller
     {
         $data = array();
 
-        $this->template->users_views('home/contact_us', $data);
+        $this->template->users_views('users/contact_us', $data);
     }
 
 
@@ -65,9 +65,10 @@ class home extends CI_Controller
 
         $data["countries"] = $this->Common_model->select_all("ci_countries");
 
-        $this->template->users_views('home/jobs', $data);
+        $this->template->users_views('users/jobs', $data);
     }
 
+    
     public function jobs_json()
     {
 
@@ -82,7 +83,7 @@ class home extends CI_Controller
 
 
         $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby);
-
+// lq();
         $candidate_id = $this->user_id;
 
         $data = array();
@@ -100,7 +101,6 @@ class home extends CI_Controller
 
             $differenceInSeconds = $timeSecond - $timeFirst;
 
-            // $quiz_time_left = $quiz_time - $differenceInSeconds;
 
             $responses[] = array(
                 ++$i,
@@ -114,7 +114,8 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => ($row->candidate_id == $candidate_id) ? ($row->wishlist ? true : false) : false,
+                'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
+                'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
 
 
             );
@@ -139,9 +140,10 @@ class home extends CI_Controller
     }
 
 
-    public function apply_job($job_id = 0)
+    public function apply_job_page($job_id = 0)
     {
         $data = $this->data;
+        $data["job_id"] = $job_id;
         $job_id = en_func($job_id, 'd');
 
         $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
@@ -176,7 +178,10 @@ class home extends CI_Controller
             $candidate_id = $this->user_id;
 
             $data["candidateDetails"] = $this->M_candidates->select_candidate_by_id($candidate_id);
+            $jobApplied = $this->M_jobs->select_applied_job($job_id, $candidate_id);
 
+
+            $data["jobApplied"] = $jobApplied ? true : false;
 
             $records["content"] = $this->load->view('users/jobs/jobs_apply', $data, true);
             $records["heading"] = "Apply for jobs";
@@ -184,6 +189,74 @@ class home extends CI_Controller
         }
 
         $this->response(200, $records);
+    }
+
+
+    public function apply_job()
+    {
+        $this->form_validation->set_rules('job_id', 'Job', 'trim|required');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('status' => 'success', 'msg' => validation_errors());
+            echo json_encode($data);
+            exit();
+        }
+
+
+        $data = $this->data;
+        $job_id = $this->input->post('job_id');
+        $job_id = en_func($job_id, 'd');
+
+        if (!$this->session->has_userdata('user_login_status')) {
+
+            $data = array('status' => 'success', 'msg' => "Unauthorised");
+            echo json_encode($data);
+            exit();
+        }
+
+
+
+        $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
+        $data["status"] = $this->Common_model->select_status();
+
+        $this->check_exists($data["jobDetails"]);
+
+        $candidate_id = $this->user_id;
+
+        $jobApplied = $this->M_jobs->select_applied_job($job_id, $candidate_id);
+        if ($jobApplied) {
+
+            $data = array('status' => 'success', 'msg' => "Already Applied");
+            echo json_encode($data);
+            exit();
+        }
+
+
+
+        $data_insert = array(
+            'job_id' => $job_id,
+            'candidate_id' => $candidate_id,
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s"),
+            'job_status' => 1,
+            'status' => 1
+        );
+
+        $addToWishlist = $this->Common_model->insert_table($data_insert, 'ci_jobs_apply');
+
+        //lq();
+        if ($addToWishlist == 0) :
+            $data = array('status' => 'error', 'msg' => 'Job could not be applied , Please try again !');
+            echo json_encode($data);
+            exit();
+        endif;
+
+        $message =  "Applied this Job";
+
+        $data = array('status' => 'success', 'msg' => $message);
+        echo json_encode($data);
+        exit();
     }
 
 

@@ -16,7 +16,7 @@
             <div class="col-12 mb-10">
                 <div class="content-header">
                     <div>
-                        <button type="submit" id="submit-form" class="btn btn-sm btn-custom font-sm hover-up submit-form float-right"><?= ($operation == 'add') ? 'Add' : 'Update'; ?> Job &nbsp; <i class="fas fa-sign-in-alt"></i></button>
+                        <button type="submit" id="submit-form" class="btn btn-custom font-sm hover-up submit-form float-right"><?= ($operation == 'add') ? 'Add' : 'Update'; ?> Job &nbsp; <i class="fas fa-sign-in-alt"></i></button>
                     </div>
                 </div>
             </div>
@@ -37,14 +37,14 @@
 
                     <div class="form-group">
                         <label for="inputName">Job description ( Brief )</label>
-                        <textarea data-validation="required|alpha" <?= ($operation == 'view') ? 'disabled' : '' ?> type="text" class="form-control" name="brief_description" id="brief_description">
+                        <textarea data-validation="required" <?= ($operation == 'view') ? 'disabled' : '' ?> type="text" class="form-control" name="brief_description" id="brief_description">
                         <?= (!empty($jobsDetails)) ? $jobsDetails->brief_description : ''; ?>
                         </textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="inputName">Job description ( Full )</label>
-                        <textarea data-validation="required|alpha" <?= ($operation == 'view') ? 'disabled' : '' ?> type="text" class="form-control" name="job_description" id="job_description">
+                        <textarea data-validation="required" <?= ($operation == 'view') ? 'disabled' : '' ?> type="text" class="form-control" name="job_description" id="job_description">
                         <?= (!empty($jobsDetails)) ? $jobsDetails->job_description : ''; ?>
                         </textarea>
                     </div>

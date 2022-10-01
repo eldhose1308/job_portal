@@ -129,12 +129,13 @@ class Common_model extends CI_Model
 	 */
 	
 	public function select_status(){
-		$multiplewhere = array(
-		);
-		
-	 
 		$this->db->select('*');
-		$this->db->where($multiplewhere);
 		return $this->db->get('status')->result();
+	}	
+
+	public function select_job_status(){
+
+		$this->db->select('*');
+		return $this->db->get('ci_job_status')->result();
 	}
 }

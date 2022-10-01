@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-3 text-end">
-                        <button class="btn btn-sm btn-custom open-offcanvas" data-url="<?= base_url() ?>admin/jobs/add_countries">Add</button>
+                        <button class="btn btn-custom open-offcanvas" data-url="<?= base_url() ?>admin/jobs/add_countries">Add</button>
                     </div>
 
                 </div>

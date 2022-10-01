@@ -16,7 +16,7 @@
             <div class="col-12 mb-10">
                 <div class="content-header">
                     <div>
-                        <button type="submit" id="submit-form" class="btn btn-sm btn-custom font-sm hover-up submit-form float-right"><?= ($operation == 'add') ? 'Add' : 'Update'; ?> Candidates &nbsp; <i class="fas fa-sign-in-alt"></i></button>
+                        <button type="submit" id="submit-form" class="btn btn-custom font-sm hover-up submit-form float-right"><?= ($operation == 'add') ? 'Add' : 'Update'; ?> Candidates &nbsp; <i class="fas fa-sign-in-alt"></i></button>
                     </div>
                 </div>
             </div>

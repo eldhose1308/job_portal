@@ -3,7 +3,7 @@
         <div class="container">
             <div class="banner-hero banner-single banner-single-bg">
                 <div class="block-banner text-center">
-                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">22</span> Jobs</span> Saved to Wishlist</h3>
+                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">22</span> Jobs</span> Applied </h3>
                     <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero repellendus magni, <br class="d-none d-xl-block">atque delectus molestias quis?</div>
                     <div class="form-find text-start mt-40 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                         <form class="jobs-search-form">
@@ -30,20 +30,31 @@
                         <div class="box-filters-job">
                             <div class="row">
 
-                                <div class="col-xl-6 col-lg-6 col-6">
+                                <div class="col-xl-4 col-lg-4 col-4">
                                     <span class="text-small text-showing pagination-details">Showing <strong>0-0 </strong>of <strong>0 </strong>jobs</span>
                                     <a class="btn btn-sm btn-outline-custom show-filters" role="button"><i class="fa fa-filter"></i>Show Filter </a>
 
                                 </div>
 
 
-                                <div class="col-xl-6 col-lg-6 col-6 text-lg-end mt-sm-15">
+                                <div class="col-xl-8 col-lg-8 col-8 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
 
 
-                                        <form action="<?= base_url() ?>users/jobs/saved_jobs_json" class="jobs_datacard-list float-right">
+                                        <form action="<?= base_url() ?>users/jobs/applied_jobs_json" class="jobs_datacard-list float-right">
 
 
+                                            <div class="box-border mr-10"><span class="text-sortby">Application Status:</span>
+                                                <div class="dropdown dropdown-sort">
+                                                    <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>All</span><i class="fi-rr-angle-small-down"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-light filter" id="job_status" aria-labelledby="dropdownSort">
+                                                    <li><a data-value="-1" class="dropdown-item" href="#">All</a></li>
+                                                    <?php foreach ($job_statuses as $job_status) : ?>
+                                                            <li><a data-value="<?= en_func($job_status->status_id,'e') ?>" class="dropdown-item" href="#"><?= $job_status->status_name ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                             <div class="box-border mr-10"><span class="text-sortby">Show:</span>
                                                 <div class="dropdown dropdown-sort">
                                                     <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>10</span><i class="fi-rr-angle-small-down"></i></button>

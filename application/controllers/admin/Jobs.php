@@ -13,6 +13,7 @@ class jobs extends MY_Controller
         $this->load->library('session');
 
         $this->load->model('M_users');
+        $this->load->model('M_jobs');
     }
 
     public function index()
@@ -37,7 +38,7 @@ class jobs extends MY_Controller
         $records["heading"] = "Add jobs details";
         $records["sub_heading"] = "Add jobs details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function edit_jobs($job_id = 0)
@@ -54,12 +55,12 @@ class jobs extends MY_Controller
 
         $this->check_exists($data["jobsDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/jobs/add_jobs', $data, true);
         $records["heading"] = "Edit jobs details";
         $records["sub_heading"] = "Edit jobs details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function view_jobs($job_id = 0)
@@ -77,12 +78,12 @@ class jobs extends MY_Controller
 
         $this->check_exists($data["jobsDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/jobs/add_jobs', $data, true);
         $records["heading"] = "View jobs details";
         $records["sub_heading"] = "View jobs details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function update_jobs()
@@ -122,7 +123,7 @@ class jobs extends MY_Controller
             'job_title' => $this->input->post('job_title'),
             'brief_description' => $this->input->post('brief_description'),
             'job_description' => $this->input->post('job_description'),
-            'job_location' => en_func($this->input->post('job_location'),'d'),
+            'job_location' => en_func($this->input->post('job_location'), 'd'),
             'job_openings' => $this->input->post('job_openings'),
             'min_experience' => $this->input->post('min_experience'),
             'max_experience' => $this->input->post('max_experience'),
@@ -165,41 +166,71 @@ class jobs extends MY_Controller
     public function jobs_json()
     {
 
-        $status = (int) en_func($this->input->get('status'), 'd');
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
 
-        $records['data'] = $this->Common_model->select_all('ci_jobs', $status);
+        $query = $this->input->get('query');
+
+        $start_index = ($page - 1) * $per_page;
+        $total_rows = $this->M_jobs->select_all_jobs_count();
+
+
+        $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby);
+
+        $candidate_id = $this->user_id;
+
         $data = array();
+        $responses = array();
         $i = 0;
         foreach ($records['data']  as $row) {
             $job_id  = en_func($row->job_id, 'e');
-            $data[] = array(
-                ++$i,
-                ++$i,
-                '<a>
-                    <h5>' . $row->job_title . '</h5>
-                </a>',
-                '<span class="font-sm text-info">' . $row->min_experience . ' - ' . $row->max_experience .' years experience </span>',
-                '<span class="font-sm text-primary">' . $row->min_salary . ' - ' . $row->max_salary .'</span>',
-                '<span class="font-sm">' . $row->brief_description . '</span>',
 
-                '
-                <div class="employers-info mt-15 row">
-                
-                <div class="col-3 datacard_btns">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/jobs/edit_jobs/' . $job_id . '">Edit</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-info open-offcanvas" data-url="' . base_url() . 'admin/jobs/view_jobs/' . $job_id . '">View</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
-                </div>
-                
-                </div>
-                '
+
+
+            $updated_at = $row->updated_at;
+
+            $timeFirst  = strtotime($updated_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+
+            $responses[] = array(
+                ++$i,
+                '_id' => $job_id,
+                'job_title' => $row->job_title,
+                'job_location' => $row->country_name,
+                'min_experience' => $row->min_experience,
+                'max_experience' => $row->max_experience,
+                'min_salary' => $row->min_salary,
+                'max_salary' => $row->max_salary,
+                'job_openings' => $row->job_openings,
+                'posted_before' => seconds2format($differenceInSeconds) . " ago",
+                'brief_description' => $row->brief_description,
+                'wishlist' => ($row->candidate_id == $candidate_id) ? ($row->wishlist ? true : false) : false,
+
 
             );
         }
+
+        // dd($responses);
+
+        $data['jobs'] = $responses;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
+
+
+        $data['page_limit'] = ceil($total_rows / $per_page);
+        $data['current_page'] = $page;
+        $data['nums_limit'] = 5;
+
+        $data['user_type'] = 'admin';
+
         $this->response(200, $data);
     }
 
@@ -246,7 +277,7 @@ class jobs extends MY_Controller
         $records["heading"] = "Add countries details";
         $records["sub_heading"] = "Add countries details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function edit_countries($country_id = 0)
@@ -262,12 +293,12 @@ class jobs extends MY_Controller
 
         $this->check_exists($data["countriesDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/jobs/countries/add_countries', $data, true);
         $records["heading"] = "Edit countries details";
         $records["sub_heading"] = "Edit countries details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function view_countries($country_id = 0)
@@ -284,12 +315,12 @@ class jobs extends MY_Controller
 
         $this->check_exists($data["countriesDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/jobs/countries/add_countries', $data, true);
         $records["heading"] = "View countries details";
         $records["sub_heading"] = "View countries details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function update_countries()
@@ -333,7 +364,7 @@ class jobs extends MY_Controller
         if ($func == 'update') :
             $msg = "Country details successfully updated !";
             unset($data_insert['created_at']);
-            $qry_response = $this->Common_model->update_table($data_insert, $country_id , 'ci_countries', 'country_id');
+            $qry_response = $this->Common_model->update_table($data_insert, $country_id, 'ci_countries', 'country_id');
             $this->add_activity_log("Updated country details");
         else :
             $msg = "New Country successfully added !";
@@ -363,7 +394,7 @@ class jobs extends MY_Controller
         $data = array();
         $i = 0;
         foreach ($records['data']   as $row) {
-            $country_id   = en_func($row->country_id , 'e');
+            $country_id   = en_func($row->country_id, 'e');
             $data[] = array(
                 ++$i,
                 ++$i,
@@ -386,7 +417,4 @@ class jobs extends MY_Controller
         }
         $this->response(200, $data);
     }
-
-
-
 }
