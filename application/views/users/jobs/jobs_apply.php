@@ -7,7 +7,8 @@
         </div>
 
         <div class="alert alert-info" role="alert">
-            You have applied for this job in <?= date('d M ,Y', strtotime($jobDetails->updated_at)) . ' at ' . date('h:i a', strtotime($jobDetails->updated_at)) ?>
+            You have already applied for this job 
+            <!-- You have applied for this job in <?= date('d M ,Y', strtotime($jobDetails->updated_at)) . ' at ' . date('h:i a', strtotime($jobDetails->updated_at)) ?> -->
         </div>
     </div>
 

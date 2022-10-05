@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function showOffCanvas(canvas, show_loader = true) {
     let offCanvas_loader = `<center><i style="font-size:35px;color: #05264e;" class="fa fa-spinner fa-spin"></i></center>`;
-    $(canvas).css('width', '65%');
+    $(canvas).css('width', '100%');
     $('.bs-canvas-overlay').addClass('show');
     $(canvas).show();
 
@@ -425,17 +425,17 @@ $(document).on('submit', '#add-form-without-csrf', function (e) {
 
         var out = jQuery.parseJSON(data);
         if (out.status == 'success') {
-            // AlertandToast(out.status, out.msg, false, true);
+            AlertandToast(out.status, out.msg, false, true);
             // go_to_backpage();
             // closeOffCanvas();
             // load_datacard_list();
         }
         else
-            // AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
+            AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
 
 
-            // AlertandToast(out.status, out.msg, true, false);
-            $('.submit-form').show();
+        AlertandToast(out.status, out.msg, false, true);
+        $('.submit-form').show();
 
     });
 
@@ -457,6 +457,43 @@ function BottomToast(message = 'Welcome !') {
 
 
 /******** Submits form without csrf and shows alert ********/
+
+
+
+
+function circular_loader_post(action = 'hide', progress = 0) {
+    $("#loader-overlay").show();
+    var width = 0;
+    if (action == 'hide') {
+        $("#circular-progress-value").html('0%');
+        $("#loader-overlay").hide();
+    }
+
+
+    var prg = setInterval(function () {
+        if (progress >= 100) {
+            $("#circular-progress-value").html('0%');
+            clearInterval(prg);
+            $("#loader-overlay").hide();
+
+        } else {
+            $("#circular-progress-value").html(progress + '%');
+            $("#circular-progressbar").removeClass();
+            // width++;
+            $("#circular-progressbar").addClass('progress-circle');
+            if (progress >= 50)
+                $("#circular-progressbar").addClass('over50');
+
+            $("#circular-progressbar").addClass('p' + progress);
+
+        }
+    }, 1);
+
+
+
+}
+
+
 
 
 /******** Submits form and shows alert ********/
@@ -529,7 +566,32 @@ $(document).on('submit', '#add-form', function (e) {
 
 /******** Submits image crop form and shows alert ********/
 
-$(document).on('change', '#document-upload', function (e) {
+$(document).on('change', '.document-img-upload', function (e) {
+    var allowedTypes = ['image/jpeg', 'image/png', 'image/jpg',];
+    var file = this.files[0];
+    var fileName = file.name;
+    var fileType = file.type;
+    var fileSize = (file.size / 1024) / 1024;
+    fileSize = Math.ceil(fileSize);
+
+
+    if (fileSize > 5) {
+        AlertandToast('warning', fileName + ' is of ' + fileSize + 'MB and the limit for uploading size is 5 MB', false, true);
+        return false;
+    }
+
+    fileSize = fileSize + ' MB';
+
+    $('#previous_document').hide();
+    $('#document-preview').fadeIn();
+    document.getElementById('document-preview').src = window.URL.createObjectURL(this.files[0]);
+    return true;
+
+});
+
+
+
+$(document).on('change', '.document-upload', function (e) {
     var allowedTypes = ['application/pdf'];
     var file = this.files[0];
     var fileName = file.name;

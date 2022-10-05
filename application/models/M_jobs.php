@@ -96,11 +96,21 @@ class M_jobs extends CI_Model
      */
 
 
-    function select_saved_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
+    function select_saved_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
         );
+
+        if ($posted_date > 0) {
+            $where['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $where['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $where['ci_jobs.job_location'] = $job_location;
+
+        
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
@@ -122,11 +132,21 @@ class M_jobs extends CI_Model
         return $query->num_rows();
     }
 
-    public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
+    public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
         );
+
+        if ($posted_date > 0) {
+            $multiplewhere['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $multiplewhere['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $multiplewhere['ci_jobs.job_location'] = $job_location;
+
+
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
@@ -163,11 +183,20 @@ class M_jobs extends CI_Model
      */
 
 
-    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
+    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
         );
+
+        if ($posted_date > 0) {
+            $where['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $where['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $where['ci_jobs.job_location'] = $job_location;
+
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_apply.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
@@ -189,11 +218,20 @@ class M_jobs extends CI_Model
         return $query->num_rows();
     }
 
-    public function select_all_applied_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0)
+    public function select_all_applied_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
         );
+
+        if ($posted_date > 0) {
+            $multiplewhere['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $multiplewhere['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $multiplewhere['ci_jobs.job_location'] = $job_location;
+
 
         if ($job_status > 0)
             $multiplewhere['ci_jobs_apply.job_status'] = $job_status;

@@ -40,7 +40,7 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
 
 $(document).on('change', '.checkbox-filters', function (e) {
     $(this).parent().parent().parent().find('.checkbox-filters').not(this).prop('checked', false);
-    
+
     let ids = $(this).parent().parent().parent()[0].id;
     let value = $(this).attr("data-value");
 
@@ -50,7 +50,7 @@ $(document).on('change', '.checkbox-filters', function (e) {
 });
 
 $(document).on('change', '.dropdown-filters', function (e) {
-    
+
     let ids = $(this)[0].id;
     let value = $(this).val();
     add_getParameters(ids, value);
@@ -219,46 +219,18 @@ function circular_loader_get(action = 'hide') {
 
 
 
-function circular_loader_post(action = 'hide', progress = 0) {
-    $("#loader-overlay").show();
-    var width = 0;
-    if (action == 'hide') {
-        $("#circular-progress-value").html('0%');
-        $("#loader-overlay").hide();
-    }
-
-
-    var prg = setInterval(function () {
-        if (progress >= 100) {
-            $("#circular-progress-value").html('0%');
-            clearInterval(prg);
-            $("#loader-overlay").hide();
-
-        } else {
-            $("#circular-progress-value").html(progress + '%');
-            $("#circular-progressbar").removeClass();
-            // width++;
-            $("#circular-progressbar").addClass('progress-circle');
-            if (progress >= 50)
-                $("#circular-progressbar").addClass('over50');
-
-            $("#circular-progressbar").addClass('p' + progress);
-
-        }
-    }, 1);
-
-
-
-}
-
-
-
 
 function buildJobsCard(myList) {
 
     let datacard_element = ``;
     let jobsData = myList.jobs;
-
+    if (myList.content_null) {
+        datacard_element += `
+            <div class="col-xl-12 col-12 mt-15">
+            <h4><a href="#">No Jobs found</a></h4>
+            </div>
+        `;
+    }
     $.each(jobsData, function (index, item) {
         if (myList.user_type != "admin") {
             datacard_element += `
@@ -300,7 +272,7 @@ function buildJobsCard(myList) {
                                         <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
                                         <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter' : 'btn-apply-now'}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
+                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter' : 'btn-apply-now  open-right-offcanvas'} " data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
                                         </form>
                                     </div>
                                 </div>

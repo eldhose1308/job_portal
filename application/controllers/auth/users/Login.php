@@ -144,6 +144,7 @@ class Login extends CI_Controller
                 'user_photo' => $data->user_photo,
                 'user_email' => $data->user_email,
                 'user_mobile' => $data->user_mobile,
+                'user_resume' => $data->user_resume,
                 'enc_token' => $tokenEnc,
                 'userdata' => $data,
                 'user_login_status' => "1"
@@ -366,6 +367,7 @@ class Login extends CI_Controller
             'user_photo' => $data->user_photo,
             'user_email' => $data->user_email,
             'user_mobile' => $data->user_mobile,
+            'user_resume' => $data->user_resume,
             'enc_token' => $tokenEnc,
             'userdata' => $data,
             'user_login_status' => "1"

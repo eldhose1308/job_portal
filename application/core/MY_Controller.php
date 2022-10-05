@@ -237,6 +237,8 @@ class US_Controller extends CI_Controller
 
         $this->data = array();
 
+        $this->user_id = (int) en_func($this->session->userdata('user_id'), 'd');
+
 
         /***
          * 
@@ -256,6 +258,32 @@ class US_Controller extends CI_Controller
         //exit();
     }
 
+
+    public function addFiles($image)
+    {
+        $config['upload_path'] = './uploads/resumes/';
+        $config['allowed_types'] = 'pdf';
+        $config['max_size'] = 4000;
+
+        $ext = pathinfo($_FILES[$image]['name'], PATHINFO_EXTENSION);
+
+
+
+        $this->load->library('upload', $config);
+
+
+
+        if (!$this->upload->do_upload($image)) {
+            $msg['msg'] = $error = array('error' => $this->upload->display_errors());
+            $msg["status"] = '500';
+        } else {
+            $msg['msg'] = $data = array('image_metadata' => $this->upload->data());
+            $msg["status"] = '200';
+            $msg["filename"] = $data['image_metadata']['file_name'];
+        }
+        //print_r($msg); exit();
+        return $msg;
+    }
 
     public function addImage($image)
     {

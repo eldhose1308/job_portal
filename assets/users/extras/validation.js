@@ -116,9 +116,9 @@ function validate_form(show_toast = true, show_errors = true, show_below = false
         return false;
 
     if (show_toast)
-        AlertandToast('error', 'Recheck these errors and resubmit', true, true);
+        AlertandToast('error', 'Recheck these errors and resubmit', false, true);
     if (show_errors)
-        AlertandToast('error', form_validation_message, true, false);
+        AlertandToast('error', form_validation_message, false, true);
 
     return true;
 

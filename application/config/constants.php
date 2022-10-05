@@ -21,6 +21,7 @@ define('APP_NAME','Job Portal');
 define('BASE_URL', $base_url);
 
 
+define('RESUME', $base_url. 'uploads/resumes/');
 define('PROFILE_IMG', $base_url. 'uploads/users/profile_images/');
 define('GALLERY_IMAGES', $base_url. 'uploads/image_gallery/');
 define('NEWS_IMAGES', $base_url. 'uploads/news/');

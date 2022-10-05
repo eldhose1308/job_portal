@@ -129,6 +129,7 @@ class home extends CI_Controller
         }
 
         // dd($responses);
+        $data["content_null"] = ($i == 0) ?  true : false;
 
         $data['jobs'] = $responses;
 

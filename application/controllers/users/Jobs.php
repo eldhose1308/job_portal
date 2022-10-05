@@ -44,17 +44,23 @@ class jobs extends US_Controller
     public function saved_jobs_json()
     {
 
+        // Top Sorting
         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
         $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
         $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
 
+        // Side Sorting
+        $job_location = (int) en_func($this->input->get('job_location'), 'd');
+        $posted_date = (int) $this->input->get('posted_date');
+
+        // Search Sorting
         $query = $this->input->get('query');
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_saved_jobs_count($query, $per_page, $start_index, $page, $sortby);
+        $total_rows = $this->M_jobs->select_saved_jobs_count($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location);
 
 
-        $records['data'] = $this->M_jobs->select_all_saved_jobs_users($query, $per_page, $start_index, $page, $sortby);
+        $records['data'] = $this->M_jobs->select_all_saved_jobs_users($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location);
 
 
         $data = array();
@@ -91,6 +97,8 @@ class jobs extends US_Controller
             );
         }
 
+        $data["content_null"] = ($i == 0) ?  true : false;
+
         $data['jobs'] = $responses;
 
         $data['start_index'] = $start_index;
@@ -110,19 +118,26 @@ class jobs extends US_Controller
     public function applied_jobs_json()
     {
 
-        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
-        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
-        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+         // Top Sorting
+         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+         $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+         $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+         $job_status = ((int) en_func($this->input->get('job_status'), 'd') == 0) ? 0 : (int) en_func($this->input->get('job_status'), 'd');
+ 
+         // Side Sorting
+         $job_location = (int) en_func($this->input->get('job_location'), 'd');
+         $posted_date = (int) $this->input->get('posted_date');
+ 
+         // Search Sorting
+         $query = $this->input->get('query');
 
-        $job_status = ((int) en_func($this->input->get('job_status'),'d') == 0) ? 0 : (int) en_func($this->input->get('job_status'),'d');
 
-        $query = $this->input->get('query');
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby);
+        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location);
 
 
-        $records['data'] = $this->M_jobs->select_all_applied_jobs_users($query, $per_page, $start_index, $page, $sortby, $job_status);
+        $records['data'] = $this->M_jobs->select_all_applied_jobs_users($query, $per_page, $start_index, $page, $sortby, $job_status, $posted_date, $job_location);
 
 
         $data = array();
@@ -159,6 +174,9 @@ class jobs extends US_Controller
 
             );
         }
+
+
+        $data["content_null"] = ($i == 0) ?  true : false;
 
         $data['jobs'] = $responses;
 

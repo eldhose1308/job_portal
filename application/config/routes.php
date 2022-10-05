@@ -123,17 +123,18 @@ $route['admin/logout'] = 'auth/admin/login/logout';
 $route['adminhome'] = 'admin/home';
 
 
+$route['users/update_resume'] = 'users/profile/add_resume';
 
 
-$route['profile'] = 'admin/profile';
-$route['login_history'] = 'admin/profile/login_history';
-$route['list_logs'] = 'admin/profile/list_logs';
-$route['list_logs_json'] = 'admin/profile/list_logs_json';
+$route['admin/profile'] = 'admin/profile';
+$route['admin/login_history'] = 'admin/profile/login_history';
+$route['admin/list_logs'] = 'admin/profile/list_logs';
+$route['admin/list_logs_json'] = 'admin/profile/list_logs_json';
 
-$route['patients/profile'] = 'patients/profile';
-$route['patients/login_history'] = 'patients/profile/login_history';
-$route['patients/list_logs'] = 'patients/profile/list_logs';
-$route['patients/list_logs_json'] = 'patients/profile/list_logs_json';
+$route['users/profile'] = 'users/profile';
+$route['users/login_history'] = 'users/profile/login_history';
+$route['users/list_logs'] = 'users/profile/list_logs';
+$route['users/list_logs_json'] = 'users/profile/list_logs_json';
 
 $route['list_failed_logs'] = 'admin/profile/list_failed_logs';
 $route['list_failed_logs_json'] = 'admin/profile/list_failed_logs_json';
@@ -142,11 +143,11 @@ $route['list_failed_logs_json'] = 'admin/profile/list_failed_logs_json';
 
 $route['profile_image_store']['post'] = 'admin/profile/update_profile_image';
 
-$route['update_profile'] = 'admin/profile/update_profile';
-$route['change_password'] = 'admin/profile/change_password';
+$route['admin/update_profile'] = 'admin/profile/update_profile';
+$route['admin/change_password'] = 'admin/profile/change_password';
 
-$route['patients/update_profile'] = 'patients/profile/update_profile';
-$route['patients/change_password'] = 'patients/profile/change_password';
+$route['users/update_profile'] = 'users/profile/update_profile';
+$route['users/change_password'] = 'users/profile/change_password';
 
 $route['permissions'] = 'admin/permissions';
 $route['permission_json'] = 'admin/permissions/permission_json';
