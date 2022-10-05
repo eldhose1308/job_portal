@@ -2,14 +2,14 @@
 const jobs_loader = `<center><i class="jobsdatacard-loader fa fa-circle-o-notch fa-spin"></i></center>`;
 
 document.addEventListener("DOMContentLoaded", () => {
-    load_jobs();
+    load_candidates();
 
 });
 
 
-function load_jobs() {
-    if ($('.jobs_datacard-list').length > 0)
-        $(".jobs_datacard-list").submit();
+function load_candidates() {
+    if ($('.candidates_datacard-list').length > 0)
+        $(".candidates_datacard-list").submit();
 }
 
 
@@ -20,7 +20,7 @@ $(document).on('click', '.show-filters', function (e) {
 
 });
 
-$(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (e) {
+$(document).on('click', '.candidates_datacard-list .filter .dropdown-item', function (e) {
     e.preventDefault();
 
     let ids = $(this).parent().parent()[0].id;
@@ -28,7 +28,7 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
 
     add_getParameters(ids, value);
 
-    load_jobs();
+    load_candidates();
 });
 
 
@@ -46,7 +46,7 @@ $(document).on('change', '.checkbox-filters', function (e) {
 
     add_getParameters(ids, value);
 
-    load_jobs();
+    load_candidates();
 });
 
 $(document).on('change', '.dropdown-filters', function (e) {
@@ -55,7 +55,7 @@ $(document).on('change', '.dropdown-filters', function (e) {
     let value = $(this).val();
     add_getParameters(ids, value);
 
-    load_jobs();
+    load_candidates();
 });
 
 
@@ -67,17 +67,6 @@ $(document).on('change', '.dropdown-filters', function (e) {
 
 
 
-
-$(document).on('submit', '.jobs-search-form', function (e) {
-    e.preventDefault();
-
-    let ids = "query";
-    let value = $(".jobs-search-form .query").val();
-
-    add_getParameters(ids, value);
-
-    load_jobs();
-});
 
 
 $(document).on('click', '.filter-tablinks', function (e) {
@@ -101,9 +90,9 @@ function getParameters_toDOM() {
 
 }
 
-$(document).on('submit', '.jobs_datacard-list', function (e) {
+$(document).on('submit', '.candidates_datacard-list', function (e) {
     e.preventDefault();
-    $("#jobs-na_datacard").html(jobs_loader);
+    $("#candidates-na_datacard").html(jobs_loader);
 
     getParameters_toDOM();
 
@@ -115,14 +104,14 @@ $(document).on('submit', '.jobs_datacard-list', function (e) {
     }
 
 
-    load_jobs_datacard(parameters, $(this).attr('action'));
+    load_candidates_datacard(parameters, $(this).attr('action'));
 
 
 });
 
 
 
-function load_jobs_datacard(parameters, form_url) {
+function load_candidates_datacard(parameters, form_url) {
 
     circular_loader_get('show');
 
@@ -130,7 +119,7 @@ function load_jobs_datacard(parameters, form_url) {
         var out = jQuery.parseJSON(data);
         tableData = out.data;
 
-        buildJobsCard(tableData);
+        buildCandidatesCard(tableData);
 
         circular_loader_get('hide');
 
@@ -220,78 +209,28 @@ function circular_loader_get(action = 'hide') {
 
 
 
-function buildJobsCard(myList) {
-
+function buildCandidatesCard(myList) {
     let datacard_element = ``;
-    let jobsData = myList.jobs;
+    let candidatesData = myList.candidates;
     if (myList.content_null) {
         datacard_element += `
             <div class="col-xl-12 col-12 mt-15">
-            <h4><a href="#">No Jobs found</a></h4>
+            <h4><a href="#">No Candidates found</a></h4>
             </div>
         `;
     }
-    $.each(jobsData, function (index, item) {
-        if (myList.user_type != "admin") {
+    $.each(candidatesData, function (index, item) {
+        if (myList.user_type == "admin") {
             datacard_element += `
         
-                    <div class="col-xl-12 col-12 mt-15">
-                    <div class="card-grid-2 hover-up">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="card-grid-2-image-left">
-                                    <div class="right-info">
-                                        <h4><a href="#">${item.job_title}</a></h4>
-                                        <span class="location-small text-black">${item.job_location}</span> <br>
-                                        <span class="badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card-block-info">
-                            <div class="mt-5">
-                                <span class="card-briefcase text-black">${item.job_openings} Openings</span>
-                                <span class="card-time text-black"><span>${item.posted_before}</span></span>
-                            </div>
-                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                Experience ${item.min_experience} - ${item.max_experience} years
-                            </a>
-                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                INR ${item.min_salary} - ${item.max_salary} / Month
-                            </a>
-                            <div class="card-2-bottom mt-20">
-                                <div class="row">
-                                    <div class="col-lg-12 col-12">
-                                        <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
-                                    </div>
-                                    <div class="col-lg-7 col-7">
-                                    </div>
-                                    <div class="col-lg-5 col-5 text-end">
-                                        <form id="" action="${base_url}home/add_to_wishlist">
-                                        <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
-                                        <input type="hidden" name="job_id" class="job_id" value="${item._id}">
-                                        <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="btn ${item.applied ? 'btn-counter' : 'btn-apply-now '}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-        `;
-        } else {
-            datacard_element += `
-        
-        <div class="col-xl-12 col-12 mt-15">
+        <div class="col-xl-6 col-6 mt-15">
         <div class="card-grid-2 hover-up">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card-grid-2-image-left">
                         <div class="right-info">
-                            <h4><a href="#">${item.job_title}</a></h4>
-                            <span class="location-small text-black">${item.job_location}</span> <br>
+                            <h4><a href="#">${item.full_name}</a></h4>
+                            <span class="text-black">${item.user_name}</span> <br>
                             <span class="${myList.show_application_status ? '':'d-none '} badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
                         </div>
                     </div>
@@ -300,20 +239,18 @@ function buildJobsCard(myList) {
             </div>
             <div class="card-block-info">
                 <div class="mt-5">
-                    <span class="card-briefcase text-black">${item.job_openings} Openings</span>
-                    <span class="card-time text-black"><span>${item.posted_before}</span></span>
+                    <span class="text-black"><i class="fa ${item.email_verified ? 'fa-check fa-success' : 'fa-times fa-danger'}"></i></span>
+                    <span class="card-time text-black"><span>${item.email_verified_at}</span></span>
                 </div>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                    Experience ${item.min_experience} - ${item.max_experience} years
+                     ${item.user_email}
                 </a>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                    INR ${item.min_salary} - ${item.max_salary} / Month
+                     ${item.user_mobile} 
                 </a>
                 <div class="card-2-bottom mt-20">
                     <div class="row">
-                        <div class="col-lg-12 col-12">
-                            <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
-                        </div>
+                       
                         <div class="col-lg-7 col-7">
                         </div>
                         <div class="col-lg-5 col-5 text-end">
@@ -328,7 +265,7 @@ function buildJobsCard(myList) {
         }
     });
 
-    $("#jobs-na_datacard").html(datacard_element)
+    $("#candidates-na_datacard").html(datacard_element)
 
 
     let page_limit = (myList.page_limit == undefined) ? 1 : myList.page_limit;
@@ -341,9 +278,9 @@ function buildJobsCard(myList) {
     let ending_index = (myList.total_rows == undefined) ? 0 : myList.ending_index;
 
 
-    let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>jobs`
+    let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>candidates`
     $(".pagination-details").html(pagination_details);
-    $(".total_jobs").html(total_rows);
+    $(".total_candidates").html(total_rows);
     buildJobsPagination(page_limit, current_page, nums_limit);
 
 }
@@ -409,7 +346,7 @@ function add_to_wishlist($this) {
         if (out.status == 'success') {
             BottomToast(out.msg);
 
-            // load_jobs();
+            // load_candidates();
             return true;
         }
 
@@ -426,7 +363,7 @@ function add_to_wishlist($this) {
 
 
 
-$(document).on('click', '.jobs-paginations .pages', function (e) {
+$(document).on('click', '.candidates-paginations .pages', function (e) {
     e.preventDefault();
 
     $('body,html').animate({
@@ -437,7 +374,7 @@ $(document).on('click', '.jobs-paginations .pages', function (e) {
     let page = $(this).attr('data-id');
     add_getParameters("page", page);
 
-    load_jobs();
+    load_candidates();
 });
 
 

@@ -191,6 +191,7 @@ class home extends CI_Controller
 
             $data["jobApplied"] = $jobApplied ? true : false;
 
+            $data["jobDetails"] = $jobApplied;
             $records["content"] = $this->load->view('users/jobs/jobs_apply', $data, true);
             $records["heading"] = "Apply for jobs";
             $records["sub_heading"] = "Please review your details before applying for the job";
@@ -200,72 +201,6 @@ class home extends CI_Controller
     }
 
 
-    public function apply_job()
-    {
-        $this->form_validation->set_rules('job_id', 'Job', 'trim|required');
-
-
-        if ($this->form_validation->run() == FALSE) {
-            $data = array('status' => 'success', 'msg' => validation_errors());
-            echo json_encode($data);
-            exit();
-        }
-
-
-        $data = $this->data;
-        $job_id = $this->input->post('job_id');
-        $job_id = en_func($job_id, 'd');
-
-        if (!$this->session->has_userdata('user_login_status')) {
-
-            $data = array('status' => 'success', 'msg' => "Unauthorised");
-            echo json_encode($data);
-            exit();
-        }
-
-
-
-        $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
-        $data["status"] = $this->Common_model->select_status();
-
-        $this->check_exists($data["jobDetails"]);
-
-        $candidate_id = $this->user_id;
-
-        $jobApplied = $this->M_jobs->select_applied_job($job_id, $candidate_id);
-        if ($jobApplied) {
-
-            $data = array('status' => 'success', 'msg' => "Already Applied");
-            echo json_encode($data);
-            exit();
-        }
-
-
-
-        $data_insert = array(
-            'job_id' => $job_id,
-            'candidate_id' => $candidate_id,
-            'created_at' => date("Y-m-d h:i:s"),
-            'updated_at' => date("Y-m-d h:i:s"),
-            'job_status' => 1,
-            'status' => 1
-        );
-
-        $addToWishlist = $this->Common_model->insert_table($data_insert, 'ci_jobs_apply');
-
-        //lq();
-        if ($addToWishlist == 0) :
-            $data = array('status' => 'error', 'msg' => 'Job could not be applied , Please try again !');
-            echo json_encode($data);
-            exit();
-        endif;
-
-        $message =  "Applied this Job";
-
-        $data = array('status' => 'success', 'msg' => $message);
-        echo json_encode($data);
-        exit();
-    }
 
 
 

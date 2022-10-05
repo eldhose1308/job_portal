@@ -402,4 +402,82 @@ class M_candidates extends CI_Model
 		$this->db->where($multiplewhere);
 		return $this->db->get('modules')->result();
 	}
+
+
+
+
+
+
+	
+
+
+    /***************
+     * 
+     * 
+     * 
+     * Admin Models
+     * 
+     * 
+     */
+
+
+    function select_all_candidates_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    {
+        $where = array(
+            'ci_candidates.status' => '1'
+        );
+
+        if ($posted_date > 0) {
+            $where['ci_candidates.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $where['ci_candidates.created_at <='] = date('Y-m-d');
+        }
+
+
+
+        if ($query != '') {
+			$this->db->or_like('full_name', $query);
+            $this->db->or_like('user_email', $query);
+            $this->db->or_like('user_mobile', $query);
+        }
+
+        $this->db->where($where);
+
+        $query = $this->db->get("ci_candidates");
+        return $query->num_rows();
+    }
+
+
+
+    public function select_all_candidates($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    {
+        $multiplewhere = array(
+            'ci_candidates.status' => 1
+        );
+
+        if ($posted_date > 0) {
+            $multiplewhere['ci_candidates.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $multiplewhere['ci_candidates.created_at <='] = date('Y-m-d');
+        }
+
+     
+
+        if ($query != '') {
+            $this->db->or_like('full_name', $query);
+            $this->db->or_like('user_email', $query);
+            $this->db->or_like('user_mobile', $query);
+        }
+
+        $this->db->select('ci_candidates.*');
+        $this->db->where($multiplewhere);
+      
+        $this->db->limit($limit, $start);
+
+        if ($sortby == "desc")
+            $this->db->order_by("ci_candidates.user_id", "desc");
+        else
+            $this->db->order_by("ci_candidates.user_id", "asc");
+
+
+        return $this->db->get('ci_candidates')->result();
+    }
 }

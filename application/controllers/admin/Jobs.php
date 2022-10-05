@@ -208,7 +208,10 @@ class jobs extends MY_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => ($row->candidate_id == $candidate_id) ? ($row->wishlist ? true : false) : false,
+                'action_btns' =>
+                '<a class="btn btn-tags-sm mb-10 text-white bg-custom open-right-offcanvas" data-url="' . base_url() . 'admin/jobs/edit_jobs/' . $job_id . '">Edit</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-info open-right-offcanvas" data-url="' . base_url() . 'admin/jobs/view_jobs/' . $job_id . '">View</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a> '
 
 
             );

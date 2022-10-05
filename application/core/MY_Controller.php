@@ -38,14 +38,13 @@ class MY_Controller extends CI_Controller
          * **/
 
         $this->data["sortBys"][0] = array(
-            "sort_id" => 1,
+            "sort_id" => "desc",
             "sorting_by" => "Latest"
         );
         $this->data["sortBys"][1] = array(
-            "sort_id" => 2,
+            "sort_id" => "asc",
             "sorting_by" => "Oldest"
         );
-
 
 
 

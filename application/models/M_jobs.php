@@ -110,7 +110,7 @@ class M_jobs extends CI_Model
         if ($job_location > 0)
             $where['ci_jobs.job_location'] = $job_location;
 
-        
+
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
@@ -263,6 +263,8 @@ class M_jobs extends CI_Model
         return $this->db->get('ci_jobs')->result();
     }
 
+
+
     public function select_all_jobs($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc")
     {
         $multiplewhere = array(
@@ -309,6 +311,16 @@ class M_jobs extends CI_Model
 
 
 
+    public function remove_job_application($job_id, $candidate_id)
+    {
+        $multiplewhere = array('ci_jobs_apply.job_id' => $job_id, 'ci_jobs_apply.candidate_id' => $candidate_id);
+        $this->db->where($multiplewhere);
+        $this->db->delete('ci_jobs_apply');
+        return $this->db->affected_rows();
+    }
+
+
+
 
 
 
@@ -325,5 +337,101 @@ class M_jobs extends CI_Model
         } else {
             return false;
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /***************
+     * 
+     * 
+     * 
+     * Admin Models
+     * 
+     * 
+     */
+
+
+    function select_all_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    {
+        $where = array(
+            'ci_jobs.status' => '1'
+        );
+
+        if ($posted_date > 0) {
+            $where['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $where['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $where['ci_jobs.job_location'] = $job_location;
+
+
+
+        if ($query != '') {
+            $this->db->or_like('job_title', $query);
+            $this->db->or_like('brief_description', $query);
+            $this->db->or_like('job_description', $query);
+        }
+
+        $this->db->where($where);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
+
+
+        $query = $this->db->get("ci_jobs");
+        return $query->num_rows();
+    }
+
+
+
+    public function select_all_applied_jobs($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0)
+    {
+        $multiplewhere = array(
+            'ci_jobs.status' => 1
+        );
+
+        if ($posted_date > 0) {
+            $multiplewhere['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
+            $multiplewhere['ci_jobs.created_at <='] = date('Y-m-d');
+        }
+
+        if ($job_location > 0)
+            $multiplewhere['ci_jobs.job_location'] = $job_location;
+
+
+        if ($job_status > 0)
+            $multiplewhere['ci_jobs_apply.job_status'] = $job_status;
+
+
+        if ($query != '') {
+            $this->db->or_like('job_title', $query);
+            $this->db->or_like('brief_description', $query);
+            $this->db->or_like('job_description', $query);
+        }
+
+        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_job_status.status_name,ci_jobs_apply.job_status,ci_jobs_apply.job_id as applied');
+        $this->db->where($multiplewhere);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
+        $this->db->join('ci_job_status', 'ci_job_status.status_id  = ci_jobs_apply.job_status', 'left');
+        $this->db->limit($limit, $start);
+
+        if ($sortby == "desc")
+            $this->db->order_by("ci_jobs.job_id", "desc");
+        else
+            $this->db->order_by("ci_jobs.job_id", "asc");
+
+
+        return $this->db->get('ci_jobs')->result();
     }
 }

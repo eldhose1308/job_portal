@@ -13,6 +13,7 @@ class candidates extends MY_Controller
         $this->load->library('session');
 
         $this->load->model('M_users');
+        $this->load->model('M_candidates');
     }
 
     public function index()
@@ -36,7 +37,7 @@ class candidates extends MY_Controller
         $records["heading"] = "Add Candidates details";
         $records["sub_heading"] = "Add Candidates details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function edit_candidates($user_id = 0)
@@ -52,12 +53,12 @@ class candidates extends MY_Controller
 
         $this->check_exists($data["candidatesDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/candidates/add_candidates', $data, true);
         $records["heading"] = "Edit Candidates details";
         $records["sub_heading"] = "Edit Candidates details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function view_candidates($user_id = 0)
@@ -74,12 +75,12 @@ class candidates extends MY_Controller
 
         $this->check_exists($data["candidatesDetails"]);
 
-        
+
         $records["content"] = $this->load->view('admin/candidates/add_candidates', $data, true);
         $records["heading"] = "View Candidates details";
         $records["sub_heading"] = "View Candidates details which are registered in the portal";
 
-        $this->response(200,$records);
+        $this->response(200, $records);
     }
 
     public function update_candidates()
@@ -151,43 +152,59 @@ class candidates extends MY_Controller
     public function candidates_json()
     {
 
-        $status = (int) en_func($this->input->get('status'), 'd');
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+        $added_before = (int) $this->input->get('added_before');
 
-        $records['data'] = $this->Common_model->select_all('ci_candidates', $status);
+        $query = $this->input->get('query');
+
+        $start_index = ($page - 1) * $per_page;
+        $total_rows = $this->M_candidates->select_all_candidates_count($query, $per_page, $start_index, $page, $sortby, $added_before);
+
+
+        $records['data'] = $this->M_candidates->select_all_candidates($query, $per_page, $start_index, $page, $sortby, $added_before);
+
+// lq();
         $data = array();
+        $responses = array();
         $i = 0;
         foreach ($records['data']   as $row) {
             $user_id  = en_func($row->user_id, 'e');
-            $email_verified = ( $row->email_verified == 1 ) ? '<i class="fa fa-check fa-success" aria-hidden="true"></i>' : '<i class="fa fa-times fa-danger" aria-hidden="true"></i>';
-            $data[] = array(
-                ++$i,
-                ++$i,
-                '<a>
-                    <h5>' . $row->full_name . '</h5>
-                </a>',
-                '<span class="font-sm text-primary">' . $row->user_email . $email_verified .'</span>',
-                '<span class="font-sm color-text-mutted">' . $row->user_mobile . '</span>',
-                '<p class="font-xs color-text-paragraph-2">Short note</p>',
 
-                '
-                <div class="employers-info mt-15 row">
-                <div class="col-3 datacard_btns">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-custom open-offcanvas" data-url="' . base_url() . 'admin/candidates/edit_candidates/' . $user_id . '">Edit</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-info open-offcanvas" data-url="' . base_url() . 'admin/candidates/view_candidates/' . $user_id . '">View</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-tags-sm mb-10 open-offcanvas" data-url="' . base_url() . 'admin/candidates/show_resume">Resume</a>
-                </div>
-                </div>
-                '
 
+            $responses[] = array(
+                ++$i,
+                '_id' => $user_id,
+                'full_name' => $row->full_name,
+                'user_name' => $row->user_name,
+                'user_email' => $row->user_email,
+                'user_mobile' => $row->user_mobile,
+                'user_resume' => $row->user_resume,
+                'email_verified' => $row->email_verified,
+                'email_verified_at' => date('d M, Y', strtotime($row->email_verified_at)) . ' | ' . date('h:i a', strtotime($row->email_verified_at)),
+                'created_at' => $row->created_at,
+                'action_btns' =>
+                '<a class="btn btn-tags-sm mb-10 text-white bg-custom open-right-offcanvas" data-url="' . base_url() . 'admin/candidates/edit_candidates/' . $user_id . '">Edit</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-info open-right-offcanvas" data-url="' . base_url() . 'admin/candidates/view_candidates/' . $user_id . '">View</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a> '
             );
         }
+        $data['candidates'] = $responses;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
+
+
+        $data['page_limit'] = ceil($total_rows / $per_page);
+        $data['current_page'] = $page;
+        $data['nums_limit'] = 5;
+
+        $data['user_type'] = 'admin';
+
         $this->response(200, $data);
     }
 

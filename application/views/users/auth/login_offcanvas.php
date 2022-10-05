@@ -1,3 +1,5 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <main class="main">
     <section class="pt-55 login-register">
       <div class="container">
