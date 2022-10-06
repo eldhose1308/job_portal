@@ -42,7 +42,7 @@ class home extends US_Controller
 
         $menus['unallocated'] = $unallocated_modules;
         $menus['allocated'] = array();
-        
+
         $menus['unallocated_length'] = sizeof($menus['unallocated']);
 
         //dd($menus);
@@ -67,7 +67,7 @@ class home extends US_Controller
         $menus['parent_length'] = sizeof($menus['allocated']);
         $menus['base_path'] = base_url();
 
-       //dd($menus);
+        //dd($menus);
 
         $session_data["menus"] = $menus;
         $this->session->set_userdata($session_data);
@@ -82,13 +82,12 @@ class home extends US_Controller
 
     public function dashboard_counts()
     {
-        $this->load->model('Dashboard_model');
+        $this->load->model('M_jobs');
 
-        $records['enquiries'] = $this->Common_model->get_counts('ci_contact_messages');
-        $records['news'] = $this->Common_model->get_counts('ci_news', 1);
-      //  $records['blogs'] = $this->Common_model->get_counts('ci_blogs', 1);
-        $records['traffic'] = $this->Dashboard_model->get_visitors_count();
-        $records['donations'] = 120;
+        $records['total_applications'] = $this->M_jobs->select_applied_jobs_count_dashboard();
+        $records['shortlisted_applications'] = $this->M_jobs->select_applied_jobs_count_dashboard(2);
+        $records['rejected_applications'] = $this->M_jobs->select_applied_jobs_count_dashboard(3);
+
         $this->response(200, $records);
     }
 
@@ -108,6 +107,4 @@ class home extends US_Controller
         }
         $this->response(200, $records);
     }
-
-
 }

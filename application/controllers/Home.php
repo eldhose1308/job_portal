@@ -122,7 +122,8 @@ class home extends CI_Controller
                 'brief_description' => $row->brief_description,
                 'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
                 'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
-                'show_wishlist' => true
+                'show_wishlist' => true,
+                'show_applied' => true
 
 
             );
@@ -130,6 +131,7 @@ class home extends CI_Controller
 
         // dd($responses);
         $data["content_null"] = ($i == 0) ?  true : false;
+        $data["show_pagination"] = true;
 
         $data['jobs'] = $responses;
 
@@ -154,10 +156,10 @@ class home extends CI_Controller
         $data["job_id"] = $job_id;
         $job_id = en_func($job_id, 'd');
 
-        $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
+        $data["jobInfo"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
         $data["status"] = $this->Common_model->select_status();
 
-        $this->check_exists($data["jobDetails"]);
+        $this->check_exists($data["jobInfo"]);
 
         if (!$this->session->has_userdata('user_login_status')) {
             require_once 'vendor/autoload.php';

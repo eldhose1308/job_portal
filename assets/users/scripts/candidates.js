@@ -223,7 +223,7 @@ function buildCandidatesCard(myList) {
         if (myList.user_type == "admin") {
             datacard_element += `
         
-        <div class="col-xl-6 col-6 mt-15">
+        <div class="col-xl-6 col-12 mt-15">
         <div class="card-grid-2 hover-up">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">

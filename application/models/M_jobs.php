@@ -183,7 +183,35 @@ class M_jobs extends CI_Model
      */
 
 
-    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    function select_applied_jobs_count_dashboard($job_status = 0)
+    {
+        $where = array(
+            'ci_jobs.status' => '1'
+        );
+
+        if ($job_status > 0)
+            $where['ci_jobs_apply.job_status'] = $job_status;
+
+
+
+        if ($this->session->has_userdata('user_login_status')) {
+            $or_multiplewhere['ci_jobs_apply.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
+        }
+
+
+        $this->db->where($where);
+        $this->db->where($or_multiplewhere);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
+
+        $query = $this->db->get("ci_jobs");
+        return $query->num_rows();
+    }
+
+
+
+
+    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
@@ -193,6 +221,10 @@ class M_jobs extends CI_Model
             $where['ci_jobs.created_at >='] = date('Y-m-d', strtotime('-' . $posted_date . ' days'));
             $where['ci_jobs.created_at <='] = date('Y-m-d');
         }
+
+        if ($job_status > 0)
+            $multiplewhere['ci_jobs_apply.job_status'] = $job_status;
+
 
         if ($job_location > 0)
             $where['ci_jobs.job_location'] = $job_location;

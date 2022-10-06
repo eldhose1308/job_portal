@@ -40,11 +40,13 @@ class jobs extends US_Controller
     }
 
 
-    
+
 
     public function apply_job()
     {
         $this->form_validation->set_rules('job_id', 'Job', 'trim|required');
+        if ($this->input->post('default_mobile'))
+            $this->form_validation->set_rules('user_mobile', 'Mobile number', 'numeric|min_length[9]|max_length[12]');
 
 
         if ($this->form_validation->run() == FALSE) {
@@ -52,6 +54,8 @@ class jobs extends US_Controller
             echo json_encode($data);
             exit();
         }
+
+
 
 
         $data = $this->data;
@@ -64,7 +68,6 @@ class jobs extends US_Controller
             echo json_encode($data);
             exit();
         }
-
 
 
         $data["jobDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
@@ -94,10 +97,31 @@ class jobs extends US_Controller
                 $data = array('status' => 'error', 'msg' => json_encode($file_upload['msg']['error']));
                 echo json_encode($data);
                 exit();
-            else :
-                $resume_file = $file_upload['filename'];
             endif;
         endif;
+
+
+        if ($this->input->post('default_resume')) {
+            $data_insert = array(
+                'user_resume' => $file_upload["filename"]
+            );
+
+            $changeProfile = $this->M_candidates->update_profile($data_insert, $candidate_id);
+            $this->session->set_userdata('user_resume', $file_upload["filename"]);
+        }
+
+
+
+        if ($this->input->post('default_mobile')) {
+
+            $data_insert = array(
+                'user_mobile' => $this->input->post('user_mobile')
+            );
+
+            $changeProfile = $this->M_candidates->update_profile($data_insert, $candidate_id);
+            $this->session->set_userdata('user_mobile', $this->input->post('user_mobile'));
+        }
+
 
         $data_insert = array(
             'job_id' => $job_id,
@@ -209,13 +233,15 @@ class jobs extends US_Controller
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
                 'wishlist' => $row->wishlist ? true : false,
-                'show_wishlist' => true
+                'show_wishlist' => true,
+                'show_applied' => true
 
 
             );
         }
 
         $data["content_null"] = ($i == 0) ?  true : false;
+        $data["show_pagination"] = true;
 
         $data['jobs'] = $responses;
 
@@ -236,18 +262,18 @@ class jobs extends US_Controller
     public function applied_jobs_json()
     {
 
-         // Top Sorting
-         $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
-         $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
-         $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
-         $job_status = ((int) en_func($this->input->get('job_status'), 'd') == 0) ? 0 : (int) en_func($this->input->get('job_status'), 'd');
- 
-         // Side Sorting
-         $job_location = (int) en_func($this->input->get('job_location'), 'd');
-         $posted_date = (int) $this->input->get('posted_date');
- 
-         // Search Sorting
-         $query = $this->input->get('query');
+        // Top Sorting
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+        $job_status = ((int) en_func($this->input->get('job_status'), 'd') == 0) ? 0 : (int) en_func($this->input->get('job_status'), 'd');
+
+        // Side Sorting
+        $job_location = (int) en_func($this->input->get('job_location'), 'd');
+        $posted_date = (int) $this->input->get('posted_date');
+
+        // Search Sorting
+        $query = $this->input->get('query');
 
 
 
@@ -288,13 +314,93 @@ class jobs extends US_Controller
                 'applied' => $row->applied ? true : false,
                 'job_status' => $row->status_name,
                 'job_status_badge' => ($row->job_status == 1) ? 'custom' : ($row->job_status == 2 ? 'success' : 'danger'),
-                'show_wishlist' => false
+                'show_wishlist' => false,
+                'show_applied' => true
 
             );
         }
 
 
         $data["content_null"] = ($i == 0) ?  true : false;
+        $data["show_pagination"] = true;
+
+        $data['jobs'] = $responses;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
+
+
+        $data['page_limit'] = ceil($total_rows / $per_page);
+        $data['current_page'] = $page;
+        $data['nums_limit'] = 5;
+
+        $this->response(200, $data);
+    }
+
+
+    public function recently_applied_jobs_json()
+    {
+
+        // Top Sorting
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+
+
+        // Search Sorting
+        $query = $this->input->get('query');
+
+
+
+        $start_index = ($page - 1) * $per_page;
+        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby);
+
+
+        $records['data'] = $this->M_jobs->select_all_applied_jobs_users($query, $per_page, $start_index, $page, $sortby);
+
+
+        $data = array();
+        $responses = array();
+        $i = 0;
+        foreach ($records['data']  as $row) {
+            $job_id  = en_func($row->job_id, 'e');
+
+            $created_at = $row->created_at;
+
+            $timeFirst  = strtotime($created_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+            // $quiz_time_left = $quiz_time - $differenceInSeconds;
+
+            $responses[] = array(
+                ++$i,
+                '_id' => $job_id,
+                'job_title' => $row->job_title,
+                'job_location' => $row->country_name,
+                'min_experience' => $row->min_experience,
+                'max_experience' => $row->max_experience,
+                'min_salary' => $row->min_salary,
+                'max_salary' => $row->max_salary,
+                'job_openings' => $row->job_openings,
+                'posted_before' => seconds2format($differenceInSeconds) . " ago",
+                'brief_description' => $row->brief_description,
+                'applied' => $row->applied ? true : false,
+                'job_status' => $row->status_name,
+                'job_status_badge' => ($row->job_status == 1) ? 'custom' : ($row->job_status == 2 ? 'success' : 'danger'),
+                'show_wishlist' => false,
+                'show_applied' => false
+
+            );
+        }
+
+
+        $data["content_null"] = ($i == 0) ?  true : false;
+        $data["show_pagination"] = false;
 
         $data['jobs'] = $responses;
 

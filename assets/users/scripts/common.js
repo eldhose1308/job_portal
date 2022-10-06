@@ -541,6 +541,11 @@ $(document).on('submit', '#add-form', function (e) {
             AlertandToast(out.status, out.msg, false, true);
             // go_to_backpage();
             // closeOffCanvas();
+            if ($('.jobs_datacard-list').length > 0)
+                $(".jobs_datacard-list").submit();
+
+            if ($('.candidates_datacard-list').length > 0)
+                $(".candidates_datacard-list").submit();
             load_datacard_list();
         }
         else

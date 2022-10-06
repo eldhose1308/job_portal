@@ -179,9 +179,12 @@
                                 <div class="list-checkbox pb-20">
                                     <div class="row position-relative mt-10 mb-20">
                                         <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            <div id="slider-range"></div>
                                         </div>
-
+                                        <div class="box-input-money">
+                                            <input class="input-disabled form-control min-value-money" type="text" name="min-value-money" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            <input class="form-control min-value" type="hidden" name="min-value" value="">
+                                        </div>
                                     </div>
                                     <div class="box-number-money">
                                         <div class="row mt-30">
@@ -242,7 +245,7 @@
 
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
-                                <select id="job_location" class="form-control form-icons dropdown-filters">
+                                    <select id="job_location" class="form-control form-icons dropdown-filters">
                                         <option data-identifier="default-value" value="-1">All Countries</option>
                                         <?php foreach ($countries as $country) : ?>
                                             <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
@@ -265,28 +268,28 @@
                             <div id="Posted_Time" class="filter-tabcontent">
                                 <div class="filter-block mb-30">
                                     <div class="form-group">
-                                    <ul class="list-checkbox" id="posted_date">
-                                        <li>
-                                            <label class="cb-container">
-                                                <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
+                                        <ul class="list-checkbox" id="posted_date">
+                                            <li>
+                                                <label class="cb-container">
+                                                    <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="cb-container">
+                                                    <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="cb-container">
+                                                    <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="cb-container">
+                                                    <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
+                                                </label>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -446,3 +449,6 @@
 
 
 <script src="<?= base_url() ?>assets/users/scripts/jobs.js"></script>
+
+<script src="<?= base_url() ?>assets/users/js/noUISlider.js"></script>
+<script src="<?= base_url() ?>assets/users/js/slider.js"></script>

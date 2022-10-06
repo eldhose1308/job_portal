@@ -4,6 +4,12 @@ $username = "root";
 $password = "";
 $dbname = "jobs";
 
+
+
+$start = isset($_GET['start']) ? $_GET['start'] : 1;
+$end = isset($_GET['end']) ? $_GET['end'] : 1;
+
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -11,7 +17,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-for ($i = 3; $i < 50; $i++) {
+for ($i = $start; $i < $end; $i++) {
     $job_title = "Sample job " . $i;
     $brief_description = "This is a sample job " . $i;
     $job_description = "Sample job " . $i . " description";

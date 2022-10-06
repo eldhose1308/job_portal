@@ -9318,6 +9318,33 @@ ul li:last-child .card-list-4 {
 /*# sourceMappingURL=style.css.map */
 
 
+.candidates-feature-info {
+  display: flex;
+  align-items: center;
+}
+
+.candidates-feature-info .candidates-info-icon {
+  text-align: center;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 65px;
+  flex: 0 0 65px;
+}
+
+.candidates-feature-info .candidates-info-count {
+  margin-left: auto;
+  text-align: center;
+  font-size: 24px;
+  padding: 3% 0%;
+  border-left: 1px solid white;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 85px;
+  flex: 0 0 85px;
+}
+
+
+
+
+
 @media only screen and (max-width: 1199px) {
 
   /* For mobile phones: */
