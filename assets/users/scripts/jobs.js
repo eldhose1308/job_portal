@@ -29,6 +29,9 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
     add_getParameters(ids, value);
 
     load_jobs();
+
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 
@@ -37,6 +40,13 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
  * Side Filters
  * 
  * * */
+
+$(document).on('click', '.reset-filters', function (e) {
+    remove_getParameters();
+    load_jobs();
+    AlertandToast('success', 'Filters Cleared', false, true);
+});
+
 
 $(document).on('change', '.checkbox-filters', function (e) {
     $(this).parent().parent().parent().find('.checkbox-filters').not(this).prop('checked', false);
@@ -47,15 +57,32 @@ $(document).on('change', '.checkbox-filters', function (e) {
     add_getParameters(ids, value);
 
     load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 $(document).on('change', '.dropdown-filters', function (e) {
-
     let ids = $(this)[0].id;
     let value = $(this).val();
     add_getParameters(ids, value);
 
     load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
+});
+
+
+$(document).on('click', '.range-filters', function (e) {
+    document.querySelectorAll('.range-items').forEach(function (element) {
+        let ids = element.id;
+        let value = element.value;
+        add_getParameters(ids, value);
+
+    });
+
+    load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 

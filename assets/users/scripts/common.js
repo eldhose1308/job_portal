@@ -347,6 +347,12 @@ function load_datacard(parameters, form_url) {
 /******** Loads GET Parameters data ********/
 
 
+function remove_getParameters() {
+   
+    window.history.replaceState(null, null, "?");
+
+}
+
 function add_getParameters(ids, value) {
     let current_parameters = getParameters();
 

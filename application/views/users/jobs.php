@@ -95,7 +95,7 @@
                     <div class="sidebar-shadow none-shadow mb-30">
                         <div class="sidebar-filters">
                             <div class="filter-block head-border mb-30">
-                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
+                                <h5>Advance Filter <a class="link-reset reset-filters" role="button">Reset</a></h5>
                             </div>
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
@@ -175,21 +175,21 @@
                                 </div>
                             </div>
                             <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-25">Salary Range</h5>
+                                <h5 class="medium-heading mb-25">Salary Range </h5>
                                 <div class="list-checkbox pb-20">
                                     <div class="row position-relative mt-10 mb-20">
                                         <div class="col-sm-12 box-slider-range">
-                                            <div id="slider-range"></div>
+                                            <div id="slider-range-1"></div>
                                         </div>
                                         <div class="box-input-money">
-                                            <input class="input-disabled form-control min-value-money" type="text" name="min-value-money" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                            <input class="form-control min-value" type="hidden" name="min-value" value="">
+                                            <input class="input-disabled form-control range-items min-value-money" type="text" id="salary" name="salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         </div>
                                     </div>
                                     <div class="box-number-money">
                                         <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">₹0</span></div>
+                                            <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                            <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">₹1000</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -202,14 +202,17 @@
                                 <div class="list-checkbox pb-20">
                                     <div class="row position-relative mt-10 mb-20">
                                         <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            <div id="slider-range-2"></div>
                                         </div>
-
+                                        <div class="box-input-money">
+                                            <input class="input-disabled form-control range-items min-value-experience" type="text" id="experience" name="experience" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        </div>
                                     </div>
                                     <div class="box-number-money">
                                         <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">0 yrs</span></div>
+                                            <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                            <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">20 yrs</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +243,7 @@
                         <div class="sidebar-shadow none-shadow mb-30">
 
                             <div class="filter-block head-border mb-30">
-                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
+                                <h5>Advance Filter <a class="link-reset reset-filters" role="button">Reset</a></h5>
                             </div>
 
                             <div class="filter-block mb-30">
@@ -342,14 +345,17 @@
                                     <div class="list-checkbox pb-20">
                                         <div class="row position-relative mt-10 mb-20">
                                             <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                                <div id="slider-range-3"></div>
                                             </div>
-
+                                            <div class="box-input-money">
+                                                <input class="input-disabled form-control range-items min-value-money" type="text" id="salary" name="salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
                                         </div>
                                         <div class="box-number-money">
                                             <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                                <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">₹0</span></div>
+                                                <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                                <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">₹1000</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -364,14 +370,17 @@
                                     <div class="list-checkbox pb-20">
                                         <div class="row position-relative mt-10 mb-20">
                                             <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                                <div id="slider-range-4"></div>
                                             </div>
-
+                                            <div class="box-input-money">
+                                                <input class="input-disabled form-control range-items min-value-experience" type="text" id="experience" name="experience" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
                                         </div>
                                         <div class="box-number-money">
                                             <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                                <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">0 yrs</span></div>
+                                                <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                                <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">20 yrs</span></div>
                                             </div>
                                         </div>
                                     </div>

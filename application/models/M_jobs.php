@@ -12,7 +12,7 @@ class M_jobs extends CI_Model
      * 
      * 
      */
-    function select_all_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    function select_all_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
@@ -25,6 +25,17 @@ class M_jobs extends CI_Model
 
         if ($job_location > 0)
             $where['ci_jobs.job_location'] = $job_location;
+
+        if ($salary > 0) {
+            $where['ci_jobs.min_salary <='] = $salary;
+            $where['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $where['ci_jobs.min_experience <='] = $experience;
+            $where['ci_jobs.max_experience >='] = $experience;
+        }
 
 
         if ($query != '') {
@@ -50,7 +61,7 @@ class M_jobs extends CI_Model
 
 
 
-    public function select_all_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    public function select_all_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
@@ -64,6 +75,16 @@ class M_jobs extends CI_Model
         if ($job_location > 0)
             $multiplewhere['ci_jobs.job_location'] = $job_location;
 
+        if ($salary > 0) {
+            $multiplewhere['ci_jobs.min_salary <='] = $salary;
+            $multiplewhere['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $multiplewhere['ci_jobs.min_experience <='] = $experience;
+            $multiplewhere['ci_jobs.max_experience >='] = $experience;
+        }
 
         if ($query != '') {
             $this->db->or_like('job_title', $query);
@@ -96,7 +117,7 @@ class M_jobs extends CI_Model
      */
 
 
-    function select_saved_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    function select_saved_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
@@ -110,6 +131,16 @@ class M_jobs extends CI_Model
         if ($job_location > 0)
             $where['ci_jobs.job_location'] = $job_location;
 
+        if ($salary > 0) {
+            $where['ci_jobs.min_salary <='] = $salary;
+            $where['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $where['ci_jobs.min_experience <='] = $experience;
+            $where['ci_jobs.max_experience >='] = $experience;
+        }
 
 
         if ($this->session->has_userdata('user_login_status')) {
@@ -132,7 +163,7 @@ class M_jobs extends CI_Model
         return $query->num_rows();
     }
 
-    public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
@@ -146,6 +177,16 @@ class M_jobs extends CI_Model
         if ($job_location > 0)
             $multiplewhere['ci_jobs.job_location'] = $job_location;
 
+        if ($salary > 0) {
+            $multiplewhere['ci_jobs.min_salary <='] = $salary;
+            $multiplewhere['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $multiplewhere['ci_jobs.min_experience <='] = $experience;
+            $multiplewhere['ci_jobs.max_experience >='] = $experience;
+        }
 
 
         if ($this->session->has_userdata('user_login_status')) {
@@ -211,7 +252,7 @@ class M_jobs extends CI_Model
 
 
 
-    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0)
+    function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $where = array(
             'ci_jobs.status' => '1'
@@ -223,12 +264,22 @@ class M_jobs extends CI_Model
         }
 
         if ($job_status > 0)
-            $multiplewhere['ci_jobs_apply.job_status'] = $job_status;
+            $where['ci_jobs_apply.job_status'] = $job_status;
 
 
         if ($job_location > 0)
             $where['ci_jobs.job_location'] = $job_location;
 
+        if ($salary > 0) {
+            $where['ci_jobs.min_salary <='] = $salary;
+            $where['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $where['ci_jobs.min_experience <='] = $experience;
+            $where['ci_jobs.max_experience >='] = $experience;
+        }
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_apply.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
@@ -250,7 +301,7 @@ class M_jobs extends CI_Model
         return $query->num_rows();
     }
 
-    public function select_all_applied_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0)
+    public function select_all_applied_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
@@ -267,6 +318,18 @@ class M_jobs extends CI_Model
 
         if ($job_status > 0)
             $multiplewhere['ci_jobs_apply.job_status'] = $job_status;
+
+
+        if ($salary > 0) {
+            $multiplewhere['ci_jobs.min_salary <='] = $salary;
+            $multiplewhere['ci_jobs.max_salary >='] = $salary;
+        }
+
+
+        if ($experience > 0) {
+            $multiplewhere['ci_jobs.min_experience <='] = $experience;
+            $multiplewhere['ci_jobs.max_experience >='] = $experience;
+        }
 
         if ($this->session->has_userdata('user_login_status')) {
             $or_multiplewhere['ci_jobs_apply.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
