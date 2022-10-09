@@ -201,11 +201,16 @@ class jobs extends US_Controller
         $query = $this->input->get('query');
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_saved_jobs_count($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
 
+        $candidate_id = $this->user_id;
+
+        $applied_jobs = $this->M_jobs->select_jobs_in_applied($candidate_id);
+
+        $total_rows = $this->M_jobs->select_saved_jobs_count($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
 
         $records['data'] = $this->M_jobs->select_all_saved_jobs_users($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
 
+        $applied_job_ids = array_column($applied_jobs, 'job_id');
 
         $data = array();
         $responses = array();
@@ -219,8 +224,8 @@ class jobs extends US_Controller
             $timeSecond = strtotime(date("Y-m-d h:i:s"));
 
             $differenceInSeconds = $timeSecond - $timeFirst;
+            $applied = in_array($row->job_id,$applied_job_ids) ? true : false;
 
-            // $quiz_time_left = $quiz_time - $differenceInSeconds;
 
             $responses[] = array(
                 ++$i,
@@ -234,7 +239,8 @@ class jobs extends US_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => $row->wishlist ? true : false,
+                'wishlist' => true,
+                'applied' => $applied,
                 'show_wishlist' => true,
                 'show_applied' => true
 

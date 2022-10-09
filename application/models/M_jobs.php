@@ -5,6 +5,41 @@ class M_jobs extends CI_Model
 {
 
 
+
+
+    function check_job_in_wishlist($job_id, $candidate_id)
+    {
+        $this->db->select('ci_jobs_wishlist.*');
+        $this->db->from('ci_jobs_wishlist');
+        $this->db->where('ci_jobs_wishlist.job_id', $job_id);
+        $this->db->where('ci_jobs_wishlist.candidate_id', $candidate_id);
+        $data = $this->db->get();
+
+        if ($data->num_rows() == 1) {
+            return $data->row();
+        } else {
+            return false;
+        }
+    }
+
+
+
+    function select_jobs_in_wishlist( $candidate_id)
+    {
+        $this->db->select('ci_jobs_wishlist.job_id');
+        $this->db->where('ci_jobs_wishlist.candidate_id', $candidate_id);
+        return $this->db->get('ci_jobs_wishlist')->result_array();
+
+    }
+    function select_jobs_in_applied( $candidate_id)
+    {
+        $this->db->select('ci_jobs_apply.job_id');
+        $this->db->where('ci_jobs_apply.candidate_id', $candidate_id);
+        return $this->db->get('ci_jobs_apply')->result_array();
+
+    }
+
+
     /*
      * 
      * 
@@ -44,11 +79,9 @@ class M_jobs extends CI_Model
             $this->db->or_like('job_description', $query);
         }
 
-        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.candidate_id as wishlist_candidate,ci_jobs_apply.candidate_id as applied_candidate,ci_jobs_wishlist.job_id as wishlist,ci_jobs_apply.job_id as applied');
+        $this->db->select('ci_jobs.*,ci_countries.country_name');
         $this->db->where($where);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
-        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
-        $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
 
         if ($sortby == "desc")
             $this->db->order_by("ci_jobs.job_id", "desc");
@@ -92,11 +125,9 @@ class M_jobs extends CI_Model
             $this->db->or_like('job_description', $query);
         }
 
-        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.candidate_id as wishlist_candidate,ci_jobs_apply.candidate_id as applied_candidate,ci_jobs_wishlist.job_id as wishlist,ci_jobs_apply.job_id as applied');
+        $this->db->select('ci_jobs.*,ci_countries.country_name');
         $this->db->where($multiplewhere);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
-        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
-        $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
         $this->db->limit($limit, $start);
 
         if ($sortby == "desc")
@@ -119,8 +150,12 @@ class M_jobs extends CI_Model
 
     function select_saved_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
+        $candidate_id = $this->user_id;
+
         $where = array(
-            'ci_jobs.status' => '1'
+            'ci_jobs.status' => '1',
+            'ci_jobs_wishlist.candidate_id' => $candidate_id
+
         );
 
         if ($posted_date > 0) {
@@ -143,30 +178,30 @@ class M_jobs extends CI_Model
         }
 
 
-        if ($this->session->has_userdata('user_login_status')) {
-            $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
-        }
 
         if ($query != '') {
             $this->db->or_like('job_title', $query);
             $this->db->or_like('brief_description', $query);
             $this->db->or_like('job_description', $query);
         }
-
+        $this->db->distinct();
+        $this->db->select('ci_jobs_wishlist.job_id as wishlist_id,ci_jobs.*,ci_countries.country_name');
         $this->db->where($where);
-        $this->db->where($or_multiplewhere);
+        $this->db->join('ci_jobs', 'ci_jobs.job_id  = ci_jobs_wishlist.job_id', 'left');
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
-        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
 
 
-        $query = $this->db->get("ci_jobs");
+        $query = $this->db->get("ci_jobs_wishlist");
         return $query->num_rows();
     }
 
     public function select_all_saved_jobs_users($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
+        $candidate_id = $this->user_id;
+
         $multiplewhere = array(
-            'ci_jobs.status' => 1
+            'ci_jobs.status' => 1,
+            'ci_jobs_wishlist.candidate_id' => $candidate_id
         );
 
         if ($posted_date > 0) {
@@ -189,9 +224,6 @@ class M_jobs extends CI_Model
         }
 
 
-        if ($this->session->has_userdata('user_login_status')) {
-            $or_multiplewhere['ci_jobs_wishlist.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
-        }
 
         if ($query != '') {
             $this->db->or_like('job_title', $query);
@@ -199,11 +231,11 @@ class M_jobs extends CI_Model
             $this->db->or_like('job_description', $query);
         }
 
-        $this->db->select('ci_jobs.*,ci_countries.country_name,ci_jobs_wishlist.job_id as wishlist');
+        $this->db->distinct();
+        $this->db->select('ci_jobs_wishlist.job_id as wishlist_id,ci_jobs.*,ci_countries.country_name');
         $this->db->where($multiplewhere);
-        $this->db->where($or_multiplewhere);
+        $this->db->join('ci_jobs', 'ci_jobs.job_id  = ci_jobs_wishlist.job_id', 'left');
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
-        $this->db->join('ci_jobs_wishlist', 'ci_jobs_wishlist.job_id  = ci_jobs.job_id', 'left');
         $this->db->limit($limit, $start);
 
         if ($sortby == "desc")
@@ -212,7 +244,7 @@ class M_jobs extends CI_Model
             $this->db->order_by("ci_jobs.job_id", "asc");
 
 
-        return $this->db->get('ci_jobs')->result();
+        return $this->db->get('ci_jobs_wishlist')->result();
     }
 
 
@@ -254,8 +286,11 @@ class M_jobs extends CI_Model
 
     function select_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $job_status = 0, $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
+        $candidate_id = $this->user_id;
+
         $where = array(
-            'ci_jobs.status' => '1'
+            'ci_jobs.status' => '1',
+            'ci_jobs_apply.candidate_id' => $candidate_id
         );
 
         if ($posted_date > 0) {
@@ -281,10 +316,6 @@ class M_jobs extends CI_Model
             $where['ci_jobs.max_experience >='] = $experience;
         }
 
-        if ($this->session->has_userdata('user_login_status')) {
-            $or_multiplewhere['ci_jobs_apply.candidate_id'] = (int) en_func($this->session->userdata('user_id'), 'd');
-        }
-
         if ($query != '') {
             $this->db->or_like('job_title', $query);
             $this->db->or_like('brief_description', $query);
@@ -292,7 +323,6 @@ class M_jobs extends CI_Model
         }
 
         $this->db->where($where);
-        $this->db->where($or_multiplewhere);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
         $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
 
@@ -660,7 +690,7 @@ class M_jobs extends CI_Model
      * 
      */
 
-     
+
     function select_all_applied_jobs_count_dashboard($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
     {
         $where = array(
@@ -674,5 +704,4 @@ class M_jobs extends CI_Model
         $query = $this->db->get("ci_jobs_apply");
         return $query->num_rows();
     }
-
 }

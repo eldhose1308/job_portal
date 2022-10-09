@@ -137,43 +137,7 @@
                             </div>
 
 
-                            <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-15">Industry</h5>
-                                <div class="form-group">
-                                    <ul class="list-checkbox">
-                                        <li>
-                                            <label class="cb-container">
-                                                <input data-identifier="default-value" class="checkbox-filters" data-value="0" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            
                             <div class="filter-block mb-20">
                                 <h5 class="medium-heading mb-25">Salary Range </h5>
                                 <div class="list-checkbox pb-20">
@@ -261,7 +225,6 @@
 
                             <div class="filter-tab">
                                 <button class="filter-tablinks active" data-target="Posted_Time">Posted time</button>
-                                <button class="filter-tablinks" data-target="Job_Type">Job type</button>
                                 <button class="filter-tablinks" data-target="Salary">Salary</button>
                                 <button class="filter-tablinks" data-target="Experience">Experience</button>
                             </div>
@@ -298,46 +261,7 @@
                             </div>
                             <!---->
 
-                            <!---->
-                            <div id="Job_Type" class="filter-tabcontent" style="display: none;">
-                                <div class="filter-block mb-20">
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                                </label><span class="number-item">180</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!---->
+                            
 
                             <!---->
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
@@ -354,7 +278,6 @@
                                         <div class="box-number-money">
                                             <div class="row mt-30">
                                                 <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">₹0</span></div>
-                                                <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
                                                 <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">₹1000</span></div>
                                             </div>
                                         </div>
@@ -379,7 +302,6 @@
                                         <div class="box-number-money">
                                             <div class="row mt-30">
                                                 <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">0 yrs</span></div>
-                                                <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
                                                 <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">20 yrs</span></div>
                                             </div>
                                         </div>
@@ -396,6 +318,17 @@
                         </div>
 
 
+
+                        <div class="container">
+                            <div class="row mb-15">
+                                <div class="col-6">
+                                    <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
+                                </div>  
+                                <div class="col-6">
+                                    <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>

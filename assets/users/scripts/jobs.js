@@ -43,6 +43,8 @@ $(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (
 
 $(document).on('click', '.reset-filters', function (e) {
     remove_getParameters();
+    closeOffCanvas();
+
     load_jobs();
     AlertandToast('success', 'Filters Cleared', false, true);
 });
@@ -79,10 +81,10 @@ $(document).on('click', '.range-filters', function (e) {
         add_getParameters(ids, value);
 
     });
+    closeOffCanvas();
 
     load_jobs();
     AlertandToast('success', 'Filters Applied', false, true);
-
 });
 
 

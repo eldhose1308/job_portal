@@ -9420,11 +9420,14 @@ ul li:last-child .card-list-4 {
   overflow-y: auto;
 }
 
+.bs-canvas.bg-light{
+  background-color: #fff !important;
+}
 .bs-canvas-bottom {
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 75% !important;
+  height: 95% !important;
 }
 
 .bs-canvas-left {

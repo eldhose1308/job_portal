@@ -151,7 +151,7 @@ $(document).on('submit', '.jobs_datacard-list', function (e) {
 
 function load_jobs_datacard(parameters, form_url) {
 
-    circular_loader_get('show');
+    // circular_loader_get('show');
 
     $.get(form_url, parameters, function (data, status) {
         var out = jQuery.parseJSON(data);
@@ -159,11 +159,11 @@ function load_jobs_datacard(parameters, form_url) {
 
         buildJobsCard(tableData);
 
-        circular_loader_get('hide');
+        // circular_loader_get('hide');
 
     }).fail(function () {
         AlertandToast('error', 'Could not load jobs', false, true);
-        circular_loader_get('hide');
+        // circular_loader_get('hide');
 
     });
 

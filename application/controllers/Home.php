@@ -87,12 +87,18 @@ class home extends CI_Controller
 
         $start_index = ($page - 1) * $per_page;
 
+        $candidate_id = $this->user_id;
+
+        $wishlists_jobs = $this->M_jobs->select_jobs_in_wishlist($candidate_id);
+        $applied_jobs = $this->M_jobs->select_jobs_in_applied($candidate_id);
+
         $total_rows = $this->M_jobs->select_all_jobs_count($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
 
         $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
 
-        // lq();
-        $candidate_id = $this->user_id;
+
+        $wishlisted_job_ids = array_column($wishlists_jobs, 'job_id');
+        $applied_job_ids = array_column($applied_jobs, 'job_id');
 
         $data = array();
         $responses = array();
@@ -109,6 +115,12 @@ class home extends CI_Controller
 
             $differenceInSeconds = $timeSecond - $timeFirst;
 
+            $wishlist = in_array($row->job_id,$wishlisted_job_ids) ? true : false;
+            $applied = in_array($row->job_id,$applied_job_ids) ? true : false;
+            /*
+                'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
+                'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
+            */
 
             $responses[] = array(
                 ++$i,
@@ -122,8 +134,8 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
-                'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
+                'wishlist' => $wishlist,
+                'applied' => $applied,
                 'show_wishlist' => true,
                 'show_applied' => true
 
@@ -205,10 +217,8 @@ class home extends CI_Controller
                 'job_openings' => $row->job_openings,
                 'posted_before' => seconds2format($differenceInSeconds) . " ago",
                 'brief_description' => $row->brief_description,
-                'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
-                'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
-                'show_wishlist' => true,
-                'show_applied' => true
+                'show_wishlist' => false,
+                'show_applied' => false
 
 
             );
@@ -307,11 +317,22 @@ class home extends CI_Controller
         $data["status"] = $this->Common_model->select_status();
 
         $this->check_exists($data["jobDetails"]);
+        $candidate_id = $this->user_id;
+
+
 
         $wishlist_status = (int) $this->input->post('wishlist_status', TRUE);
 
+        if ($wishlist_status)
+            if ($this->M_jobs->check_job_in_wishlist($job_id, $candidate_id)) {
 
-        $candidate_id = $this->user_id;
+                $data = array('status' => 'success', 'msg' => "Job already wishlisted");
+                echo json_encode($data);
+                exit();
+            }
+
+
+
         $data_insert = array(
             'job_id' => $job_id,
             'candidate_id' => $candidate_id,
