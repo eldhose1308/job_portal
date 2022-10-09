@@ -47,7 +47,7 @@
                                                 <div class="dropdown dropdown-sort">
                                                     <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>10</span><i class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light filter" id="per_page" aria-labelledby="dropdownSort">
-                                                        <li><a data-value="10" class="dropdown-item active" href="#">10</a></li>
+                                                        <li><a data-identifier="default-value" data-value="10" class="dropdown-item active" href="#">10</a></li>
                                                         <li><a data-value="20" class="dropdown-item" href="#">20</a></li>
                                                         <li><a data-value="30" class="dropdown-item" href="#">30</a></li>
                                                     </ul>
@@ -58,12 +58,11 @@
                                                     <button class="btn dropdown-toggle" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>Newest Post</span><i class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light filter" id="sortby" aria-labelledby="dropdownSort2">
                                                         <?php foreach ($sortBys as $sortBy) : ?>
-                                                            <li><a data-value="<?= $sortBy['sort_id'] ?>" class="dropdown-item" href="#"><?= $sortBy['sorting_by'] ?></a></li>
+                                                            <li><a data-identifier="default-value" data-value="<?= $sortBy['sort_id'] ?>" class="dropdown-item" href="#"><?= $sortBy['sorting_by'] ?></a></li>
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div>
                                             </div>
-
 
                                         </form>
 
@@ -94,11 +93,12 @@
                     <div class="sidebar-shadow none-shadow mb-30">
                         <div class="sidebar-filters">
                             <div class="filter-block head-border mb-30">
-                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
+                                <h5>Advance Filter <a class="link-reset reset-filters" role="button">Reset</a></h5>
                             </div>
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
-                                    <select class="form-control form-icons">
+                                    <select id="job_location" class="form-control form-icons dropdown-filters">
+                                        <option data-identifier="default-value" value="-1">All Countries</option>
                                         <?php foreach ($countries as $country) : ?>
                                             <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
                                         <?php endforeach; ?>
@@ -109,25 +109,25 @@
                             <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-10">Job Posted</h5>
                                 <div class="form-group">
-                                    <ul class="list-checkbox">
+                                    <ul class="list-checkbox" id="posted_date">
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
+                                                <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                         <li>
                                             <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
+                                                <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
                                             </label>
                                         </li>
                                     </ul>
@@ -135,56 +135,23 @@
                             </div>
 
 
+
                             <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-15">Industry</h5>
-                                <div class="form-group">
-                                    <ul class="list-checkbox">
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label><span class="number-item">180</span>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-25">Salary Range</h5>
+                                <h5 class="medium-heading mb-25">Salary Range </h5>
                                 <div class="list-checkbox pb-20">
                                     <div class="row position-relative mt-10 mb-20">
                                         <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            <div id="slider-range-1"></div>
                                         </div>
-
+                                        <div class="box-input-money">
+                                            <input class="input-disabled form-control range-items min-value-money" type="text" id="salary" name="salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        </div>
                                     </div>
                                     <div class="box-number-money">
                                         <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">₹0</span></div>
+                                            <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                            <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">₹1000</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -197,14 +164,17 @@
                                 <div class="list-checkbox pb-20">
                                     <div class="row position-relative mt-10 mb-20">
                                         <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                            <div id="slider-range-2"></div>
                                         </div>
-
+                                        <div class="box-input-money">
+                                            <input class="input-disabled form-control range-items min-value-experience" type="text" id="experience" name="experience" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        </div>
                                     </div>
                                     <div class="box-number-money">
                                         <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                            <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">0 yrs</span></div>
+                                            <div class="col-sm-4 col-4"><a class="btn btn-link btn-sm float-right range-filters">Apply</a></div>
+                                            <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">20 yrs</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -235,12 +205,13 @@
                         <div class="sidebar-shadow none-shadow mb-30">
 
                             <div class="filter-block head-border mb-30">
-                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
+                                <h5>Advance Filter <a class="link-reset reset-filters" role="button">Reset</a></h5>
                             </div>
 
                             <div class="filter-block mb-30">
                                 <div class="form-group select-style select-style-icon">
-                                    <select class="form-control form-icons">
+                                    <select id="job_location" class="form-control form-icons dropdown-filters">
+                                        <option data-identifier="default-value" value="-1">All Countries</option>
                                         <?php foreach ($countries as $country) : ?>
                                             <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
                                         <?php endforeach; ?>
@@ -252,7 +223,6 @@
 
                             <div class="filter-tab">
                                 <button class="filter-tablinks active" data-target="Posted_Time">Posted time</button>
-                                <button class="filter-tablinks" data-target="Job_Type">Job type</button>
                                 <button class="filter-tablinks" data-target="Salary">Salary</button>
                                 <button class="filter-tablinks" data-target="Experience">Experience</button>
                             </div>
@@ -262,25 +232,25 @@
                             <div id="Posted_Time" class="filter-tabcontent">
                                 <div class="filter-block mb-30">
                                     <div class="form-group">
-                                        <ul class="list-checkbox">
+                                        <ul class="list-checkbox" id="posted_date">
                                             <li>
                                                 <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
+                                                    <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
                                                 </label>
                                             </li>
                                             <li>
                                                 <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
+                                                    <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
                                                 </label>
                                             </li>
                                             <li>
                                                 <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
+                                                    <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
                                                 </label>
                                             </li>
                                             <li>
                                                 <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
+                                                    <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
                                                 </label>
                                             </li>
                                         </ul>
@@ -289,46 +259,7 @@
                             </div>
                             <!---->
 
-                            <!---->
-                            <div id="Job_Type" class="filter-tabcontent" style="display: none;">
-                                <div class="filter-block mb-20">
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                                </label><span class="number-item">180</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!---->
+                            
 
                             <!---->
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
@@ -336,14 +267,16 @@
                                     <div class="list-checkbox pb-20">
                                         <div class="row position-relative mt-10 mb-20">
                                             <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                                <div id="slider-range-3"></div>
                                             </div>
-
+                                            <div class="box-input-money">
+                                                <input class="input-disabled form-control range-items min-value-money" type="text" id="salary" name="salary" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
                                         </div>
                                         <div class="box-number-money">
                                             <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                                <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">₹0</span></div>
+                                                <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">₹1000</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -358,14 +291,16 @@
                                     <div class="list-checkbox pb-20">
                                         <div class="row position-relative mt-10 mb-20">
                                             <div class="col-sm-12 box-slider-range">
-                                                <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
+                                                <div id="slider-range-4"></div>
                                             </div>
-
+                                            <div class="box-input-money">
+                                                <input class="input-disabled form-control range-items min-value-experience" type="text" id="experience" name="experience" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                            </div>
                                         </div>
                                         <div class="box-number-money">
                                             <div class="row mt-30">
-                                                <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                                <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
+                                                <div class="col-sm-4 col-4"><span class="font-sm color-brand-1">0 yrs</span></div>
+                                                <div class="col-sm-4 col-4 text-end"><span class="font-sm color-brand-1">20 yrs</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -382,10 +317,22 @@
 
 
 
+                        <div class="container">
+                            <div class="row mb-15">
+                                <div class="col-6">
+                                    <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
+                                </div>  
+                                <div class="col-6">
+                                    <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
                 <!--- Bottom canvas -->
+
 
 
             </div>
@@ -443,3 +390,6 @@
 
 
 <script src="<?= base_url() ?>assets/users/scripts/jobs.js"></script>
+
+<script src="<?= base_url() ?>assets/users/js/noUISlider.js"></script>
+<script src="<?= base_url() ?>assets/users/js/slider.js"></script>

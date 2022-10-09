@@ -49,6 +49,9 @@
                 </a>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
                     <?= $applications->user_mobile ?>
+                </a> 
+                <a target="_blank" href="https://api.whatsapp.com/send?phone=+91<?= $applications->user_mobile ?>&text=This is a message from Amore Holidays" class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                    Whatsapp <i class="fa fa-whatsapp text-success"></i>
                 </a>
                 <br>
                 <a class="btn btn-tags-sm mb-10 text-white bg-primary">

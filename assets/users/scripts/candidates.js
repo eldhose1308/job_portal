@@ -247,6 +247,9 @@ function buildCandidatesCard(myList) {
                 </a>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
                      ${item.user_mobile} 
+                </a> 
+                <a target="_blank" href="https://api.whatsapp.com/send?phone=+91${item.user_mobile}&text=This is a message from Amore Holidays" class="btn btn-tags-sm mt-10 mb-10 mr-5">
+                Whatsapp <i class="fa fa-whatsapp text-success"></i>
                 </a>
                 <div class="card-2-bottom mt-20">
                     <div class="row">

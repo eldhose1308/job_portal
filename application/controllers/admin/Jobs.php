@@ -22,6 +22,7 @@ class jobs extends MY_Controller
         $data = $this->data;
         $data["status"] = $this->Common_model->select_status();
         $data["genders"] = $this->Common_model->select_all("ci_gender");
+        $data["countries"] = $this->Common_model->select_all("ci_countries");
 
 
         $this->template->views('admin/jobs/index', $data);
