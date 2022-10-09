@@ -30,7 +30,7 @@
 
                                 <div class="col-xl-4 col-lg-4 col-4">
                                     <span class="text-small text-showing pagination-details">Showing <strong>0-0 </strong>of <strong>0 </strong>jobs</span>
-                                    <a class="btn btn-sm btn-outline-custom show-filters" role="button"><i class="fa fa-filter"></i>Show Filter </a>
+                                    <a class="btn btn-sm btn-outline-custom show-filters d-inline-block" role="button"><i class="fa fa-filter"></i>Show Filter </a>
 
                                 </div>
 

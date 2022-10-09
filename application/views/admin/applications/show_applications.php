@@ -1,6 +1,22 @@
 <?php echo form_open(base_url('admin/applications/change_application_status'), 'class="" id="change-status-forms" autocomplete="off" '); ?>
 </form>
 
+<div class="col-lg-8 col-md-12 mb-15">
+    <h3><?= $jobsDetails->job_title ?></h3>
+    <div class="mt-0 mb-15 text-black">
+        <span class="card-briefcase"><?= $jobsDetails->job_openings ?></span>
+        <span class="card-time"><?=  date('d M ,Y', strtotime($jobsDetails->created_at)) . ' | ' . date('h:i a', strtotime($jobsDetails->created_at)) ?></span>
+    </div>
+
+    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+        Experience <?= $jobsDetails->min_experience .' - '. $jobsDetails->max_experience ?> years
+    </a>  
+    <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
+        INR <?= $jobsDetails->min_salary .' - '. $jobsDetails->max_salary ?> / Month
+    </a>
+</div>
+
+<hr>
 
 <?php foreach ($jobApplications as $applications) :
     $status_bg = ($applications->job_status == 1) ? 'custom' : ($applications->job_status == 2 ? 'success' : 'danger');
@@ -35,7 +51,7 @@
                     <?= $applications->user_mobile ?>
                 </a>
                 <br>
-                <a class="btn btn-tags-sm mb-10 text-white bg-primary"> 
+                <a class="btn btn-tags-sm mb-10 text-white bg-primary">
                     <i class="fa fa-envelope text-white mr-10"></i> Send Email notification
                 </a>
 
