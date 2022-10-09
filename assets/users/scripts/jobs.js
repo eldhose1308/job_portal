@@ -127,8 +127,14 @@ $(document).on('click', '.filter-tablinks', function (e) {
 });
 
 function getParameters_toDOM() {
+    let parameters = getParameters();
+    parameters.forEach((value, key) => {
+
+    });
 
 }
+
+
 
 $(document).on('submit', '.jobs_datacard-list', function (e) {
     e.preventDefault();
