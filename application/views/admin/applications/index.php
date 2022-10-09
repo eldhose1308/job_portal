@@ -3,7 +3,7 @@
         <div class="container">
             <div class="banner-hero banner-single banner-single-bg">
                 <div class="block-banner text-center">
-                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">00</span> Jobs</span> Applied </h3>
+                    <h3 class="wow animate__animated animate__fadeInUp"><span class="color-brand-2"><span class="total_jobs">00</span> Jobs</span> Available </h3>
                     <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero repellendus magni, <br class="d-none d-xl-block">atque delectus molestias quis?</div>
                     <div class="form-find text-start mt-40 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                         <form class="jobs-search-form">
@@ -23,7 +23,7 @@
     <section class="section-box mt-30">
         <div class="container">
             <div class="row flex-row-reverse">
-                <div class="col-lg-9 col-md-12 col-sm-12 col-12 float-right">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-12 float-right">
                     <div class="content-page">
                         <div class="box-filters-job">
                             <div class="row">
@@ -39,10 +39,10 @@
                                     <div class="display-flex2">
 
 
-                                        <form action="<?= base_url() ?>admin/applications/applied_jobs_json" class="jobs_datacard-list float-right">
+                                        <form action="<?= base_url() ?>admin/applications/jobs_json" class="jobs_datacard-list float-right">
 
 
-                                            <div class="box-border mr-10"><span class="text-sortby">Application Status:</span>
+                                            <div class="box-border mr-10 d-none"><span class="text-sortby">Application Status:</span>
                                                 <div class="dropdown dropdown-sort">
                                                     <button class="btn dropdown-toggle" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>All</span><i class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light filter" id="job_status" aria-labelledby="dropdownSort">
@@ -83,147 +83,32 @@
                         </div>
 
 
-                        <div id="jobs-na_datacard" data-class="row">
-                            <center><i class="datacard-loader fa fa-circle-o-notch fa-spin"></i></center>
+                        <div class="jobapplications-content" data-class="row">
+                            <center><i class="datacard-loader fa fa-circle-o-notch fa-spin" style="display: none;"></i></center>
                         </div>
 
 
                     </div>
 
 
-                    <div class="jobs-paginations float-end paginations">
-                        <ul class="pager" id="job-pagination_btns">
-
-                        </ul>
-                    </div>
 
                 </div>
 
 
-                <div class="col-lg-3 col-md-12 col-sm-12 col-12 jobs-filters-desktop">
+                <div class="col-lg-4 col-md-12 col-sm-12 col-12 jobs-filters-desktop">
                     <div class="sidebar-shadow none-shadow mb-30">
-                        <div class="sidebar-filters">
-                            <div class="filter-block head-border mb-30">
-                                <h5>Advance Filter <a class="link-reset" href="#">Reset</a></h5>
-                            </div>
-                            <div class="filter-block mb-30">
-                                <div class="form-group select-style select-style-icon">
-                                    <select id="job_location" class="form-control form-icons dropdown-filters">
-                                        <option data-identifier="default-value" value="-1">All Countries</option>
-                                        <?php foreach ($countries as $country) : ?>
-                                            <option value="<?= en_func($country->country_id, 'e') ?>"><?= $country->country_name ?></option>
-                                        <?php endforeach; ?>
-                                    </select><i class="fi-rr-marker"></i>
-                                </div>
-                            </div>
-
-                            <div class="filter-block mb-30">
-                                <h5 class="medium-heading mb-10">Job Posted</h5>
-                                <div class="form-group">
-                                    <ul class="list-checkbox" id="posted_date">
-                                        <li>
-                                            <label class="cb-container">
-                                                <input data-identifier="default-value" class="checkbox-filters" data-value="-1" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">1 day</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="7" type="checkbox"><span class="text-small">7 days</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="30" type="checkbox"><span class="text-small">30 days</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                            <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-15">Industry</h5>
-                                <div class="form-group">
-                                    <ul class="list-checkbox">
-                                        <li>
-                                            <label class="cb-container">
-                                                <input data-identifier="default-value" class="checkbox-filters" data-value="0" type="checkbox" checked="checked"><span class="text-small">All</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" data-value="1" type="checkbox"><span class="text-small">Software</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Finance</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Recruting</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Management</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label class="cb-container">
-                                                <input class="checkbox-filters" type="checkbox"><span class="text-small">Advertising</span><span class="checkmark"></span>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="filter-block mb-20">
-                                <h5 class="medium-heading mb-25">Salary Range</h5>
-                                <div class="list-checkbox pb-20">
-                                    <div class="row position-relative mt-10 mb-20">
-                                        <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
-                                        </div>
-
-                                    </div>
-                                    <div class="box-number-money">
-                                        <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="filter-block mb-30">
-                                <h5 class="medium-heading mb-10">Experience Level</h5>
-                                <div class="list-checkbox pb-20">
-                                    <div class="row position-relative mt-10 mb-20">
-                                        <div class="col-sm-12 box-slider-range">
-                                            <input type="range" min="1" max="100" value="50" class="slider" name="salary_range" id="salary_range">
-                                        </div>
-
-                                    </div>
-                                    <div class="box-number-money">
-                                        <div class="row mt-30">
-                                            <div class="col-sm-6 col-6"><span class="font-sm color-brand-1">$0</span></div>
-                                            <div class="col-sm-6 col-6 text-end"><span class="font-sm color-brand-1">$500</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                        <!---->
+                        <div id="jobs-na_datacard" data-class="row">
+                            <center><i class="datacard-loader fa fa-circle-o-notch fa-spin"></i></center>
                         </div>
+
+                        <div class="jobs-paginations float-end paginations">
+                            <ul class="pager" id="job-pagination_btns">
+
+                            </ul>
+                        </div>
+
+                        <!---->
                     </div>
                 </div>
 
@@ -454,4 +339,4 @@
 
 
 
-<script src="<?= base_url() ?>assets/users/scripts/jobs.js"></script>
+<script src="<?= base_url() ?>assets/users/scripts/applications.js"></script>

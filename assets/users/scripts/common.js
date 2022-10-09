@@ -348,7 +348,7 @@ function load_datacard(parameters, form_url) {
 
 
 function remove_getParameters() {
-   
+
     window.history.replaceState(null, null, "?");
 
 }
@@ -901,7 +901,12 @@ function alertMessage(status, message) {
 
 }
 
+function go_to_top() {
 
+    $('body,html').animate({
+        scrollTop: 0
+    }, 100);
+}
 
 function toastModal(status, message, alert_modal = true, toast = true, alert = false) {
     if (toast) {

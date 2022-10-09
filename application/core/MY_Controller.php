@@ -132,7 +132,7 @@ class MY_Controller extends CI_Controller
     function check_exists($data_arr)
     {
         if (empty($data_arr))
-            redirect_to_404();
+            redirect_to_404_ajax();
     }
 
     function remove_p_tag($data)
@@ -253,7 +253,7 @@ class US_Controller extends CI_Controller
             "sorting_by" => "Oldest"
         );
 
-        
+
         //exit();
     }
 
@@ -347,7 +347,7 @@ class US_Controller extends CI_Controller
     function check_exists($data_arr)
     {
         if (empty($data_arr))
-            redirect_to_404();
+            redirect_to_404_ajax();
     }
 
     function check_id_real($id)

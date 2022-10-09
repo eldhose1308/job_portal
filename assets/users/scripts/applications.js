@@ -161,13 +161,36 @@ function load_jobs_datacard(parameters, form_url) {
 
         circular_loader_get('hide');
 
-    }).fail(function () {
-        AlertandToast('error', 'Could not load jobs', false, true);
-        circular_loader_get('hide');
-
     });
 
 }
+
+
+
+/***
+ * 
+ * Show applications of the job
+ * 
+ */
+
+$(document).on('click', '.show-applications-of-job', function (e) {
+    let form_url = $(this).attr("data-url");
+    $('.jobapplications-content').html(jobs_loader);
+    $.get(form_url, function (data, status) {
+        var out = jQuery.parseJSON(data);
+        out = out.data;
+
+        $('.jobapplications-content').html(out.content);
+        go_to_top();
+
+    }).fail(function () {
+        AlertandToast('error', 'Could not load jobs', false, true);
+        $('.jobapplications-content').html('');
+
+    });
+
+
+});
 
 
 
@@ -186,11 +209,100 @@ $(document).on('click', '.open-bottom-offcanvas', function (e) {
         $('.offcanvas-subheading').html(out.sub_heading);
         $('.offcanvas-content').html(out.content);
 
-    }).fail(function () {
-        AlertandToast('error', 'Could not load jobs', false, true);
-        $('.offcanvas-content').html('');
+    });
+
+
+});
+
+
+
+$(document).on('change', '.change_status', function (e) {
+    e.preventDefault();
+    var $this_elem = $(this).parent().parent().parent().parent().parent().parent().find('.application-status');
+    var this_elem_text = $(this)[0].selectedOptions[0].innerText;
+
+    let apply_id = $(this).attr('data-id');
+    let application_status = $(this).val();
+
+    var formData = new FormData($("#change-status-forms")[0]);
+    formData.append('apply_id',apply_id);
+    formData.append('application_status',application_status);
+
+    var form_url = $('#change-status-forms').attr('action');
+    var result_xhr = $.ajax({
+        url: form_url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+                    circular_loader_post('show', percentComplete);
+
+                }
+            }, false);
+            return xhr;
+        },
+        beforeSend: function () {
+            circular_loader_post('hide', 0);
+
+        }
+    })
+
+    result_xhr.done(function (data) {
+        circular_loader_post('hide', 0);
+
+        var out = jQuery.parseJSON(data);
+        if (out.status == 'success') {
+            closeOffCanvas();
+            AlertandToast(out.status, out.msg, false, true);
+            // go_to_backpage();
+            // closeOffCanvas();
+
+            console.log($this_elem);
+            $this_elem.removeClass();
+            $this_elem.addClass('badge application-status bg-' + out.status_bg);
+            $this_elem.text(this_elem_text);
+
+        }
+        else
+            AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
+
+
+        AlertandToast(out.status, out.msg, false, true);
 
     });
+
+    result_xhr.fail(function () {
+        circular_loader_post('hide', 0);
+        AlertandToast('error', 'Page has expired, try later !', false, true);
+    });
+
+});
+
+
+$(document).on('click', '.open-right-offcanvas-with-url', function (e) {
+    $('.offcanvas-heading').html('');
+    $('.offcanvas-subheading').html('');
+    $('.offcanvas-content').html('');
+
+    $('.offcanvas-heading').html($(this).attr("data-name"));
+    $('.offcanvas-subheading').html($(this).attr("data-email"));
+    $('.offcanvas-content').css('height', '100%');
+
+    showOffCanvas("#bs-canvas-right");
+    let form_url = $(this).attr("data-url");
+
+    var ifrm = document.createElement("iframe");
+    ifrm.setAttribute("src", form_url);
+    ifrm.style.width = "100%";
+    ifrm.style.height = "100%";
+
+    $('.offcanvas-content').html(ifrm);
+
 
 
 });
@@ -210,10 +322,6 @@ $(document).on('click', '.open-right-offcanvas', function (e) {
         $('.offcanvas-heading').html(out.heading);
         $('.offcanvas-subheading').html(out.sub_heading);
         $('.offcanvas-content').html(out.content);
-
-    }).fail(function () {
-        AlertandToast('error', 'Could not load jobs', false, true);
-        $('.offcanvas-content').html('');
 
     });
 
@@ -271,57 +379,8 @@ function buildJobsCard(myList) {
         `;
     }
     $.each(jobsData, function (index, item) {
-        if (myList.user_type != "admin") {
-            datacard_element += `
-        
-                    <div class="col-xl-12 col-12 mt-15">
-                    <div class="card-grid-2 hover-up">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="card-grid-2-image-left">
-                                    <div class="right-info">
-                                        <h4><a href="#">${item.job_title}</a></h4>
-                                        <span class="location-small text-black">${item.job_location}</span> <br>
-                                        <span class="badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                        <div class="card-block-info">
-                            <div class="mt-5">
-                                <span class="card-briefcase text-black">${item.job_openings} Openings</span>
-                                <span class="card-time text-black"><span>${item.posted_before}</span></span>
-                            </div>
-                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                Experience ${item.min_experience} - ${item.max_experience} years
-                            </a>
-                            <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                                INR ${item.min_salary} - ${item.max_salary} / Month
-                            </a>
-                            <div class="card-2-bottom mt-20">
-                                <div class="row">
-                                    <div class="col-lg-12 col-12">
-                                        <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
-                                    </div>
-                                    <div class="col-lg-7 col-7">
-                                    </div>
-                                    <div class="col-lg-5 col-5 text-end">
-                                        <form id="" action="${base_url}home/add_to_wishlist">
-                                        <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
-                                        <input type="hidden" name="job_id" class="job_id" value="${item._id}">
-                                        <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="${item.show_applied ? '' : 'd-none'} btn ${item.applied ? 'btn-counter' : 'btn-apply-now '}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-        `;
-        } else {
-            datacard_element += `
+        datacard_element += `
         
         <div class="col-xl-12 col-12 mt-15">
         <div class="card-grid-2 hover-up">
@@ -364,7 +423,7 @@ function buildJobsCard(myList) {
         </div>
         </div>
 `;
-        }
+
     });
 
     $("#jobs-na_datacard").html(datacard_element)
@@ -386,6 +445,9 @@ function buildJobsCard(myList) {
         $(".total_jobs").html(total_rows);
         buildJobsPagination(page_limit, current_page, nums_limit);
     }
+
+    $('.open-now').trigger('click');
+
 }
 
 

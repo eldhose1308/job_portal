@@ -292,6 +292,15 @@ function redirect_to_404()
     //exit();
 }
 
+
+function redirect_to_404_ajax()
+{
+    echo json_encode(array('status' => 'forbidden', 'msg' => 'Page not found'));
+    exit();
+
+    //exit();
+}
+
 // limit the no of characters
 if (!function_exists('text_limit')) {
     function text_limit($string, $length)
