@@ -190,7 +190,76 @@ class candidates extends MY_Controller
                 <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a> '
             );
         }
+
+        $data["content_null"] = ($i == 0) ?  true : false;
+
         $data['candidates'] = $responses;
+        $data["show_pagination"] = true;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
+
+
+        $data['page_limit'] = ceil($total_rows / $per_page);
+        $data['current_page'] = $page;
+        $data['nums_limit'] = 5;
+
+        $data['user_type'] = 'admin';
+
+        $this->response(200, $data);
+    }
+
+
+    
+    public function recent_candidates_json()
+    {
+
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 10 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+        $added_before = (int) $this->input->get('added_before');
+
+        $query = $this->input->get('query');
+
+        $start_index = ($page - 1) * $per_page;
+        $total_rows = $this->M_candidates->select_all_candidates_count($query, $per_page, $start_index, $page, $sortby, $added_before);
+
+
+        $records['data'] = $this->M_candidates->select_all_candidates($query, $per_page, $start_index, $page, $sortby, $added_before);
+
+// lq();
+        $data = array();
+        $responses = array();
+        $i = 0;
+        foreach ($records['data']   as $row) {
+            $user_id  = en_func($row->user_id, 'e');
+
+
+            $responses[] = array(
+                ++$i,
+                '_id' => $user_id,
+                'full_name' => $row->full_name,
+                'user_name' => $row->user_name,
+                'user_email' => $row->user_email,
+                'user_mobile' => $row->user_mobile,
+                'user_resume' => $row->user_resume,
+                'email_verified' => $row->email_verified,
+                'email_verified_at' => date('d M, Y', strtotime($row->email_verified_at)) . ' | ' . date('h:i a', strtotime($row->email_verified_at)),
+                'created_at' => $row->created_at,
+                'action_btns' =>
+                '<a class="btn btn-tags-sm mb-10 text-white bg-custom open-right-offcanvas" data-url="' . base_url() . 'admin/candidates/edit_candidates/' . $user_id . '">Edit</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-info open-right-offcanvas" data-url="' . base_url() . 'admin/candidates/view_candidates/' . $user_id . '">View</a>                           
+                <a class="btn btn-tags-sm mb-10 text-white bg-danger">Delete</a> '
+            );
+        }
+
+        $data["content_null"] = ($i == 0) ?  true : false;
+
+        $data['candidates'] = $responses;
+        $data["show_pagination"] = false;
 
         $data['start_index'] = $start_index;
         $data['per_page'] = $per_page;

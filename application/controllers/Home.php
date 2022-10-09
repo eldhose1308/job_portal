@@ -152,6 +152,89 @@ class home extends CI_Controller
     }
 
 
+    public function home_jobs_json()
+    {
+        // Top Sorting
+        $page = 1;
+        $per_page = 6;
+        $sortby = "desc";
+
+        // Side Sorting
+        $job_location = 0;
+        $posted_date = 0;
+        $salary = 0;
+        $experience = 0;
+
+        // Search Sorting
+        $query = "";
+
+        $start_index = ($page - 1) * $per_page;
+
+        $total_rows = 6;
+
+        $records['data'] = $this->M_jobs->select_all_jobs_users($query, $per_page, $start_index, $page, $sortby, $posted_date, $job_location, $salary, $experience);
+
+        // lq();
+        $candidate_id = $this->user_id;
+
+        $data = array();
+        $responses = array();
+        $i = 0;
+        foreach ($records['data']  as $row) {
+            $job_id  = en_func($row->job_id, 'e');
+
+
+
+            $created_at = $row->created_at;
+
+            $timeFirst  = strtotime($created_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+
+            $responses[] = array(
+                ++$i,
+                '_id' => $job_id,
+                'job_title' => $row->job_title,
+                'job_location' => $row->country_name,
+                'min_experience' => $row->min_experience,
+                'max_experience' => $row->max_experience,
+                'min_salary' => $row->min_salary,
+                'max_salary' => $row->max_salary,
+                'job_openings' => $row->job_openings,
+                'posted_before' => seconds2format($differenceInSeconds) . " ago",
+                'brief_description' => $row->brief_description,
+                'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
+                'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
+                'show_wishlist' => true,
+                'show_applied' => true
+
+
+            );
+        }
+
+        // dd($responses);
+        $data["content_null"] = ($i == 0) ?  true : false;
+        $data["show_pagination"] = true;
+
+        $data['jobs'] = $responses;
+
+        $data['start_index'] = $start_index;
+        $data['per_page'] = $per_page;
+        $data['total_rows'] = $total_rows;
+
+        $data['ending_index'] = (($start_index + $per_page) > $total_rows) ? $total_rows : $start_index + $per_page;
+
+
+        $data['page_limit'] = ceil($total_rows / $per_page);
+        $data['current_page'] = $page;
+        $data['nums_limit'] = 5;
+
+        $this->response(200, $data);
+    }
+
+
     public function apply_job_page($job_id = 0)
     {
         $data = $this->data;

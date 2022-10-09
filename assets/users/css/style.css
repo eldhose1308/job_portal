@@ -2849,10 +2849,13 @@ ul li:last-child .card-list-4 {
 }
 
 .box-newsletter {
-  padding: 57px 0px 96px 0px;
+  padding: 20px;
+  background-color: #05264e;
+  border-radius: 25px;
+  /* padding: 57px 0px 96px 0px;
   background: url(../imgs/template/bg-newsletter.svg) no-repeat 0px 0px;
   background-size: cover;
-  border-radius: 16px;
+  border-radius: 16px; */
 }
 
 .box-newsletter .box-form-newsletter {
@@ -8192,10 +8195,10 @@ ul li:last-child .card-list-4 {
 }
 
 .box-newsletter-2 {
-  background: url(../imgs/page/homepage4/bg-newsletter.png) no-repeat top center;
-  background-size: cover;
+  /* background: url(../imgs/page/homepage4/bg-newsletter.png) no-repeat top center; */
+  /* background-size: cover;
   padding: 100px 0px 90px 0px;
-  border-radius: 0px;
+  border-radius: 0px; */
 }
 
 .box-search-2 {

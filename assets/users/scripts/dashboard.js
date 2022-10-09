@@ -22,6 +22,9 @@ function load_dashboard_count() {
     $(".shortlisted_applications").html(out.shortlisted_applications);
     $(".rejected_applications").html(out.rejected_applications);
 
+    $(".total_candidates").html(out.total_candidates);
+    $(".total_openings").html(out.total_openings);
+
   });
 
 }

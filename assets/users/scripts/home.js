@@ -2,14 +2,14 @@
 const jobs_loader = `<center><i class="jobsdatacard-loader fa fa-circle-o-notch fa-spin"></i></center>`;
 
 document.addEventListener("DOMContentLoaded", () => {
-    load_candidates();
+    load_jobs();
 
 });
 
 
-function load_candidates() {
-    if ($('.candidates_datacard-list').length > 0)
-        $(".candidates_datacard-list").submit();
+function load_jobs() {
+    if ($('.jobs_datacard-list').length > 0)
+        $(".jobs_datacard-list").submit();
 }
 
 
@@ -20,7 +20,7 @@ $(document).on('click', '.show-filters', function (e) {
 
 });
 
-$(document).on('click', '.candidates_datacard-list .filter .dropdown-item', function (e) {
+$(document).on('click', '.jobs_datacard-list .filter .dropdown-item', function (e) {
     e.preventDefault();
 
     let ids = $(this).parent().parent()[0].id;
@@ -28,7 +28,10 @@ $(document).on('click', '.candidates_datacard-list .filter .dropdown-item', func
 
     add_getParameters(ids, value);
 
-    load_candidates();
+    load_jobs();
+
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 
@@ -37,6 +40,13 @@ $(document).on('click', '.candidates_datacard-list .filter .dropdown-item', func
  * Side Filters
  * 
  * * */
+
+$(document).on('click', '.reset-filters', function (e) {
+    remove_getParameters();
+    load_jobs();
+    AlertandToast('success', 'Filters Cleared', false, true);
+});
+
 
 $(document).on('change', '.checkbox-filters', function (e) {
     $(this).parent().parent().parent().find('.checkbox-filters').not(this).prop('checked', false);
@@ -46,16 +56,33 @@ $(document).on('change', '.checkbox-filters', function (e) {
 
     add_getParameters(ids, value);
 
-    load_candidates();
+    load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 $(document).on('change', '.dropdown-filters', function (e) {
-
     let ids = $(this)[0].id;
     let value = $(this).val();
     add_getParameters(ids, value);
 
-    load_candidates();
+    load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
+});
+
+
+$(document).on('click', '.range-filters', function (e) {
+    document.querySelectorAll('.range-items').forEach(function (element) {
+        let ids = element.id;
+        let value = element.value;
+        add_getParameters(ids, value);
+
+    });
+
+    load_jobs();
+    AlertandToast('success', 'Filters Applied', false, true);
+
 });
 
 
@@ -67,6 +94,17 @@ $(document).on('change', '.dropdown-filters', function (e) {
 
 
 
+
+$(document).on('submit', '.jobs-search-form', function (e) {
+    e.preventDefault();
+
+    let ids = "query";
+    let value = $(".jobs-search-form .query").val();
+
+    add_getParameters(ids, value);
+
+    load_jobs();
+});
 
 
 $(document).on('click', '.filter-tablinks', function (e) {
@@ -90,9 +128,9 @@ function getParameters_toDOM() {
 
 }
 
-$(document).on('submit', '.candidates_datacard-list', function (e) {
+$(document).on('submit', '.jobs_datacard-list', function (e) {
     e.preventDefault();
-    $("#candidates-na_datacard").html(jobs_loader);
+    $("#jobs-na_datacard").html(jobs_loader);
 
     getParameters_toDOM();
 
@@ -104,14 +142,14 @@ $(document).on('submit', '.candidates_datacard-list', function (e) {
     }
 
 
-    load_candidates_datacard(parameters, $(this).attr('action'));
+    load_jobs_datacard(parameters, $(this).attr('action'));
 
 
 });
 
 
 
-function load_candidates_datacard(parameters, form_url) {
+function load_jobs_datacard(parameters, form_url) {
 
     circular_loader_get('show');
 
@@ -119,8 +157,12 @@ function load_candidates_datacard(parameters, form_url) {
         var out = jQuery.parseJSON(data);
         tableData = out.data;
 
-        buildCandidatesCard(tableData);
+        buildJobsCard(tableData);
 
+        circular_loader_get('hide');
+
+    }).fail(function () {
+        AlertandToast('error', 'Could not load jobs', false, true);
         circular_loader_get('hide');
 
     });
@@ -144,6 +186,10 @@ $(document).on('click', '.open-bottom-offcanvas', function (e) {
         $('.offcanvas-subheading').html(out.sub_heading);
         $('.offcanvas-content').html(out.content);
 
+    }).fail(function () {
+        AlertandToast('error', 'Could not load jobs', false, true);
+        $('.offcanvas-content').html('');
+
     });
 
 
@@ -164,6 +210,10 @@ $(document).on('click', '.open-right-offcanvas', function (e) {
         $('.offcanvas-heading').html(out.heading);
         $('.offcanvas-subheading').html(out.sub_heading);
         $('.offcanvas-content').html(out.content);
+
+    }).fail(function () {
+        AlertandToast('error', 'Could not load jobs', false, true);
+        $('.offcanvas-content').html('');
 
     });
 
@@ -209,28 +259,29 @@ function circular_loader_get(action = 'hide') {
 
 
 
-function buildCandidatesCard(myList) {
+function buildJobsCard(myList) {
+
     let datacard_element = ``;
-    let candidatesData = myList.candidates;
+    let jobsData = myList.jobs;
     if (myList.content_null) {
         datacard_element += `
             <div class="col-xl-12 col-12 mt-15">
-            <h4><a href="#">No Candidates found</a></h4>
+            <h4><a href="#">No Jobs found</a></h4>
             </div>
         `;
     }
-    $.each(candidatesData, function (index, item) {
-        if (myList.user_type == "admin") {
+    $.each(jobsData, function (index, item) {
+        
             datacard_element += `
         
-        <div class="col-xl-6 col-12 mt-15">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
         <div class="card-grid-2 hover-up">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card-grid-2-image-left">
                         <div class="right-info">
-                            <h4><a href="#">${item.full_name}</a></h4>
-                            <span class="text-black">${item.user_name}</span> <br>
+                            <h4><a href="#">${item.job_title}</a></h4>
+                            <span class="location-small text-black">${item.job_location}</span> <br>
                             <span class="${myList.show_application_status ? '' : 'd-none '} badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
                         </div>
                     </div>
@@ -239,22 +290,23 @@ function buildCandidatesCard(myList) {
             </div>
             <div class="card-block-info">
                 <div class="mt-5">
-                    <span class="text-black"><i class="fa ${item.email_verified ? 'fa-check fa-success' : 'fa-times fa-danger'}"></i></span>
-                    <span class="card-time text-black"><span>${item.email_verified_at}</span></span>
+                    <span class="card-briefcase text-black">${item.job_openings} Openings</span>
+                    <span class="card-time text-black"><span>${item.posted_before}</span></span>
                 </div>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                     ${item.user_email}
+                    Experience ${item.min_experience} - ${item.max_experience} years
                 </a>
                 <a class="btn btn-tags-sm mt-10 mb-10 mr-5">
-                     ${item.user_mobile} 
+                    INR ${item.min_salary} - ${item.max_salary} / Month
                 </a>
                 <div class="card-2-bottom mt-20">
                     <div class="row">
-                       
+                        <div class="col-lg-12 col-12">
+                            <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
+                        </div>
                         <div class="col-lg-7 col-7">
                         </div>
                         <div class="col-lg-5 col-5 text-end">
-                            ${item.action_btns}                         
                         </div>
                     </div>
                 </div>
@@ -262,10 +314,10 @@ function buildCandidatesCard(myList) {
         </div>
         </div>
 `;
-        }
+        
     });
 
-    $("#candidates-na_datacard").html(datacard_element)
+    $("#jobs-na_datacard").html(datacard_element)
 
 
     let page_limit = (myList.page_limit == undefined) ? 1 : myList.page_limit;
@@ -279,12 +331,11 @@ function buildCandidatesCard(myList) {
 
 
     if (myList.show_pagination) {
-        let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>candidates`
+        let pagination_details = `Showing <strong>${start_index}-${ending_index} </strong>of <strong>${total_rows} </strong>jobs`
         $(".pagination-details").html(pagination_details);
-        $(".total_candidates").html(total_rows);
+        $(".total_jobs").html(total_rows);
         buildJobsPagination(page_limit, current_page, nums_limit);
     }
-
 }
 
 
@@ -348,7 +399,7 @@ function add_to_wishlist($this) {
         if (out.status == 'success') {
             BottomToast(out.msg);
 
-            // load_candidates();
+            // load_jobs();
             return true;
         }
 
@@ -365,7 +416,7 @@ function add_to_wishlist($this) {
 
 
 
-$(document).on('click', '.candidates-paginations .pages', function (e) {
+$(document).on('click', '.jobs-paginations .pages', function (e) {
     e.preventDefault();
 
     $('body,html').animate({
@@ -376,7 +427,7 @@ $(document).on('click', '.candidates-paginations .pages', function (e) {
     let page = $(this).attr('data-id');
     add_getParameters("page", page);
 
-    load_candidates();
+    load_jobs();
 });
 
 

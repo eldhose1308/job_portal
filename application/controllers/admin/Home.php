@@ -93,13 +93,13 @@ class home extends MY_Controller
 
     public function dashboard_counts()
     {
-        $this->load->model('Dashboard_model');
+        $this->load->model('M_jobs');
+        $this->load->model('M_candidates');
 
-        $records['enquiries'] = $this->Common_model->get_counts('ci_contact_messages');
-        $records['news'] = $this->Common_model->get_counts('ci_news', 1);
-      //  $records['blogs'] = $this->Common_model->get_counts('ci_blogs', 1);
-        $records['traffic'] = $this->Dashboard_model->get_visitors_count();
-        $records['donations'] = 120;
+        $records['total_applications'] = $this->M_jobs->select_all_applied_jobs_count_dashboard();
+        $records['total_candidates'] = $this->M_candidates->select_all_candidates_count();
+        $records['total_openings'] = $this->M_jobs->select_all_jobs_admin_count();
+
         $this->response(200, $records);
     }
 

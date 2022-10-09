@@ -555,6 +555,7 @@ class M_jobs extends CI_Model
      * 
      */
 
+
     function select_all_applied_jobs_count($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
     {
         $where = array(
@@ -652,4 +653,26 @@ class M_jobs extends CI_Model
 
         return $this->db->get('ci_jobs_apply')->result();
     }
+
+    /***
+     * 
+     * Dashboiard
+     * 
+     */
+
+     
+    function select_all_applied_jobs_count_dashboard($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0)
+    {
+        $where = array(
+            'ci_jobs_apply.status' => '1'
+        );
+
+
+        $this->db->where($where);
+
+
+        $query = $this->db->get("ci_jobs_apply");
+        return $query->num_rows();
+    }
+
 }
