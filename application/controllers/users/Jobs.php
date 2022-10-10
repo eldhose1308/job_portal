@@ -133,16 +133,30 @@ class jobs extends US_Controller
             'status' => 1
         );
 
-        $addToWishlist = $this->Common_model->insert_table($data_insert, 'ci_jobs_apply');
+        $addToApply = $this->Common_model->insert_table($data_insert, 'ci_jobs_apply');
+
 
         //lq();
-        if ($addToWishlist == 0) :
+        if ($addToApply == 0) :
             $data = array('status' => 'error', 'msg' => 'Job could not be applied , Please try again !');
             echo json_encode($data);
             exit();
         endif;
 
+        $mail_data["applicationDetails"] = $this->M_jobs->select_all_details_of_apply_id($addToApply);
+
+        $candidate_mail = $mail_data["applicationDetails"]->user_email;
+        $mail_status = $mail_data["applicationDetails"]->status_name;
+        $mail_template = $this->load->view('mail/application_notification', $mail_data, true);
+
+        $mail_response = send_email_func($candidate_mail, $mail_template, 'Amore - Job Notification ( ' . $mail_status . ' )');
+
+
+
         $message =  "Applied this Job";
+
+        if ($mail_response) 
+            $message .= " and a mail is sent";
 
         $data = array('status' => 'success', 'msg' => $message);
         echo json_encode($data);
@@ -224,7 +238,7 @@ class jobs extends US_Controller
             $timeSecond = strtotime(date("Y-m-d h:i:s"));
 
             $differenceInSeconds = $timeSecond - $timeFirst;
-            $applied = in_array($row->job_id,$applied_job_ids) ? true : false;
+            $applied = in_array($row->job_id, $applied_job_ids) ? true : false;
 
 
             $responses[] = array(
@@ -289,7 +303,7 @@ class jobs extends US_Controller
 
 
         $start_index = ($page - 1) * $per_page;
-        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby,$job_status, $posted_date, $job_location, $salary, $experience);
+        $total_rows = $this->M_jobs->select_applied_jobs_count($query, $per_page, $start_index, $page, $sortby, $job_status, $posted_date, $job_location, $salary, $experience);
 
         $records['data'] = $this->M_jobs->select_all_applied_jobs_users($query, $per_page, $start_index, $page, $sortby, $job_status, $posted_date, $job_location, $salary, $experience);
 
