@@ -27,10 +27,10 @@ if (!function_exists('send_email_func')) {
 
         $config = array(
             "protocol" => "smtp",
-            "smtp_host" => "smtp-relay.sendinblue.com",
+            "smtp_host" => "",
             "smtp_port" => 587,
             "smtp_user" => "eldhossaji13.8@gmail.com",
-            "smtp_pass" => "xsmtpsib-15cf3dc9052a523ee5db9510ca30d23a18aa8102c21878d55e03718700ed0e26-MKgPf1taVyzqwrSm",
+            "smtp_pass" => "",
             "mailtype"   => "html",
             "charset"   => "utf-8",
             "newline"   => "\r\n"
