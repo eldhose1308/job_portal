@@ -180,6 +180,15 @@ function load_jobs_datacard(parameters, form_url) {
 
 
 
+$(document).on('click', '.copy-to-clipboard', function (e) {
+    e.preventDefault();
+    let copy_link = $(this).attr('data-url');
+    navigator.clipboard.writeText(copy_link);
+    AlertandToast('success', 'Copied to Clipboard', false, true);
+});
+
+
+
 $(document).on('click', '.open-bottom-offcanvas', function (e) {
     $('.offcanvas-heading').html('');
     $('.offcanvas-content').html('');
@@ -312,9 +321,14 @@ function buildJobsCard(myList) {
                                     <div class="col-lg-12 col-12">
                                         <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
                                     </div>
-                                    <div class="col-lg-7 col-7">
+                                    <div class="col-lg-7 col-7 mt-15">
+                                        <a class="mr-5 d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${item._id}"><i class="fa fa-share-alt btn text-primary"></i></a>
+                                        <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.country_name} 
+                                            for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${item._id}" data-action="share/whatsapp/share">
+                                            <img alt="nexcode" src="${base_url}assets/users/imgs/template/icons/share-whatsapp.svg">
+                                        </a>
                                     </div>
-                                    <div class="col-lg-5 col-5 text-end">
+                                    <div class="col-lg-5 col-5 text-end mt-15">
                                         <form id="" action="${base_url}home/add_to_wishlist">
                                         <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
