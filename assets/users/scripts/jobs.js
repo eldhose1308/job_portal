@@ -288,7 +288,7 @@ function buildJobsCard(myList) {
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="card-grid-2-image-left">
                                     <div class="right-info">
-                                        <h4><a href="#">${item.job_title}</a></h4>
+                                        <h4><a href="${base_url}job_details/${item._id}">${item.job_title}</a></h4>
                                         <span class="location-small text-black">${item.job_location}</span> <br>
                                         <span class="badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
                                     </div>

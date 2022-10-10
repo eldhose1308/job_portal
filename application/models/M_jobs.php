@@ -31,11 +31,23 @@ class M_jobs extends CI_Model
         return $this->db->get('ci_jobs_wishlist')->result_array();
 
     }
+
+
     function select_jobs_in_applied( $candidate_id)
     {
         $this->db->select('ci_jobs_apply.job_id');
         $this->db->where('ci_jobs_apply.candidate_id', $candidate_id);
         return $this->db->get('ci_jobs_apply')->result_array();
+
+    }
+
+
+    function selelct_jobdetails_by_id($job_id)
+    {
+        $this->db->select('ci_jobs.*,ci_countries.country_name');
+        $this->db->where('ci_jobs.job_id', $job_id);
+        $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
+        return $this->db->get('ci_jobs')->row();
 
     }
 

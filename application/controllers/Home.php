@@ -69,6 +69,20 @@ class home extends CI_Controller
     }
 
 
+    public function job_details($job_id)
+    {
+        $data = $this->data;
+
+        $data["job_id"] = $job_id;
+
+        $job_id = en_func($job_id, 'd');
+        $data["jobsDetails"] = $this->M_jobs->selelct_jobdetails_by_id($job_id);
+        $this->check_exists($data["jobsDetails"]);
+
+        $this->template->users_views('users/job_details', $data);
+    }
+
+
     public function jobs_json()
     {
         // Top Sorting
