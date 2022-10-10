@@ -1,6 +1,9 @@
 <?php echo form_open(base_url('admin/applications/change_application_status'), 'class="" id="change-status-forms" autocomplete="off" '); ?>
 </form>
 
+<?php echo form_open(base_url('admin/applications/send_email_notification'), 'class="" id="send-email-forms" autocomplete="off" '); ?>
+</form>
+
 <div class="col-lg-8 col-md-12 mb-15">
     <h3><?= $jobsDetails->job_title ?></h3>
     <div class="mt-0 mb-15 text-black">
@@ -54,7 +57,7 @@
                     Whatsapp <i class="fa fa-whatsapp text-success"></i>
                 </a>
                 <br>
-                <a class="btn btn-tags-sm mb-10 text-white bg-primary">
+                <a data-id="<?= en_func($applications->apply_id,'e') ?>" class="btn btn-tags-sm mb-10 text-white bg-primary send-email-notification">
                     <i class="fa fa-envelope text-white mr-10"></i> Send Email notification
                 </a>
 

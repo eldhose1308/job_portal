@@ -696,6 +696,27 @@ class M_jobs extends CI_Model
         return $this->db->get('ci_jobs_apply')->result();
     }
 
+
+    public function select_all_details_of_apply_id($apply_id)
+    {
+        $multiplewhere = array(
+            'ci_jobs_apply.status' => 1,
+            'ci_jobs_apply.apply_id' => $apply_id
+        );
+
+
+        $this->db->select('ci_jobs_apply.apply_id,ci_jobs_apply.job_status,ci_job_status.status_name,ci_jobs_apply.created_at as applied_date,ci_candidates.*,ci_jobs.job_title');
+        $this->db->where($multiplewhere);
+        $this->db->join('ci_candidates', 'ci_candidates.user_id  = ci_jobs_apply.candidate_id', 'left');
+        $this->db->join('ci_jobs', 'ci_jobs.job_id = ci_jobs_apply.job_id', 'left');
+        $this->db->join('ci_job_status', 'ci_job_status.status_id  = ci_jobs_apply.job_status', 'left');
+
+        $this->db->order_by("ci_jobs_apply.job_status", "asc");
+
+
+        return $this->db->get('ci_jobs_apply')->row();
+    }
+
     /***
      * 
      * Dashboiard

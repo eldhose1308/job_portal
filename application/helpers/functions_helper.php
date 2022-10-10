@@ -14,6 +14,58 @@ if (!function_exists('page_speed')) {
 }
 
 
+
+
+//sending mail
+if (!function_exists('send_email_func')) {
+    function send_email_func($emailid, $message, $subject)
+    {
+        $ci = &get_instance();
+
+        $ci->load->library('email');
+
+
+        $config = array(
+            "protocol" => "smtp",
+            "smtp_host" => "",
+            "smtp_port" => 587,
+            "smtp_user" => "eldhossaji13.8@gmail.com",
+            "smtp_pass" => "",
+            "mailtype"   => "html",
+            "charset"   => "utf-8",
+            "newline"   => "\r\n"
+        );
+
+
+        $ci->email->initialize($config);
+
+
+        $ci->email->from('nexcode@nexcode.com', 'Nexcode');
+
+
+        $ci->email->to($emailid);
+
+
+
+        $ci->email->subject($subject);
+
+        $ci->email->message($message);
+
+        $mail_response =  $ci->email->send();
+
+        if ($mail_response) {
+            return true;
+            //echo "Success! - An email has been sent to " . $emailid;
+        } else {
+            //show_error($this->email->print_debugger());
+            return false;
+        }
+
+        return $mail_response;
+    }
+}
+
+
 //encryption decryption
 if (!function_exists('en_func')) {
     function en_func($string, $action)

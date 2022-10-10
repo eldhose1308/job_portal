@@ -284,6 +284,72 @@ $(document).on('change', '.change_status', function (e) {
 });
 
 
+/****
+ * 
+ * Send Email notification
+ * 
+ */
+$(document).on('click', '.send-email-notification', function (e) {
+    e.preventDefault();
+
+    let apply_id = $(this).attr('data-id');
+
+    var formData = new FormData($("#send-email-forms")[0]);
+    formData.append('apply_id',apply_id);
+
+    var form_url = $('#send-email-forms').attr('action');
+    var result_xhr = $.ajax({
+        url: form_url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+                    circular_loader_post('show', percentComplete);
+
+                }
+            }, false);
+            return xhr;
+        },
+        beforeSend: function () {
+            circular_loader_post('hide', 0);
+
+        }
+    })
+
+    result_xhr.done(function (data) {
+        circular_loader_post('hide', 0);
+
+        var out = jQuery.parseJSON(data);
+        if (out.status == 'success') {
+            closeOffCanvas();
+            AlertandToast(out.status, out.msg, false, true);
+            // go_to_backpage();
+            // closeOffCanvas();
+
+          
+
+        }
+        else
+            AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
+
+
+        AlertandToast(out.status, out.msg, false, true);
+
+    });
+
+    result_xhr.fail(function () {
+        circular_loader_post('hide', 0);
+        AlertandToast('error', 'Page has expired, try later !', false, true);
+    });
+
+});
+
+
 $(document).on('click', '.open-right-offcanvas-with-url', function (e) {
     $('.offcanvas-heading').html('');
     $('.offcanvas-subheading').html('');

@@ -90,6 +90,41 @@ class applications extends MY_Controller
     }
 
 
+    public function send_email_notification()
+    {
+        $this->form_validation->set_rules('apply_id', 'Application', 'trim|required');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('status' => 'error', 'msg' => validation_errors());
+            echo json_encode($data);
+            exit();
+        }
+
+        $apply_id = en_func($this->input->post('apply_id'), 'd');
+        $mail_data["apply_id"] = $apply_id;
+
+        $mail_data["applicationDetails"] = $this->M_jobs->select_all_details_of_apply_id($apply_id);
+
+        $candidate_mail = $mail_data["applicationDetails"]->user_email;
+        $mail_status = $mail_data["applicationDetails"]->status_name;
+        $mail_template = $this->load->view('mail/application_notification', $mail_data, true);
+
+        $mail_response = send_email_func($candidate_mail, $mail_template, 'Amore - Job Notification ( ' . $mail_status .' )');
+
+
+        if ($mail_response) {
+
+            $data = array('status' => 'success', 'msg' => 'Notification mail sent');
+            echo json_encode($data);
+            exit();
+        }
+
+        $data = array('status' => 'error', 'msg' => 'Notification mail could not be sent,Try again');
+        echo json_encode($data);
+        exit();
+    }
+
     public function jobs_json()
     {
 
@@ -162,5 +197,4 @@ class applications extends MY_Controller
 
         $this->response(200, $data);
     }
-
 }
