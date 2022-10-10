@@ -8,6 +8,9 @@ $differenceInSeconds = $timeSecond - $timeFirst;
 
 ?>
 
+<?php echo form_open(base_url('home/add_to_wishlist/'), 'class=" text-start mt-20" id="job_wishlist-forms" autocomplete="off" '); ?>
+<?php echo form_close(); ?>
+
 <main class="main">
 
     <section class="section-box">
@@ -41,7 +44,7 @@ $differenceInSeconds = $timeSecond - $timeFirst;
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 text-lg-end">
-                    <div class="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
+                    <div class="btn btn-apply-icon btn-apply btn-apply-big hover-up open-right-offcanvas <?= $applied ? 'btn-custom' : '' ?>" data-url="<?= base_url() ?>home/apply_job_page/<?= en_func($jobsDetails->job_id, 'e') ?>"><?= ($applied) ? 'Applied 🗸' : 'Apply now' ?></div>
                 </div>
             </div>
             <div class="border-bottom pt-10 pb-10"></div>
@@ -69,7 +72,7 @@ $differenceInSeconds = $timeSecond - $timeFirst;
                         <div class="row mt-25">
                             <div class="col-md-6 d-flex mt-sm-15">
                                 <div class="sidebar-icon-item"><img src="<?= base_url() ?>assets/users/imgs/page/job-single/updated.svg" alt="nexcode"></div>
-                                <div class="sidebar-text-info ml-10"><span class="text-description jobtype-icon mb-10">Updated</span><strong class="small-heading"><?=  date('d M , Y', strtotime($jobsDetails->created_at)) . ' | ' . date('h:i a', strtotime($jobsDetails->created_at)) ?></strong></div>
+                                <div class="sidebar-text-info ml-10"><span class="text-description jobtype-icon mb-10">Updated</span><strong class="small-heading"><?= date('d M , Y', strtotime($jobsDetails->created_at)) . ' | ' . date('h:i a', strtotime($jobsDetails->created_at)) ?></strong></div>
                             </div>
                             <div class="col-md-6 d-flex mt-sm-15">
                                 <div class="sidebar-icon-item"><img src="<?= base_url() ?>assets/users/imgs/page/job-single/location.svg" alt="nexcode"></div>
@@ -88,11 +91,18 @@ $differenceInSeconds = $timeSecond - $timeFirst;
                     </div>
                     <div class="single-apply-jobs">
                         <div class="row align-items-center">
-                            <div class="col-md-5"><a class="btn btn-default mr-15" href="#">Apply now</a><a class="btn btn-border" href="#">Save job</a></div>
+                            <div class="col-md-5">
+                                <a class="btn btn-default mr-15 open-right-offcanvas <?= $applied ? 'btn-custom' : '' ?>" data-url="<?= base_url() ?>home/apply_job_page/<?= en_func($jobsDetails->job_id, 'e') ?>"><?= ($applied) ? 'Applied 🗸' : 'Apply now' ?></a>
+                                <input type="hidden" name="job_id" class="job_id" value="<?= $job_id ?>">
+                                <input type="hidden" name="wishlist_status" class="wishlist_status" value="<?= $wishlist ? 1 : 0 ?>">
+                                <a class="btn btn-border add-to-wishlist <?= $wishlist ? 'active' : '' ?>"><span>&#x2764;</span><span class="wishlisted-text"> <?= ($wishlist) ? 'Remove From Wishlist' : 'Add To Wishlist' ?></a>
+                            </div>
                             <div class="col-md-7 text-lg-end social-share">
                                 <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-10">Share this</h6>
                                 <a class="mr-5 d-inline-block d-middle" href="#"><i class="fa fa-share-alt btn text-primary"></i></a>
-                                <a class="d-inline-block d-middle" href="#"><img alt="nexcode" src="<?= base_url() ?>assets/users/imgs/template/icons/share-whatsapp.svg"></a>
+                                <a class="d-inline-block d-middle" href="whatsapp://send?text=This is WhatsApp sharing example using link" data-action="share/whatsapp/share">
+                                    <img alt="nexcode" src="<?= base_url() ?>assets/users/imgs/template/icons/share-whatsapp.svg">
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -106,112 +116,54 @@ $differenceInSeconds = $timeSecond - $timeFirst;
         <div class="container">
             <div class="text-left">
                 <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Featured Jobs</h2>
-                <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Get the latest news, updates and tips</p>
+                <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Get the latest jobs</p>
             </div>
+
+
+            <form action="<?= base_url() ?>home/home_jobs_json" class="jobs_datacard-list float-right">
+            </form>
+
             <div class="mt-50">
                 <div class="box-swiper style-nav-top">
-                    <div class="swiper-container swiper-group-4 swiper">
-                        <div class="swiper-wrapper pb-10 pt-5">
-                            <div class="swiper-slide">
-                                <div class="card-grid-2 hover-up">
-                                    <div class="card-grid-2-image-left"><span class="flash"></span>
-                                        <div class="image-box"><img src="<?= base_url() ?>assets/users/imgs/brands/brand-6.png" alt="nexcode"></div>
-                                        <div class="right-info"><a class="name-job" href="company-details.html">Quora JSC</a><span class="location-small">New York, US</span></div>
-                                    </div>
-                                    <div class="card-block-info">
-                                        <h6><a href="job-details.html">Senior System Engineer</a></h6>
-                                        <div class="mt-5"><span class="card-briefcase">Part time</span><span class="card-time">5<span> minutes ago</span></span></div>
-                                        <p class="font-sm color-text-paragraph mt-15">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                        <div class="mt-30"><a class="btn btn-grey-small mr-5" href="job-details.html">PHP</a><a class="btn btn-grey-small mr-5" href="job-details.html">Android </a>
-                                        </div>
-                                        <div class="card-2-bottom mt-30">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-7"><span class="card-text-price">$800</span><span class="text-muted">/Hour</span></div>
-                                                <div class="col-lg-5 col-5 text-end">
-                                                    <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-grid-2 hover-up">
-                                    <div class="card-grid-2-image-left"><span class="flash"></span>
-                                        <div class="image-box"><img src="<?= base_url() ?>assets/users/imgs/brands/brand-4.png" alt="nexcode"></div>
-                                        <div class="right-info"><a class="name-job" href="company-details.html">Dailymotion</a><span class="location-small">New York, US</span></div>
-                                    </div>
-                                    <div class="card-block-info">
-                                        <h6><a href="job-details.html">Frontend Developer</a></h6>
-                                        <div class="mt-5"><span class="card-briefcase">Full time</span><span class="card-time">6<span> minutes ago</span></span></div>
-                                        <p class="font-sm color-text-paragraph mt-15">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                        <div class="mt-30"><a class="btn btn-grey-small mr-5" href="jobs-grid.html">Typescript</a><a class="btn btn-grey-small mr-5" href="jobs-grid.html">Java</a>
-                                        </div>
-                                        <div class="card-2-bottom mt-30">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-7"><span class="card-text-price">$250</span><span class="text-muted">/Hour</span></div>
-                                                <div class="col-lg-5 col-5 text-end">
-                                                    <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-grid-2 hover-up">
-                                    <div class="card-grid-2-image-left"><span class="flash"></span>
-                                        <div class="image-box"><img src="<?= base_url() ?>assets/users/imgs/brands/brand-8.png" alt="nexcode"></div>
-                                        <div class="right-info"><a class="name-job" href="company-details.html">Periscope</a><span class="location-small">New York, US</span></div>
-                                    </div>
-                                    <div class="card-block-info">
-                                        <h6><a href="job-details.html">Lead Quality Control QA</a></h6>
-                                        <div class="mt-5"><span class="card-briefcase">Full time</span><span class="card-time">6<span> minutes ago</span></span></div>
-                                        <p class="font-sm color-text-paragraph mt-15">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                        <div class="mt-30"><a class="btn btn-grey-small mr-5" href="job-details.html">iOS</a><a class="btn btn-grey-small mr-5" href="job-details.html">Laravel</a><a class="btn btn-grey-small mr-5" href="job-details.html">Golang</a>
-                                        </div>
-                                        <div class="card-2-bottom mt-30">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-7"><span class="card-text-price">$250</span><span class="text-muted">/Hour</span></div>
-                                                <div class="col-lg-5 col-5 text-end">
-                                                    <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="card-grid-2 hover-up">
-                                    <div class="card-grid-2-image-left"><span class="flash"></span>
-                                        <div class="image-box"><img src="<?= base_url() ?>assets/users/imgs/brands/brand-4.png" alt="nexcode"></div>
-                                        <div class="right-info"><a class="name-job" href="company-details.html">Dailymotion</a><span class="location-small">New York, US</span></div>
-                                    </div>
-                                    <div class="card-block-info">
-                                        <h6><a href="job-details.html">Frontend Developer</a></h6>
-                                        <div class="mt-5"><span class="card-briefcase">Full time</span><span class="card-time">6<span> minutes ago</span></span></div>
-                                        <p class="font-sm color-text-paragraph mt-15">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae architecto eveniet, dolor quo repellendus pariatur.</p>
-                                        <div class="mt-30"><a class="btn btn-grey-small mr-5" href="jobs-grid.html">Typescript</a><a class="btn btn-grey-small mr-5" href="jobs-grid.html">Java</a>
-                                        </div>
-                                        <div class="card-2-bottom mt-30">
-                                            <div class="row">
-                                                <div class="col-lg-7 col-7"><span class="card-text-price">$250</span><span class="text-muted">/Hour</span></div>
-                                                <div class="col-lg-5 col-5 text-end">
-                                                    <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">Apply now</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div id="jobs-na_datacard" class="row" data-class="row">
+                        <center><i class="datacard-loader fa fa-circle-o-notch fa-spin"></i></center>
                     </div>
-                    <div class="swiper-button-next swiper-button-next-4"></div>
-                    <div class="swiper-button-prev swiper-button-prev-4"></div>
+
+
                 </div>
-                <div class="text-center"><a class="btn btn-grey" href="#">Load more posts</a></div>
+                <div class="text-center"><a class="btn btn-grey" href="<?= base_url() ?>jobs">Load more posts</a></div>
             </div>
+
         </div>
     </section>
 
+
+
+
+    <!--- Right canvas -->
+    <div id="bs-canvas-right" class="bs-canvas bs-canvas-anim bs-canvas-right position-fixed bg-light h-100">
+        <header class="bs-canvas-header p-3 bg-primary overflow-auto">
+            <button type="button" class="bs-canvas-close float-left close" aria-label="Close" style="background: transparent; border: none;">
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+            </button>
+            <h5 class="d-inline-block text-light mb-0 float-righ offcanvas-heading">Canvas Header</h5>
+            <p class="mt-10 ml-50 offcanvas-subheading text-white">Subheading</p>
+        </header>
+
+        <div id="alert-message-div" class="mt-15 alert-message-div" style="display: none; padding: 0% 3%;">
+        </div>
+
+
+        <div class="bs-canvas-content px-3 offcanvas-content mt-10">
+            ...
+        </div>
+    </div>
+    <!--- Right canvas -->
+
+
+
+
 </main>
+
+<script src="<?= base_url() ?>assets/users/scripts/jobs.js"></script>
