@@ -179,12 +179,37 @@ function load_jobs_datacard(parameters, form_url) {
 
 
 
-
+/***
+ * 
+ *  sharing options
+ * 
+ */
 $(document).on('click', '.copy-to-clipboard', function (e) {
     e.preventDefault();
     let copy_link = $(this).attr('data-url');
     navigator.clipboard.writeText(copy_link);
     AlertandToast('success', 'Copied to Clipboard', false, true);
+});
+
+
+$(document).on('click', '.web-share', function (e) {
+    e.preventDefault();
+    let copy_link = $(this).attr('data-url');
+    let text_link = $(this).attr('data-text');
+    if (navigator.share) {
+        navigator.share({
+            title: 'Amore - Job Portal',
+            text: text_link,
+            url: copy_link
+        }).then(() => {
+            console.log('Thanks for sharing!');
+        }).catch(err => {
+            AlertandToast('error', 'Something went wrong, try again !', false, true);
+            console.log(err);
+        });
+    } else {
+        AlertandToast('error', 'This feature is not supported !', false, true);
+    }
 });
 
 
@@ -322,8 +347,11 @@ function buildJobsCard(myList) {
                                         <p class="font-sm color-text-paragraph mt-10">${item.brief_description}</p>
                                     </div>
                                     <div class="col-lg-7 col-7 mt-15">
-                                        <a class="mr-5 d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${item._id}"><i class="fa fa-share-alt btn text-primary"></i></a>
-                                        <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.country_name} 
+                                        <a class="d-inline-block d-middle web-share" data-text="Job Description for ${item.job_title} in ${item.job_location} for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now !" 
+                                        data-url="${base_url}job_details/${item._id}"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
+
+                                        <a class="d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${item._id}"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
+                                        <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.job_location} 
                                             for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${item._id}" data-action="share/whatsapp/share">
                                             <img alt="nexcode" src="${base_url}assets/users/imgs/template/icons/share-whatsapp.svg">
                                         </a>
@@ -333,7 +361,8 @@ function buildJobsCard(myList) {
                                         <button title="Wishlist" class="${item.show_wishlist ? '' : 'd-none'} btn btn-counter add-to-wishlist ${item.wishlist ? 'active' : ''}"><span>&#x2764;</span><span class="wishlisted-text"> ${item.wishlist ? 'Remove From Wishlist' : 'Add To Wishlist'}</span> </button>
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
                                         <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
-                                        <a data-no="${index}" class="${item.show_applied ? '' : 'd-none'} btn ${item.applied ? 'btn-counter' : 'btn-apply-now '}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied 🗸' : 'Apply now'}</a>
+                                        <a data-no="${index}" class="${item.show_applied ? '' : 'd-none'} btn ${item.applied ? 'btn-counter' : 'btn-apply-now '}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied <span>&#x2713;</span>' : 'Apply now'}</a>
+                                        <a class="btn btn-counter" href="${base_url}job_details/${item._id}">Details<span class="ml-5">&#x2192;</span></a>
                                         </form>
                                     </div>
                                 </div>
