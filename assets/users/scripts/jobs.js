@@ -354,8 +354,7 @@ function buildJobsCard(myList) {
                                         data-url="${base_url}job_details/${job_url}"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
 
                                         <a class="d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${job_url}"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
-                                        <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.job_location} 
-                                            for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${job_url}" data-action="share/whatsapp/share">
+                                        <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.job_location} for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${job_url}" data-action="share/whatsapp/share">
                                             <img alt="nexcode" src="${base_url}assets/users/imgs/template/icons/share-whatsapp.svg">
                                         </a>
                                     </div>

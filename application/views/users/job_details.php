@@ -51,11 +51,10 @@ $differenceInSeconds = $timeSecond - $timeFirst;
 
                 <div class="col-md-12 text-lg-end mt-25 social-share">
                     <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-10">Share this</h6>
-                    <a class="d-inline-block d-middle web-share" data-text="Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience ?> - <?= $jobsDetails->max_experience ?> years of experience .Apply Now !" data-url="<?= base_url() ?>job_details/<?= $job_id ?>"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
+                    <a class="d-inline-block d-middle web-share" data-text="Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience ?> - <?= $jobsDetails->max_experience ?> years of experience .Apply Now !" data-url="<?= base_url() ?>job_details/<?= str_replace(' ','-',strtolower($jobsDetails->job_title)) .'-'.  $job_id ?>"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
 
-                    <a class="d-inline-block d-middle copy-to-clipboard" data-url="<?= base_url() ?>job_details/<?= $job_id ?>"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
-                    <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> 
-                                    for <?= $jobsDetails->min_experience . ' - ' . $jobsDetails->max_experience ?> years of experience .Apply Now ! <?= base_url() ?>job_details/<?= $job_id ?>" data-action="share/whatsapp/share">
+                    <a class="d-inline-block d-middle copy-to-clipboard" data-url="<?= base_url() ?>job_details/<?= str_replace(' ','-',strtolower($jobsDetails->job_title)) .'-'. $job_id ?>"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
+                    <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience . ' - ' . $jobsDetails->max_experience ?> years of experience .Apply Now ! <?= base_url() ?>job_details/<?= $job_id ?>" data-action="share/whatsapp/share">
                         <img alt="nexcode" src="<?= base_url() ?>assets/users/imgs/template/icons/share-whatsapp.svg">
                     </a>
                 </div>
@@ -114,11 +113,10 @@ $differenceInSeconds = $timeSecond - $timeFirst;
                             </div>
                             <div class="col-md-7 text-lg-end social-share">
                                 <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-10">Share this</h6>
-                                <a class="d-inline-block d-middle web-share" data-text="Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience ?> - <?= $jobsDetails->max_experience ?> years of experience .Apply Now !" data-url="<?= base_url() ?>job_details/<?= $job_id ?>"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
+                                <a class="d-inline-block d-middle web-share" data-text="Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience ?> - <?= $jobsDetails->max_experience ?> years of experience .Apply Now !" data-url="<?= base_url() ?>job_details/<?= str_replace(' ','-',strtolower($jobsDetails->job_title)) .'-'.  $job_id ?>"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
 
-                                <a class="d-inline-block d-middle copy-to-clipboard" data-url="<?= base_url() ?>job_details/<?= $job_id ?>"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
-                                <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> 
-                                    for <?= $jobsDetails->min_experience . ' - ' . $jobsDetails->max_experience ?> years of experience .Apply Now ! <?= base_url() ?>job_details/<?= $job_id ?>" data-action="share/whatsapp/share">
+                                <a class="d-inline-block d-middle copy-to-clipboard" data-url="<?= base_url() ?>job_details/<?= str_replace(' ','-',strtolower($jobsDetails->job_title)) .'-'.  $job_id ?>"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
+                                <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for <?= $jobsDetails->job_title ?> in <?= $jobsDetails->country_name ?> for <?= $jobsDetails->min_experience . ' - ' . $jobsDetails->max_experience ?> years of experience .Apply Now ! <?= base_url() ?>job_details/<?= $job_id ?>" data-action="share/whatsapp/share">
                                     <img alt="nexcode" src="<?= base_url() ?>assets/users/imgs/template/icons/share-whatsapp.svg">
                                 </a>
                             </div>
