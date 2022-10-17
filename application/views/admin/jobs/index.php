@@ -29,7 +29,7 @@
                         <div class="box-filters-job">
                             <div class="row">
 
-                                <div class="col-xl-6 col-lg-6 col-6">
+                                <div class="col-xl-3 col-lg-3 col-6">
                                     <span class="text-small text-showing pagination-details">Showing <strong>0-0 </strong>of <strong>0 </strong>jobs</span>
                                     <a class="btn btn-sm btn-outline-custom show-filters" role="button"><i class="fa fa-filter"></i>Show Filter </a>
 
@@ -68,6 +68,11 @@
 
                                     </div>
                                 </div>
+
+                                <div class="col-xl-3 col-lg-3 text-end">
+                                    <button class="btn btn-custom open-right-offcanvas" data-url="<?= base_url() ?>admin/jobs/add_jobs">Add</button>
+                                </div>
+
                             </div>
                         </div>
 
@@ -259,7 +264,7 @@
                             </div>
                             <!---->
 
-                            
+
 
                             <!---->
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
@@ -321,7 +326,7 @@
                             <div class="row mb-15">
                                 <div class="col-6">
                                     <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
-                                </div>  
+                                </div>
                                 <div class="col-6">
                                     <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
                                 </div>

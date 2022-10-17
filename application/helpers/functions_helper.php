@@ -27,7 +27,7 @@ if (!function_exists('send_email_func')) {
 
         $config = array(
             "protocol" => "smtp",
-            "smtp_host" => "smtp-relay.sendinblue.com",
+            "smtp_host" => "",
             "smtp_port" => 587,
             "smtp_user" => "eldhossaji13.8@gmail.com",
             "smtp_pass" => "",
