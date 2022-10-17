@@ -312,8 +312,11 @@ function buildJobsCard(myList) {
             </div>
         `;
     }
+    var job_url = '';
     $.each(jobsData, function (index, item) {
         if (myList.user_type != "admin") {
+            job_url = item.job_title.replace(/ /g, "-").toLowerCase() + '-' + item._id;
+
             datacard_element += `
         
                     <div class="col-xl-12 col-12 mt-15">
@@ -322,7 +325,7 @@ function buildJobsCard(myList) {
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="card-grid-2-image-left">
                                     <div class="right-info">
-                                        <h4><a href="${base_url}job_details/${item._id}">${item.job_title}</a></h4>
+                                        <h4><a href="${base_url}job_details/${job_url}">${item.job_title}</a></h4>
                                         <span class="location-small text-black">${item.job_location}</span> <br>
                                         <span class="badge bg-${item.job_status_badge}">${item.job_status ? item.job_status : ''}</span>
                                     </div>
@@ -348,11 +351,11 @@ function buildJobsCard(myList) {
                                     </div>
                                     <div class="col-lg-7 col-7 mt-15">
                                         <a class="d-inline-block d-middle web-share" data-text="Job Description for ${item.job_title} in ${item.job_location} for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now !" 
-                                        data-url="${base_url}job_details/${item._id}"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
+                                        data-url="${base_url}job_details/${job_url}"><i class="fa fa-share-alt ml-0 btn text-primary"></i></a>
 
-                                        <a class="d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${item._id}"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
+                                        <a class="d-inline-block d-middle copy-to-clipboard" data-url="${base_url}job_details/${job_url}"><i class="fa fa-clone ml-0 btn text-primary"></i></a>
                                         <a class="d-inline-block d-middle" href="whatsapp://send?text=Job Description for ${item.job_title} in ${item.job_location} 
-                                            for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${item._id}" data-action="share/whatsapp/share">
+                                            for ${item.min_experience} - ${item.max_experience} years of experience .Apply Now ! ${base_url}job_details/${job_url}" data-action="share/whatsapp/share">
                                             <img alt="nexcode" src="${base_url}assets/users/imgs/template/icons/share-whatsapp.svg">
                                         </a>
                                     </div>
@@ -362,7 +365,7 @@ function buildJobsCard(myList) {
                                         <input type="hidden" name="job_id" class="job_id" value="${item._id}">
                                         <input type="hidden" name="wishlist_status" class="wishlist_status" value="${item.wishlist ? 1 : 0}">
                                         <a data-no="${index}" class="${item.show_applied ? '' : 'd-none'} btn ${item.applied ? 'btn-counter' : 'btn-apply-now '}  open-right-offcanvas" data-url="${base_url + 'home/apply_job_page/' + item._id}">${item.applied ? 'Applied <span>&#x2713;</span>' : 'Apply now'}</a>
-                                        <a class="btn btn-counter" href="${base_url}job_details/${item._id}">Details<span class="ml-5">&#x2192;</span></a>
+                                        <a class="btn btn-counter" href="${base_url}job_details/${job_url}">Details<span class="ml-5">&#x2192;</span></a>
                                         </form>
                                     </div>
                                 </div>

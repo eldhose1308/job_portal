@@ -73,6 +73,10 @@ class home extends CI_Controller
     {
         $data = $this->data;
 
+        $urlElements = explode('-', $job_id);
+        $job_id = $urlElements[count($urlElements)-1];
+
+
         $data["job_id"] = $job_id;
 
         $job_id = en_func($job_id, 'd');
@@ -80,15 +84,15 @@ class home extends CI_Controller
         $this->check_exists($data["jobsDetails"]);
 
         $candidate_id = $this->user_id;
-      
+
         $applied_jobs = $this->M_jobs->select_jobs_in_applied($candidate_id);
         $wishlists_jobs = $this->M_jobs->select_jobs_in_wishlist($candidate_id);
 
         $applied_job_ids = array_column($applied_jobs, 'job_id');
         $wishlisted_job_ids = array_column($wishlists_jobs, 'job_id');
 
-        $data["wishlist"] = in_array($data["jobsDetails"]->job_id,$wishlisted_job_ids) ? true : false;
-        $data["applied"] = in_array($data["jobsDetails"]->job_id,$applied_job_ids) ? true : false;
+        $data["wishlist"] = in_array($data["jobsDetails"]->job_id, $wishlisted_job_ids) ? true : false;
+        $data["applied"] = in_array($data["jobsDetails"]->job_id, $applied_job_ids) ? true : false;
 
         $this->template->users_views('users/job_details', $data);
     }
@@ -140,12 +144,13 @@ class home extends CI_Controller
 
             $differenceInSeconds = $timeSecond - $timeFirst;
 
-            $wishlist = in_array($row->job_id,$wishlisted_job_ids) ? true : false;
-            $applied = in_array($row->job_id,$applied_job_ids) ? true : false;
+            $wishlist = in_array($row->job_id, $wishlisted_job_ids) ? true : false;
+            $applied = in_array($row->job_id, $applied_job_ids) ? true : false;
             /*
                 'wishlist' => ($row->wishlist_candidate == $candidate_id) ? ($row->wishlist ? true : false) : false,
                 'applied' => ($row->applied_candidate == $candidate_id) ? ($row->applied ? true : false) : false,
             */
+
 
             $responses[] = array(
                 ++$i,
