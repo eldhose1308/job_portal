@@ -191,5 +191,5 @@ $route['privacy_policy'] = 'home/privacy_policy';
 $route['terms_and_conditions'] = 'home/terms_and_conditions';
 
 
-$route['save_contact_us'] = 'ajax/save_contact_us';
+$route['save_contact_us'] = 'home/save_contact_us';
 

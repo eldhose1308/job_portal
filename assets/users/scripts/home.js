@@ -1,6 +1,80 @@
 "use strict";
 const jobs_loader = `<center><i class="jobsdatacard-loader fa fa-circle-o-notch fa-spin"></i></center>`;
 
+
+
+/***
+ * 
+ * Contact Us 
+ * 
+ */
+
+ $(document).on('submit', '#contact-form', function(e) {
+    e.preventDefault();
+
+    if (validate_form(true, false, true))
+        return false;
+
+
+
+
+
+    var this_btn_elem = $($(('.submit-form')));
+    loading_btn(this_btn_elem);
+
+
+    var formData = new FormData($("#contact-form")[0]);
+    var form_url = $('#contact-form').attr('action');
+    var result_xhr = $.ajax({
+        url: form_url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+                    circular_loader_post('show', percentComplete);
+
+                }
+            }, false);
+            return xhr;
+        },
+        beforeSend: function() {
+            circular_loader_post('hide', 0);
+
+        }
+    })
+
+    result_xhr.done(function(data) {
+        circular_loader_post('hide', 0);
+
+
+        var out = jQuery.parseJSON(data);
+        if (out.status == 'success') {
+            AlertandToast(out.status, out.msg, false, true);
+            $('#contact-form')[0].reset();
+        } else
+            AlertandToast(out.status, 'Recheck these errors and resubmit', false, true);
+
+
+        AlertandToast(out.status, out.msg, false, true);
+        $('.submit-form').show();
+        loading_btn();
+    });
+
+    result_xhr.fail(function() {
+        circular_loader_post('hide', 0);
+
+
+        AlertandToast('error', 'Page has expired, try later !',false,true);
+        loading_btn();
+    });
+
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     load_jobs();
 

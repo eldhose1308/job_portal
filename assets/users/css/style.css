@@ -9437,9 +9437,10 @@ ul li:last-child .card-list-4 {
   overflow-y: auto;
 }
 
-.bs-canvas.bg-light{
+.bs-canvas.bg-light {
   background-color: #fff !important;
 }
+
 .bs-canvas-bottom {
   bottom: 0;
   right: 0;
@@ -10252,7 +10253,11 @@ ul li:last-child .card-list-4 {
 
 /* Snackbar toast */
 
-.color-text-paragraph{
+.btn-brand {
+  padding: 18px 25px;
+}
+
+.color-text-paragraph {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

@@ -7,7 +7,7 @@
                     <div class="col-xl-7 col-lg-12">
                         <div class="block-banner">
                             <h1 class="heading-banner wow animate__animated animate__fadeInUp">Get The <span class="color-brand-2">Right Job</span><br class="d-none d-lg-block">You Deserve</h1>
-                            <div class="banner-description mt-20 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Each month, more than 3 million job seekers turn to website in their search for work,<br class="d-none d-lg-block">making over 140,000 applications every single day</div>
+                            <div class="banner-description mt-20 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">Millions of people are searching for jobs, salary information, company reviews, and interview questions,<br class="d-none d-lg-block">See what others are looking</div>
 
                             <div class="mt-30">
                                 <a href="<?= base_url() ?>jobs" class="btn btn-default mr-15">Get Started</a>
@@ -77,7 +77,7 @@
 
 
 
-    <section class="section-box mt-70">
+    <section class="section-box mt-70 d-none">
         <div class="section-box wow animate__animated animate__fadeIn">
             <div class="container">
                 <div class="text-center">

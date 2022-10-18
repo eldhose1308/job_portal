@@ -518,6 +518,9 @@ $(document).on('submit', '#add-form', function (e) {
 
 
 
+    var this_btn_elem = $($(('.submit-form')));
+    loading_btn(this_btn_elem);
+
     var formData = new FormData($("#add-form")[0]);
     var form_url = $('#add-form').attr('action');
     var result_xhr = $.ajax({
@@ -564,10 +567,11 @@ $(document).on('submit', '#add-form', function (e) {
 
 
         AlertandToast(out.status, out.msg, false, true);
-
+        loading_btn();
     });
 
     result_xhr.fail(function () {
+        loading_btn();
         circular_loader_post('hide', 0);
         AlertandToast('error', 'Page has expired, try later !', false, true);
     });

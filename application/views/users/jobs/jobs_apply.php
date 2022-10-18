@@ -118,7 +118,7 @@
 
 
                 <div class="form-group">
-                    <button class="btn btn-default hover-up w-100" type="submit" name="login">Apply Job</button>
+                    <button class="btn btn-default hover-up w-100 submit-form" type="submit" name="login">Apply Job</button>
                 </div>
 
                 </form>

@@ -58,7 +58,6 @@ class home extends CI_Controller
 
 
 
-
     public function jobs()
     {
         $data = $this->data;
@@ -387,6 +386,96 @@ class home extends CI_Controller
         echo json_encode($data);
         exit();
     }
+
+
+    
+    /***** Save contact message ******/
+
+    public function save_contact_us()
+    {
+        $this->load->library('user_agent');
+
+
+        $this->form_validation->set_rules('full_name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('email_address', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('phone_number', 'Phone', 'trim|numeric');
+        $this->form_validation->set_rules('feedback', 'Feedback', 'trim|required');
+        $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'trim|required');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('status' => 'error', 'msg' => validation_errors());
+            echo json_encode($data);
+            exit();
+        }
+
+        $captcha_response = trim($this->input->post('g-recaptcha-response'));
+
+        if ($captcha_response != '') {
+            $keySecret = $this->config->item('google_secret');
+            $userIp = $this->input->ip_address();
+
+            $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $keySecret . "&response=" . $captcha_response;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $status = json_decode($output, true);
+
+            //$status['success'] = true;
+
+            if (!$status['success']) {
+                $data = array('status' => 'error', 'msg' => 'Something wrong with captcha,Try again later !!');
+                echo json_encode($data);
+                exit();
+            }
+        }
+
+        $agent = ($this->agent->is_browser()) ?
+            $this->agent->browser() . ' ' . $this->agent->version() : (($this->agent->is_mobile()) ? $this->agent->mobile() : 'Nulls');
+
+
+
+        $data_insert = array(
+            'full_name' => $this->input->post('full_name'),
+            'email_address' => $this->input->post('email_address'),
+            'phone_number' => $this->input->post('phone_number'),
+            'feedback' => $this->input->post('feedback'),
+            'visitor_ip' => $this->input->ip_address(),
+            'visited_platform' => $this->agent->platform(),
+            'visited_agent' => $agent,
+            'created_at' => date("Y-m-d h:i:s"),
+            'status' => 1
+
+        );
+
+        $qry_response = $this->Common_model->insert_table($data_insert,'ci_contact_messages');
+
+        //Send email about the details to admin
+
+        $toEmail = $this->config->item('email_address');
+        $fromEmail = $this->input->post('email_address');
+
+        $message = $this->input->post('message');
+
+
+
+
+        if ($qry_response > 0) :
+            $data = array('status' => 'success', 'msg' => 'Message submitted successfully !');
+            echo json_encode($data);
+            exit();
+        endif;
+
+        $data = array('status' => 'error', 'msg' => 'Message could not be submitted !');
+        echo json_encode($data);
+        exit();
+    }
+    /***** Save contact message ******/
+
+
 
 
 

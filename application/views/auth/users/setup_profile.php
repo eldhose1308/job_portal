@@ -247,8 +247,13 @@
                             <input data-validation="required|numeric|exact_length-10" class="form-control" id="user_mobile" type="text" name="user_mobile">
                         </div>
 
-                        <div class="form-group">
-                            <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit</button>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <a class="btn btn-primary btn-brand hover-up w-100" href="<?= base_url() ?>usershome">Skip</a>
+                            </div>  
+                            <div class="form-group col-md-6">
+                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Submit</button>
+                            </div>
                         </div>
 
                         <?php echo form_close(); ?>
