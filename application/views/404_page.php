@@ -7,7 +7,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><?= APP_NAME ?> | Login</title>
+    <title><?= APP_NAME ?> | 404</title>
 
     <!-- Favicon -->
     <link href="<?= BASE_URL ?>assets/users/images/favicon.ico" rel="shortcut icon" />

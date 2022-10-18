@@ -373,3 +373,4 @@
 
 <script src="<?= base_url() ?>assets/users/js/noUISlider.js"></script>
 <script src="<?= base_url() ?>assets/users/js/slider.js"></script>
+

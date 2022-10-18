@@ -48,6 +48,30 @@ class home extends CI_Controller
 
 
 
+    public function privacy_policy()
+    {
+        $data = array();
+
+        $this->template->users_views('users/privacy_policy', $data);
+    }
+
+
+    public function terms()
+    {
+        $data = array();
+
+        $this->template->users_views('users/terms', $data);
+    }
+
+    public function faqs()
+    {
+        $data = array();
+
+        $this->template->users_views('users/faqs', $data);
+    }
+
+
+
     public function contact_us()
     {
         $data = array();
