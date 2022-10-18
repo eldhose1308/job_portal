@@ -10251,3 +10251,10 @@ ul li:last-child .card-list-4 {
 }
 
 /* Snackbar toast */
+
+.color-text-paragraph{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
