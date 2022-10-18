@@ -21,6 +21,17 @@
 
 <hr>
 
+
+
+<?php  if(empty($jobApplications)):  ?>
+
+    <h4><a href="#">No applications present !!</a></h4>
+
+
+<?php endif;  ?>
+
+
+
 <?php foreach ($jobApplications as $applications) :
     $status_bg = ($applications->job_status == 1) ? 'custom' : ($applications->job_status == 2 ? 'success' : 'danger');
 

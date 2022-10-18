@@ -5,6 +5,21 @@ class M_home extends CI_Model
 {
 
 
+	public function check_subscription_exists($user)
+	{
+		$this->db->select('ci_subscriptions.*');
+		$this->db->from('ci_subscriptions');
+		$this->db->where('ci_subscriptions.subscription_mail', $user);
+		$data = $this->db->get();
+
+		if ($data->num_rows() == 1) {
+			return $data->row();
+		} else {
+			return false;
+		}
+	}
+
+
 	public function get_Banner_details()
 	{
 		$multiplewhere = array(

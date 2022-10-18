@@ -18,3 +18,5 @@
 
 <script src="<?= base_url() ?>assets/users/extras/datacards.js"></script>
 <script src="<?= base_url() ?>assets/users/extras/validation.js"></script>
+
+<script src="<?= base_url() ?>assets/users/scripts/home.js"></script>

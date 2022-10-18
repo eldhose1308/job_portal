@@ -73,7 +73,7 @@ class home extends CI_Controller
         $data = $this->data;
 
         $urlElements = explode('-', $job_id);
-        $job_id = $urlElements[count($urlElements)-1];
+        $job_id = $urlElements[count($urlElements) - 1];
 
 
         $data["job_id"] = $job_id;
@@ -388,7 +388,7 @@ class home extends CI_Controller
     }
 
 
-    
+
     /***** Save contact message ******/
 
     public function save_contact_us()
@@ -451,7 +451,7 @@ class home extends CI_Controller
 
         );
 
-        $qry_response = $this->Common_model->insert_table($data_insert,'ci_contact_messages');
+        $qry_response = $this->Common_model->insert_table($data_insert, 'ci_contact_messages');
 
         //Send email about the details to admin
 
@@ -474,6 +474,75 @@ class home extends CI_Controller
         exit();
     }
     /***** Save contact message ******/
+
+
+
+
+
+    /***** Save Subscription ******/
+
+    public function subscribe_newsletter()
+    {
+        $this->load->library('user_agent');
+        $this->load->model('M_home');
+
+
+        $this->form_validation->set_rules('subscription_mail', 'Email', 'trim|required|valid_email');
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('status' => 'error', 'msg' => validation_errors());
+            echo json_encode($data);
+            exit();
+        }
+
+
+        $subscriptionExists = $this->M_home->check_subscription_exists($this->input->post('subscription_mail'));
+        if ($subscriptionExists) :
+            $data = array('status' => 'error', 'msg' => "You have already subscribed to the newsletter");
+            echo json_encode($data);
+            exit();
+        endif;
+
+
+        $agent = ($this->agent->is_browser()) ?
+            $this->agent->browser() . ' ' . $this->agent->version() : (($this->agent->is_mobile()) ? $this->agent->mobile() : 'Nulls');
+
+
+
+        $data_insert = array(
+            'subscription_mail' => $this->input->post('subscription_mail'),
+            'visitor_ip' => $this->input->ip_address(),
+            'visited_platform' => $this->agent->platform(),
+            'visited_agent' => $agent,
+            'created_at' => date("Y-m-d h:i:s"),
+            'status' => 1
+
+        );
+
+        $qry_response = $this->Common_model->insert_table($data_insert, 'ci_subscriptions');
+
+        //Send email about the details to admin
+
+        $toEmail = $this->config->item('email_address');
+        $fromEmail = $this->input->post('email_address');
+
+        $message = $this->input->post('subscription_mail');
+
+
+
+
+        if ($qry_response > 0) :
+            $data = array('status' => 'success', 'msg' => 'Subscribed to newsletter successfully !');
+            echo json_encode($data);
+            exit();
+        endif;
+
+        $data = array('status' => 'error', 'msg' => 'Could not subscribe to the newsletter !');
+        echo json_encode($data);
+        exit();
+    }
+    /***** Save Subscription ******/
 
 
 
