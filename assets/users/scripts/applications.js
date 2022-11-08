@@ -153,13 +153,13 @@ function load_jobs_datacard(parameters, form_url) {
 
     circular_loader_get('show');
 
-    $.get(form_url, parameters, function (data, status) {
+    $.get(form_url, parameters, async function (data, status) {
         var out = jQuery.parseJSON(data);
         tableData = out.data;
 
-        buildJobsCard(tableData);
-
+        await buildJobsCard(tableData);
         circular_loader_get('hide');
+        await $('.open-now').trigger('click');
 
     });
 
@@ -433,7 +433,7 @@ function circular_loader_get(action = 'hide') {
 
 
 
-function buildJobsCard(myList) {
+async function buildJobsCard(myList) {
 
     let datacard_element = ``;
     let jobsData = myList.jobs;
@@ -512,7 +512,6 @@ function buildJobsCard(myList) {
         buildJobsPagination(page_limit, current_page, nums_limit);
     }
 
-    $('.open-now').trigger('click');
 
 }
 

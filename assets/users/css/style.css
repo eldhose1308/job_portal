@@ -221,11 +221,11 @@ a {
 }
 
 a:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 a *:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 li.hr span {
@@ -690,7 +690,7 @@ h6 {
 }
 
 .color-brand-2 {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .op-70 {
@@ -773,7 +773,7 @@ h6 {
   overflow: visible;
   border-radius: 10px;
   position: relative;
-  background-color: #3C65F5 !important;
+  background-color: #FF9600 !important;
 }
 
 .box-progress-bar .progress .bg-brand-2 span {
@@ -790,7 +790,7 @@ h6 {
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   position: absolute;
   top: -5px;
   right: -5px;
@@ -1000,7 +1000,7 @@ h6,
 
 .btn.btn-default {
   color: #ffffff;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   line-height: 26px;
   padding: 10px 25px;
 }
@@ -1016,7 +1016,7 @@ h6,
   gap: 10px;
   background: #E0E6F7;
   border-radius: 8px;
-  color: #3C65F5;
+  color: #FF9600;
   font-size: 14px;
   line-height: 14px;
 }
@@ -1030,7 +1030,7 @@ h6,
 }
 
 .btn-grey-small:hover {
-  color: #3C65F5 !important;
+  color: #FF9600 !important;
 }
 
 .btn-grey-big {
@@ -1045,12 +1045,12 @@ h6,
 }
 
 .btn-grey-big:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .btn-apply-now {
   background-color: #E0E6F7;
-  color: #3C65F5;
+  color: #FF9600;
   padding: 12px 10px;
   min-width: 95px;
   border-radius: 4px;
@@ -1061,7 +1061,7 @@ h6,
 }
 
 .btn-apply {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   color: #ffffff;
   padding: 12px 20px;
   border-radius: 4px;
@@ -1080,7 +1080,7 @@ h6,
 }
 
 .btn-apply-big {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   color: #ffffff;
   padding: 18px 35px;
   border-radius: 4px;
@@ -1131,7 +1131,7 @@ h6,
   padding: 3px 10px;
   background: #E0E6F7;
   border-radius: 5px;
-  color: #3C65F5;
+  color: #FF9600;
   min-width: 42px;
   font-size: 12px;
   line-height: 18px;
@@ -1141,7 +1141,7 @@ h6,
   padding: 6px 18px;
   color: #66789C;
   border-radius: 5px;
-  color: #3C65F5;
+  color: #FF9600;
   min-width: 42px;
   font-size: 12px;
   line-height: 18px;
@@ -1160,10 +1160,10 @@ h6,
 
 .btn-border-brand-2 {
   padding: 12px 20px;
-  border: 1px solid #3C65F5;
+  border: 1px solid #FF9600;
   background-color: #ffffff;
   border-radius: 8px;
-  color: #3C65F5;
+  color: #FF9600;
   font-size: 14px;
   line-height: 22px;
 }
@@ -1176,7 +1176,7 @@ h6,
 }
 
 .btn-brand-1:hover {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   color: #ffffff;
 }
 
@@ -1198,7 +1198,7 @@ h6,
   padding: 8px 16px;
   background: #66789C;
   border-radius: 5px;
-  color: #3C65F5;
+  color: #FF9600;
   min-width: 42px;
   font-size: 11px;
   color: #ffffff;
@@ -1211,7 +1211,7 @@ h6,
   line-height: 24px;
   color: #ffffff;
   padding: 15px 28px 15px 60px;
-  background: #3C65F5 url(../imgs/page/company/icon-email.svg) no-repeat 25px 15px;
+  background: #FF9600 url(../imgs/page/company/icon-email.svg) no-repeat 25px 15px;
   border-radius: 4px;
 }
 
@@ -1294,12 +1294,12 @@ h6,
 }
 
 .btn-link:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .btn-arrow-right {
   background: url(../imgs/page/homepage2/arrow-right.svg) no-repeat right 15px top 3px;
-  color: #3C65F5;
+  color: #FF9600;
   padding: 0px 40px 0px 0px;
   font-size: 12px;
   line-height: 12px;
@@ -1387,7 +1387,7 @@ span.btn {
 }
 
 .social-login:hover {
-  color: #3C65F5;
+  color: #FF9600;
   box-shadow: 0px 10px 20px -5px rgba(10, 42, 105, 0.06);
 }
 
@@ -1423,7 +1423,7 @@ span.btn {
 }
 
 .cb-container input:checked~.checkmark {
-  border: 2px solid #3C65F5;
+  border: 2px solid #FF9600;
 }
 
 .checkmark:after {
@@ -1442,7 +1442,7 @@ span.btn {
   width: 21px;
   height: 22px;
   border-radius: 5px;
-  background: #3C65F5 url(../imgs/template/icons/tick.svg) no-repeat center;
+  background: #FF9600 url(../imgs/template/icons/tick.svg) no-repeat center;
 }
 
 /*COMPONENTS -> FORM*/
@@ -1533,7 +1533,7 @@ textarea:focus {
 }
 
 .contact-from-area .contact-form-style button:hover {
-  background-color: #3C65F5 !important;
+  background-color: #FF9600 !important;
 }
 
 .form-group {
@@ -1705,7 +1705,7 @@ label {
 /*Customize the style representation when pager is activated*/
 .swiper-pagination-customs-active,
 .swiper-pagination-customs:hover {
-  background: #3C65F5;
+  background: #FF9600;
   border-radius: 50%;
   width: 12px;
   height: 12px;
@@ -1727,7 +1727,7 @@ label {
 }
 
 .swiper-pagination .swiper-pagination-bullet {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   width: 10px;
   height: 10px;
   margin: 0 4px;
@@ -1736,7 +1736,7 @@ label {
 
 .swiper-pagination .swiper-pagination-bullet-active,
 .swiper-pagination .swiper-pagination-bullet-active:hover {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   width: 12px;
   height: 12px;
   margin: -1px 3px 0;
@@ -1897,7 +1897,7 @@ label {
 }
 
 .noUi-background {
-  background: #3C65F5;
+  background: #FF9600;
 }
 
 .noUi-origin {
@@ -1917,7 +1917,7 @@ label {
   top: -30px;
   font-size: 14px;
   line-height: 22px;
-  color: #3C65F5;
+  color: #FF9600;
   font-weight: 500;
 }
 
@@ -1937,7 +1937,7 @@ label {
   left: 5px;
   width: 9px;
   height: 9px;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   border-radius: 50%;
 }
 
@@ -2007,7 +2007,7 @@ label {
 }
 
 .card-grid-2 .btn-apply-now {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-grid-2:hover {
@@ -2017,7 +2017,7 @@ label {
 
 .card-grid-2:hover .btn-apply-now {
   color: #ffffff;
-  background-color: #3C65F5;
+  background-color: #FF9600;
 }
 
 .card-grid-2 a {
@@ -2026,7 +2026,7 @@ label {
 }
 
 .card-grid-2 a:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-grid-2 .card-grid-2-image-rd {
@@ -2074,7 +2074,7 @@ label {
   align-items: center;
   padding: 0px 10px;
   height: 24px;
-  background: #3C65F5;
+  background: #FF9600;
   border-radius: 5px;
   color: #ffffff;
   min-width: 42px;
@@ -2150,7 +2150,7 @@ label {
 }
 
 .card-grid-2 .card-block-info .card-text-price {
-  color: #3C65F5;
+  color: #FF9600;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: bold;
   font-size: 22px;
@@ -2266,7 +2266,7 @@ label {
 }
 
 .card-grid-2 .card-grid-2-image-left .right-info .name-job:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-grid-2 .card-grid-2-image-left .right-info .location-small {
@@ -2313,7 +2313,7 @@ label {
   height: 24px;
   background: #E0E6F7;
   border-radius: 5px;
-  color: #3C65F5;
+  color: #FF9600;
   min-width: 42px;
 }
 
@@ -2371,7 +2371,7 @@ label {
 }
 
 .card-grid-3 h5 a:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-grid-3 .card-block-info {
@@ -2426,7 +2426,7 @@ label {
 }
 
 .card-grid-3 .card-block-info .card-text-price {
-  color: #3C65F5;
+  color: #FF9600;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: bold;
   font-size: 22px;
@@ -2520,7 +2520,7 @@ label {
 }
 
 .card-grid-4 .btn-readmore:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-grid-5 {
@@ -2634,7 +2634,7 @@ label {
   display: inline-block;
   padding: 0px 35px 0px 0px;
   background: url(../imgs/template/icons/arrow-right.svg) no-repeat right top 2px;
-  color: #3C65F5;
+  color: #FF9600;
   font-size: 14px;
   line-height: 22px;
 }
@@ -2663,7 +2663,7 @@ label {
   line-height: 26px;
   padding-top: 0px;
   display: inline-block;
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .card-list-4 .card-price span {
@@ -3061,7 +3061,7 @@ ul li:last-child .card-list-4 {
 }
 
 .text-brand-2 {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .w-lg-50 {
@@ -3242,13 +3242,13 @@ ul li:last-child .card-list-4 {
 }
 
 .banner-hero .color-brand-2 {
-  color: #3C65F5;
+  color: #FF9600;
   position: relative;
 }
 
 .banner-hero .color-brand-2::after {
   content: "";
-  background-color: #3C65F5;
+  background-color: #FF9600;
   height: 25px;
   position: absolute;
   width: 100%;
@@ -3364,7 +3364,7 @@ ul li:last-child .card-list-4 {
 }
 
 .banner-hero.hero-3 {
-  background: #3C65F5;
+  background: #FF9600;
 }
 
 .banner-hero.hero-3::before {
@@ -3536,7 +3536,7 @@ ul li:last-child .card-list-4 {
 
 .header .main-menu li a:hover,
 .header .main-menu li a.active {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .header .main-menu li a:hover::before,
@@ -3544,7 +3544,7 @@ ul li:last-child .card-list-4 {
   content: "";
   height: 2px;
   width: 100%;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   position: absolute;
   bottom: -10px;
   left: 0px;
@@ -3646,7 +3646,7 @@ ul li:last-child .card-list-4 {
 }
 
 .header .text-link-bd-btom:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .header .block-signin .btn-shadow {
@@ -3688,11 +3688,11 @@ ul li:last-child .card-list-4 {
 }
 
 .header-brand-2 {
-  background: #3C65F5;
+  background: #FF9600;
 }
 
 .header-brand-2.sticky-bar.stick {
-  background: #3C65F5;
+  background: #FF9600;
 }
 
 .header-brand-2 .main-menu>li>a {
@@ -3735,7 +3735,7 @@ ul li:last-child .card-list-4 {
 }
 
 .header-brand-2 .main-menu li ul li a:hover {
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .header-brand-2 .text-link-bd-btom {
@@ -3744,7 +3744,7 @@ ul li:last-child .card-list-4 {
 
 .header-brand-2 .btn-default {
   background-color: #ffffff;
-  color: #3C65F5;
+  color: #FF9600;
   font-weight: 500;
 }
 
@@ -4414,7 +4414,7 @@ ul li:last-child .card-list-4 {
   border: 0;
   background-color: #fff;
   transition-duration: 0.2s;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   background-image: url(../imgs/template/icons/go-top.svg);
   background-repeat: no-repeat;
   background-position: center;
@@ -6059,7 +6059,7 @@ ul li:last-child .card-list-4 {
 .text-blue {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 20px;
-  color: #3C65F5;
+  color: #FF9600;
   font-weight: 600;
   line-height: 24px;
 }
@@ -6247,7 +6247,7 @@ ul li:last-child .card-list-4 {
 }
 
 .block-pricing .box-pricing-item:hover .btn-border {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   color: #ffffff;
 }
 
@@ -6265,13 +6265,13 @@ ul li:last-child .card-list-4 {
 }
 
 .block-pricing .box-pricing-item .btn-border {
-  border: 1px solid #3C65F5;
-  color: #3C65F5;
+  border: 1px solid #FF9600;
+  color: #FF9600;
   width: 100%;
 }
 
 .block-pricing .box-pricing-item .btn-border:hover {
-  background-color: #3C65F5;
+  background-color: #FF9600;
   color: #ffffff;
 }
 
@@ -6284,7 +6284,7 @@ ul li:last-child .card-list-4 {
 
 .block-pricing .box-info-price .text-price {
   font-size: 56px;
-  color: #3C65F5;
+  color: #FF9600;
   font-family: "Plus Jakarta Sans", sans-serif;
   line-height: 56px;
   font-weight: 800;
@@ -6780,7 +6780,7 @@ ul li:last-child .card-list-4 {
   background-image: url(../imgs/page/candidates/editor.svg);
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #3C65F5;
+  background-color: #FF9600;
   position: absolute;
   bottom: 45px;
   right: 20px;
@@ -7579,7 +7579,7 @@ ul li:last-child .card-list-4 {
   line-height: 18px;
   border-radius: 7px;
   background: #E0E6F7;
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .background-primary {
@@ -7628,7 +7628,7 @@ ul li:last-child .card-list-4 {
 
 .input-disabled {
   background-color: #ffffff !important;
-  border: 1px solid #3C65F5;
+  border: 1px solid #FF9600;
   padding: 0px 0px;
   text-align: center;
   height: 35px;
@@ -7724,7 +7724,7 @@ ul li:last-child .card-list-4 {
   background-color: #E0E6F7;
   border-radius: 50%;
   text-align: center;
-  color: #3C65F5;
+  color: #FF9600;
 }
 
 .sidebar-border-bg {
@@ -7918,8 +7918,8 @@ ul li:last-child .card-list-4 {
 
 .nav-tabs li a:hover,
 .nav-tabs li a.active {
-  color: #3C65F5;
-  border-color: #3C65F5;
+  color: #FF9600;
+  border-color: #FF9600;
   box-shadow: 0px 2px 4px -5px rgb(10, 42, 105);
 }
 
@@ -8318,7 +8318,7 @@ ul li:last-child .card-list-4 {
 }
 
 .bg-brand-2 {
-  background-color: #3C65F5;
+  background-color: #FF9600;
 }
 
 .bg-border-3 {
@@ -8339,7 +8339,7 @@ ul li:last-child .card-list-4 {
 }
 
 .number-element {
-  color: #3C65F5;
+  color: #FF9600;
   background-color: #EFF2FB;
   width: 110px;
   height: 110px;
@@ -9490,7 +9490,7 @@ ul li:last-child .card-list-4 {
 
 
 .jobsdatacard-loader {
-  color: #3c65f5;
+  color: #FF9600;
   font-size: 50px !important;
 }
 
@@ -9587,7 +9587,7 @@ ul li:last-child .card-list-4 {
   width: 5em;
   height: 5em;
   border-radius: 50%;
-  border: 0.45em solid #3c65f5;
+  border: 0.45em solid #FF9600;
   /*The border is 0.35 but making it larger removes visual artifacts */
   /*background-color: #4D642D;*/
   /* for debug */
@@ -9601,7 +9601,7 @@ ul li:last-child .card-list-4 {
   position: absolute;
   /*needed for clipping*/
   clip: rect(0, 5em, 5em, 2.5em);
-  background-color: #3c65f5;
+  background-color: #FF9600;
   border-radius: 50%;
   width: 5em;
   height: 5em;
@@ -10136,7 +10136,7 @@ ul li:last-child .card-list-4 {
 
 .btn-counter {
   background-color: #E0E6F7;
-  color: #3C65F5;
+  color: #FF9600;
   padding: 12px 10px;
   min-width: 95px;
   border-radius: 4px;
@@ -10262,4 +10262,8 @@ ul li:last-child .card-list-4 {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+}
+
+.header-logo a img{
+  max-width: 60%;
 }
