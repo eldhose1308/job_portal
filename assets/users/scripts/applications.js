@@ -10,6 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
 function load_jobs() {
     if ($('.jobs_datacard-list').length > 0)
         $(".jobs_datacard-list").submit();
+
+    if ($('.jobs_datatable-list').length > 0)
+        $(".jobs_datatable-list").submit();
+
+
+    let job_link = fetch_getParameters('job_link');
+    if (job_link != null)
+        $('a.show-applications-of-job[data-url="' + job_link + '"]').trigger('click');
+
 }
 
 
@@ -128,6 +137,17 @@ function getParameters_toDOM() {
 
 }
 
+
+
+
+
+
+/*
+ * 
+ *  Datacards autoloading function which is inside a form with class jobs_datacard-list
+ *  GET parameters are loaded from the url and all the details are rendered to div with id jobs-na_datacard
+ * 
+ */
 $(document).on('submit', '.jobs_datacard-list', function (e) {
     e.preventDefault();
     $("#jobs-na_datacard").html(jobs_loader);
@@ -157,9 +177,9 @@ function load_jobs_datacard(parameters, form_url) {
         var out = jQuery.parseJSON(data);
         tableData = out.data;
 
-        await buildJobsCard(tableData);
+        buildJobsCard(tableData);
         circular_loader_get('hide');
-        await $('.open-now').trigger('click');
+        // await $('.open-now').trigger('click');
 
     });
 
@@ -175,6 +195,8 @@ function load_jobs_datacard(parameters, form_url) {
 
 $(document).on('click', '.show-applications-of-job', function (e) {
     let form_url = $(this).attr("data-url");
+    add_getParameters("job_link", form_url);
+
     $('.jobapplications-content').html(jobs_loader);
     $.get(form_url, function (data, status) {
         var out = jQuery.parseJSON(data);
@@ -186,6 +208,26 @@ $(document).on('click', '.show-applications-of-job', function (e) {
     }).fail(function () {
         AlertandToast('error', 'Could not load jobs', false, true);
         $('.jobapplications-content').html('');
+
+    });
+
+
+});
+
+
+
+
+$(document).on('click', '.show-applications-of-job-table', function (e) {
+    let form_url = $(this).attr("data-url");
+
+    load_datatable({},form_url,'#candidates_datatable');
+    $.get(form_url, function (data, status) {
+        var out = jQuery.parseJSON(data);
+        out = out.data;
+
+
+    }).fail(function () {
+        AlertandToast('error', 'Could not load jobs', false, true);
 
     });
 
@@ -225,8 +267,8 @@ $(document).on('change', '.change_status', function (e) {
     let application_status = $(this).val();
 
     var formData = new FormData($("#change-status-forms")[0]);
-    formData.append('apply_id',apply_id);
-    formData.append('application_status',application_status);
+    formData.append('apply_id', apply_id);
+    formData.append('application_status', application_status);
 
     var form_url = $('#change-status-forms').attr('action');
     var result_xhr = $.ajax({
@@ -295,7 +337,7 @@ $(document).on('click', '.send-email-notification', function (e) {
     let apply_id = $(this).attr('data-id');
 
     var formData = new FormData($("#send-email-forms")[0]);
-    formData.append('apply_id',apply_id);
+    formData.append('apply_id', apply_id);
 
     var form_url = $('#send-email-forms').attr('action');
     var result_xhr = $.ajax({
@@ -331,7 +373,7 @@ $(document).on('click', '.send-email-notification', function (e) {
             // go_to_backpage();
             // closeOffCanvas();
 
-          
+
 
         }
         else

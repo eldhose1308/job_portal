@@ -204,11 +204,20 @@ $(document).on('change', '.datatable-list .filter .form-control', function (e) {
 });
 
 
+
+
+/*
+ * 
+ *  Datatables autoloading function which is inside a form with class datatable-list
+ *  GET parameters are loaded from the url and all the details are rendered to table with id na_datatable
+ * 
+ */
 $(document).on('submit', '.datatable-list', function (e) {
     e.preventDefault();
 
     var parameters = [];
 
+    /*
     $(this).children()
         .each(function (index, element) {
             if (element.classList.contains('filter')) {
@@ -216,14 +225,25 @@ $(document).on('submit', '.datatable-list', function (e) {
                 parameters[ids] = element.children[0].value;
             }
         });
+    */
+
+
+    var parameters = {};
+    let current_parameters = getParameters();
+
+    for (const [key, value] of current_parameters.entries()) {
+        parameters[key] = value;
+    }
+
 
     load_datatable(parameters, $(this).attr('action'));
 });
 
-function load_datatable(parameters, form_url) {
-    $("#na_datatable").dataTable().fnDestroy();
 
-    $('#na_datatable').DataTable({
+function load_datatable(parameters, form_url,datatable_id = '#na_datatable') {
+    $(datatable_id).dataTable().fnDestroy();
+
+    $(datatable_id).DataTable({
         "processing": true,
         "serverSide": false,
         "ajax": {
@@ -365,6 +385,15 @@ function add_getParameters(ids, value) {
 
 }
 
+function fetch_getParameters(ids) {
+    let current_parameters = getParameters();
+
+    if (current_parameters.has(ids))
+        return current_parameters.get(ids);
+    return null
+
+}
+
 
 function getParameters() {
     address = window.location.search;
@@ -389,7 +418,7 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
  * 
  */
 
- $(document).on('submit', '#newsletter-forms', function(e) {
+$(document).on('submit', '#newsletter-forms', function (e) {
     e.preventDefault();
 
     if (validate_form(true, false, true))
@@ -411,9 +440,9 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
         data: formData,
         processData: false,
         contentType: false,
-        xhr: function() {
+        xhr: function () {
             var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function(evt) {
+            xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
                     var percentComplete = parseInt((evt.loaded / evt.total) * 100);
                     circular_loader_post('show', percentComplete);
@@ -422,13 +451,13 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
             }, false);
             return xhr;
         },
-        beforeSend: function() {
+        beforeSend: function () {
             circular_loader_post('hide', 0);
 
         }
     })
 
-    result_xhr.done(function(data) {
+    result_xhr.done(function (data) {
         circular_loader_post('hide', 0);
 
 
@@ -445,11 +474,11 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
         loading_btn();
     });
 
-    result_xhr.fail(function() {
+    result_xhr.fail(function () {
         circular_loader_post('hide', 0);
 
 
-        AlertandToast('error', 'Page has expired, try later !',false,true);
+        AlertandToast('error', 'Page has expired, try later !', false, true);
         loading_btn();
     });
 

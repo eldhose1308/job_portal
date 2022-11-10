@@ -28,6 +28,22 @@ class applications extends MY_Controller
         $this->template->views('admin/applications/index', $data);
     }
 
+
+    //Table
+    public function table_view()
+    {
+
+        $data = $this->data;
+        $data["status"] = $this->Common_model->select_status();
+        $data["countries"] = $this->Common_model->select_all("ci_countries");
+        $data["job_statuses"] = $this->Common_model->select_job_status();
+
+
+        $this->template->views('admin/applications/table_index', $data);
+    }
+
+
+
     public function change_application_status()
     {
         $this->form_validation->set_rules('apply_id', 'Application', 'trim|required');
@@ -90,6 +106,67 @@ class applications extends MY_Controller
     }
 
 
+    // Table
+    public function show_applications_table($job_id = 0)
+    {
+        $data = $this->data;
+        $data["operation"] = 'edit';
+        $data["job_id"] = $job_id;
+
+        $job_id = en_func($job_id, 'd');
+
+        $data["jobsDetails"] = $this->Common_model->select_by_id('ci_jobs', $job_id, 'job_id');
+        $records['data'] = $data["jobApplications"] = $this->M_jobs->select_applications_of_job($job_id);
+
+        $this->check_exists($data["jobsDetails"]);
+        $job_statuses = $this->Common_model->select_job_status();
+
+
+        $data = array();
+        $i = 0;
+        foreach ($records['data']  as $row) {
+            $apply_id  = en_func($row->apply_id, 'e');
+
+            $status_bg = ($row->job_status == 1) ? 'custom' : ($row->job_status == 2 ? 'success' : 'danger');
+
+
+            $applied_at = $row->applied_at;
+
+            $timeFirst  = strtotime($applied_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+            $select_box = '<div class="dropdown d-inline-block">
+            <select data-id="' . en_func($row->apply_id, 'e') . '" name="change_status" id="change_status" class="form-select change_status">';
+            foreach ($job_statuses as $job_status) :
+                $selected = ($row->job_status == $job_status->status_id) ? "selected" : "";
+                $select_box .= '<option ' . $selected . ' value="' . en_func($job_status->status_id, 'e') . '">' . $job_status->status_name . '</option>';
+            endforeach;
+            $select_box .= '</select></div>';
+
+
+          
+
+            $data[] = array(
+                ++$i,
+                $row->full_name,
+                '<span class="application-status badge bg-' . $status_bg . '">' . $row->status_name . '</span>',
+                date('d M, Y', strtotime($row->applied_at)) . ' | ' . date('h:i a', strtotime($row->applied_at)),
+                '<div class="btn-group btn-group-sm">
+                '.$select_box.'
+                </div>
+                ',
+                '<a class="btn btn-sm btn-custom text-white open-right-offcanvas-with-url" data-name="' . $row->full_name . '" data-email="' . $row->user_email . '" data-url="' . base_url() . 'uploads/resumes/' . $row->user_resume . '"><i class="fa fa-file-text"></i></a>'
+
+            );
+        }
+
+
+        $this->response(200, $data);
+    }
+
+
     public function send_email_notification()
     {
         $this->form_validation->set_rules('apply_id', 'Application', 'trim|required');
@@ -110,7 +187,7 @@ class applications extends MY_Controller
         $mail_status = $mail_data["applicationDetails"]->status_name;
         $mail_template = $this->load->view('mail/application_notification', $mail_data, true);
 
-        $mail_response = send_email_func($candidate_mail, $mail_template, 'Amore - Job Notification ( ' . $mail_status .' )');
+        $mail_response = send_email_func($candidate_mail, $mail_template, 'Amore - Job Notification ( ' . $mail_status . ' )');
 
 
         if ($mail_response) {
@@ -194,6 +271,56 @@ class applications extends MY_Controller
         $data['nums_limit'] = 5;
 
         $data['user_type'] = 'admin';
+
+        $this->response(200, $data);
+    }
+
+    //Table
+    public function jobs_json_table()
+    {
+
+        $page = ((int) $this->input->get('page') == 0) ? 1 : (int) $this->input->get('page');
+        $per_page = ((int) $this->input->get('per_page') == 0) ? 0 : (int) $this->input->get('per_page');
+        $sortby = ($this->input->get('sortby') == 'asc') ? 'asc' : 'desc';
+
+        $query = $this->input->get('query');
+
+        $start_index = ($page - 1) * $per_page;
+
+
+        $records['data'] = $this->M_jobs->select_all_jobs_admin($query, $per_page, $start_index, $page, $sortby);
+
+
+        $data = array();
+        $i = 0;
+        foreach ($records['data']  as $row) {
+            $job_id  = en_func($row->job_id, 'e');
+
+
+
+            $updated_at = $row->updated_at;
+
+            $timeFirst  = strtotime($updated_at);
+            $timeSecond = strtotime(date("Y-m-d h:i:s"));
+
+            $differenceInSeconds = $timeSecond - $timeFirst;
+
+            $first_one = $i == 1 ? "open-now" : "";
+
+
+            $data[] = array(
+                ++$i,
+                $row->job_title . '<br>' .
+                    '<span class="card-time text-muted"><span>' . seconds2format($differenceInSeconds) . " ago" . '</span></span>',
+                '<a class="btn btn-sm btn-custom text-white show-applications-of-job-table" data-url="' . base_url() . 'admin/applications/show_applications_table/' . $job_id . '"><i class="fa fa-eye"></i></a>'
+
+
+
+            );
+        }
+
+        // dd($responses);
+
 
         $this->response(200, $data);
     }

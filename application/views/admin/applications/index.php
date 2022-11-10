@@ -75,6 +75,15 @@
                                             </div>
 
 
+                                            <div class="box-view-type">
+                                                <a class="view-type" title="Tabular View" href="<?= base_url() ?>admin/applications/table_view">
+                                                <img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-list.svg" alt="amore">
+                                            </a>
+                                                <a class="view-type" title="Grid View" href="<?= base_url() ?>admin/applications">
+                                                    <img src="<?= base_url() ?>assets/users/imgs/template/icons/icon-grid-hover.svg" alt="amore">
+                                                </a>
+                                            </div>
+
                                         </form>
 
                                     </div>
@@ -114,8 +123,8 @@
 
 
 
-                 <!--- Bottom canvas -->
-                 <div id="bs-canvas-bottom-filter" style="display: none;" class="bs-canvas bs-canvas-anim bs-canvas-bottom position-fixed bg-light w-100">
+                <!--- Bottom canvas -->
+                <div id="bs-canvas-bottom-filter" style="display: none;" class="bs-canvas bs-canvas-anim bs-canvas-bottom position-fixed bg-light w-100">
                     <header class="bs-canvas-header p-3 bg-primary overflow-auto">
                         <button type="button" class="bs-canvas-close float-left close" aria-label="Close" style="background: transparent; border: none;">
                             <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
@@ -185,7 +194,7 @@
                             </div>
                             <!---->
 
-                            
+
 
                             <!---->
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
@@ -247,7 +256,7 @@
                             <div class="row mb-15">
                                 <div class="col-6">
                                     <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
-                                </div>  
+                                </div>
                                 <div class="col-6">
                                     <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
                                 </div>

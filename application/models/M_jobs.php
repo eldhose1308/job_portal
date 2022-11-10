@@ -542,7 +542,7 @@ class M_jobs extends CI_Model
 
 
 
-    public function select_all_jobs_admin($query = '', $limit = 10, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
+    public function select_all_jobs_admin($query = '', $limit = 0, $start = 1, $page = 1, $sortby = "desc", $posted_date = 0, $job_location = 0, $salary = 0, $experience = 0)
     {
         $multiplewhere = array(
             'ci_jobs.status' => 1
@@ -579,11 +579,13 @@ class M_jobs extends CI_Model
         $this->db->where($multiplewhere);
         $this->db->join('ci_countries', 'ci_countries.country_id  = ci_jobs.job_location', 'left');
         $this->db->join('ci_jobs_apply', 'ci_jobs_apply.job_id  = ci_jobs.job_id', 'left');
-        $this->db->limit($limit, $start);
+
+        if ($limit != 0)
+            $this->db->limit($limit, $start);
 
         $this->db->order_by("ci_jobs_apply.created_at", "desc");
 
-        
+
         if ($sortby == "desc")
             $this->db->order_by("ci_jobs.job_id", "desc");
         else
@@ -687,7 +689,7 @@ class M_jobs extends CI_Model
             $multiplewhere['ci_jobs_apply.job_id'] = $job_id;
 
 
-        $this->db->select('ci_jobs_apply.apply_id,ci_jobs_apply.job_status,ci_job_status.status_name,ci_jobs_apply.created_at,ci_candidates.*');
+        $this->db->select('ci_jobs_apply.apply_id,ci_jobs_apply.created_at as applied_at,ci_jobs_apply.job_status,ci_job_status.status_name,ci_jobs_apply.created_at,ci_candidates.*');
         $this->db->where($multiplewhere);
         $this->db->join('ci_candidates', 'ci_candidates.user_id  = ci_jobs_apply.candidate_id', 'left');
         $this->db->join('ci_job_status', 'ci_job_status.status_id  = ci_jobs_apply.job_status', 'left');
