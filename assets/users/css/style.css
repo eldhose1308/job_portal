@@ -1148,6 +1148,10 @@ h6,
   background-color: rgba(81, 146, 255, 0.12);
 }
 
+.btn-primary{
+  background-color: #FF9600 !important;
+}
+
 .btn-border-3 {
   padding: 12px 20px;
   background: #EFF2FB;
@@ -2850,12 +2854,16 @@ ul li:last-child .card-list-4 {
 
 .box-newsletter {
   padding: 20px;
-  background-color: #05264e;
+  background-color: #000;
   border-radius: 25px;
   /* padding: 57px 0px 96px 0px;
   background: url(../imgs/template/bg-newsletter.svg) no-repeat 0px 0px;
   background-size: cover;
   border-radius: 16px; */
+}
+
+.filter-preview{
+  padding: 0.5rem;
 }
 
 .box-newsletter .box-form-newsletter {
@@ -3450,6 +3458,7 @@ ul li:last-child .card-list-4 {
   padding: 30px 0;
   float: left;
   width: 100%;
+  background-color: #000 !important;
 }
 
 .header .main-header {
@@ -3458,9 +3467,13 @@ ul li:last-child .card-list-4 {
 }
 
 .header .main-header .header-right {
-  display: inline-block;
+  /*display: inline-block;
   min-width: 25vw;
-  text-align: right;
+  text-align: right;*/
+  display: inline-flex;
+    text-align: left;
+    justify-content: end;
+    width: 85%;
 }
 
 .header .main-header .header-nav {
@@ -3527,7 +3540,7 @@ ul li:last-child .card-list-4 {
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #05264E;
+  color: #fff;
   display: block;
   padding: 0px;
   text-decoration: none;
@@ -3687,6 +3700,9 @@ ul li:last-child .card-list-4 {
   top: 7px;
 }
 
+.text-our-custom {
+  color: #FF9600;
+}
 .header-brand-2 {
   background: #FF9600;
 }
@@ -4305,6 +4321,15 @@ ul li:last-child .card-list-4 {
   margin-bottom: 15px;
 }
 
+.footer {
+  background-color: #000;
+  padding-top: 20px;
+}
+
+.footer h6{
+  color: #ff9600;
+}
+
 .footer .footer-col-1 {
   flex: 0 0 auto;
   width: 24%;
@@ -4345,14 +4370,14 @@ ul li:last-child .card-list-4 {
 }
 
 .footer .menu-footer li a {
-  color: #4F5E64;
+  color: #fff;
   font-size: 14px;
   text-decoration: none;
   transition-duration: 0.2s;
 }
 
 .footer .menu-footer li a:hover {
-  color: #05264E;
+  color: #ff9600;
   transition-duration: 0.2s;
   padding-left: 3px;
 }
@@ -8595,6 +8620,14 @@ ul li:last-child .card-list-4 {
     padding-right: 50px;
   }
 
+  .header-right .block-signin a{
+    color: #fff !important;
+  }
+
+  .text-link-bd-btom{
+    color: #fff !important;
+  }
+
   .banner-hero {
     max-width: 100%;
     padding: 0;
@@ -10267,3 +10300,55 @@ ul li:last-child .card-list-4 {
 .header-logo a img{
   max-width: 60%;
 }
+@media (max-width: 500px) {
+  .header-logo a img{
+  max-width: 50%;
+}
+}
+
+
+/** Dashboard user icon ***/
+
+.user-profile {
+  box-sizing: border-box;
+  min-width: 0px;
+  width: 35px;
+  height: 35px;
+  background-color: #05264E;
+  border-radius: 100%;
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 700;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-shrink: 0;
+  float: left;
+  margin-right: 5px;
+}
+
+.user-short-name {
+  font-weight: inherit;
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0px;
+}
+
+.icon-down {
+  display: inline-block;
+  padding-right: 15px;
+  background: url(../imgs/triangle.svg) no-repeat right center;
+}
+
+.info-member {
+  display: flex;
+  align-items: center;
+}
+
+.info-member .dropdown {
+  line-height: 10px;
+}
+
+/** Dashboard user icon ***/

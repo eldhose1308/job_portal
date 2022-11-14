@@ -77,7 +77,7 @@
 
 
 
-    <section class="section-box mt-70 d-none">
+    <section class="section-box mt-70">
         <div class="section-box wow animate__animated animate__fadeIn">
             <div class="container">
                 <div class="text-center">

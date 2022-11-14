@@ -71,6 +71,14 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <hr>
+
+                            <div class=" mb-15" id="filters-preview-dom">
+                               
+                               </div>
+
+                               
                         </div>
 
 

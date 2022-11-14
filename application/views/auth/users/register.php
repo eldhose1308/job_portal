@@ -67,7 +67,7 @@
 
                         <?php else : ?>
 
-                            <a class="text-link-bd-btom hover-up" href="<?= base_url() ?>users/register">Register</a>
+                            <a class="text-link-bd-btom hover-up text-white" href="<?= base_url() ?>users/register">Register</a>
                             <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>users/login"> Sign in <i class="fa fa-sign-in"></i></a>
 
                         <?php endif; ?>

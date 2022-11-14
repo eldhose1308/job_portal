@@ -240,7 +240,7 @@ $(document).on('submit', '.datatable-list', function (e) {
 });
 
 
-function load_datatable(parameters, form_url,datatable_id = '#na_datatable') {
+function load_datatable(parameters, form_url, datatable_id = '#na_datatable') {
     $(datatable_id).dataTable().fnDestroy();
 
     $(datatable_id).DataTable({
@@ -367,6 +367,17 @@ function load_datacard(parameters, form_url) {
 /******** Loads GET Parameters data ********/
 
 
+function remove_this_getParameters(ids) {
+    let current_parameters = getParameters();
+
+    if (current_parameters.has(ids))
+        current_parameters.delete(ids);
+
+    window.history.replaceState(null, null, "?" + current_parameters);
+
+}
+
+
 function remove_getParameters() {
 
     window.history.replaceState(null, null, "?");
@@ -403,7 +414,7 @@ function getParameters() {
 
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-    remove_getParameters();
+    // remove_getParameters();
 }
 
 

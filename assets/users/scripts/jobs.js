@@ -126,15 +126,50 @@ $(document).on('click', '.filter-tablinks', function (e) {
     $(this).addClass('active');
 });
 
+
 function getParameters_toDOM() {
     let parameters = getParameters();
+    let filters = '';
+    let key_splitted;
     parameters.forEach((value, key) => {
+        key = key.replaceAll('_', ' ');
+        key_splitted = key.split(" ");
 
+        for (var i = 0; i < key_splitted.length; i++)
+            key_splitted[i] = key_splitted[i].charAt(0).toUpperCase() + key_splitted[i].slice(1);
+
+
+        key = key_splitted.join(" ");
+
+        if (key != 'Page')
+            filters += `
+                        <span class="badge filter-preview bg-custom">${key} <i class="fa fa-times-circle ml-5 remove-filter-preview"></i></span>
+                    `;
     });
+
+    $('#filters-preview-dom').html(filters);
 
 }
 
 
+
+$(document).on('click', '.remove-filter-preview', function (e) {
+    e.preventDefault();
+    let key_splitted;
+    let key = $(this).parent().text().trim();
+    key = key.replaceAll(' ', '_');
+
+    key_splitted = key.split("_");
+
+    for (var i = 0; i < key_splitted.length; i++)
+        key_splitted[i] = key_splitted[i].charAt(0).toLowerCase() + key_splitted[i].slice(1);
+
+
+    key = key_splitted.join("_");
+
+    remove_this_getParameters(key);
+    load_jobs();
+});
 
 $(document).on('submit', '.jobs_datacard-list', function (e) {
     e.preventDefault();

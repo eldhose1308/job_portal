@@ -5,8 +5,8 @@
             }
 
             .st1 {
-                fill: #05264E;
-                stroke: #05264E;
+                fill: #fff;
+                stroke: #fff;
                 stroke-width: 2;
                 stroke-miterlimit: 10;
             }

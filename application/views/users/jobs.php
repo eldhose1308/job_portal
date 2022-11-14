@@ -28,6 +28,7 @@
                 <div class="col-lg-9 col-md-12 col-sm-12 col-12 float-right">
                     <div class="content-page">
                         <div class="box-filters-job">
+                           
                             <div class="row">
 
                                 <div class="col-xl-6 col-lg-6 col-6">
@@ -71,6 +72,14 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <hr>
+
+                            <div class=" mb-15" id="filters-preview-dom">
+                               
+                            </div>
+
                         </div>
 
 
@@ -137,7 +146,7 @@
                             </div>
 
 
-                            
+
                             <div class="filter-block mb-20">
                                 <h5 class="medium-heading mb-25">Salary Range </h5>
                                 <div class="list-checkbox pb-20">
@@ -261,7 +270,7 @@
                             </div>
                             <!---->
 
-                            
+
 
                             <!---->
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
@@ -323,7 +332,7 @@
                             <div class="row mb-15">
                                 <div class="col-6">
                                     <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
-                                </div>  
+                                </div>
                                 <div class="col-6">
                                     <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
                                 </div>

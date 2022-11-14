@@ -82,6 +82,16 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <hr>
+
+                            <div class=" mb-15" id="filters-preview-dom">
+
+                            </div>
+
+
+
                         </div>
 
 
@@ -148,7 +158,7 @@
                             </div>
 
 
-                            
+
                             <div class="filter-block mb-20">
                                 <h5 class="medium-heading mb-25">Salary Range </h5>
                                 <div class="list-checkbox pb-20">
@@ -272,7 +282,7 @@
                             </div>
                             <!---->
 
-                           
+
 
                             <div id="Salary" class="filter-tabcontent" style="display: none;">
                                 <div class="filter-block mb-20">
@@ -331,7 +341,7 @@
                             <div class="row mb-15">
                                 <div class="col-6">
                                     <a class="btn btn-md btn-outline-custom reset-filters">Clear</a>
-                                </div>  
+                                </div>
                                 <div class="col-6">
                                     <a class="btn btn-md btn-custom float-right range-filters">Apply</a>
                                 </div>
