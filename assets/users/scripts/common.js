@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     load_datacard_list() // loads datacard data 
 
 
+    load_user_dp();
 
     //alert(222);
     hide_preloader() // hides preloader 
@@ -903,14 +904,12 @@ $(document).on('submit', '#add-form-with-imagecrop', function (e) {
 
 
 function load_user_dp() {
-    $('.user_image').hide();
-    let username = $('#user_image').attr('alt');
+    let username = $('#user_name-preview').text();
 
     var matches = username.match(/\b(\w)/g);
     var acronym = matches.join('');
 
-    $('.user-avatar-text').show();
-    $('.user-avatar-text').html(acronym);
+    $('.user-short-name').html(acronym);
 }
 
 

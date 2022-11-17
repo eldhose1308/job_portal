@@ -15,7 +15,7 @@ $url = (isset($_SERVER['HTTPS']) ? "https://" : "http://");
 $url .= $_SERVER['HTTP_HOST']. str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 $base_url = $url;
 
-define('APP_NAME','Job Portal');
+define('APP_NAME','Amore Holidays');
 
 
 define('BASE_URL', $base_url);

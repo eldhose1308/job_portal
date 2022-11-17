@@ -15,6 +15,7 @@
   <link rel="manifest" href="manifest.json" crossorigin>
   <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>assets/users/imgs/template/favicon.svg">
   <link href="<?= base_url() ?>assets/users/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -26,7 +27,7 @@
   <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
       <div class="preloader-inner position-relative">
-        <div class="text-center"><img src="<?= base_url() ?>assets/users/imgs/template/loading.gif" alt="jobBox"></div>
+        <div class="text-center"><img src="<?= base_url() ?>assets/users/imgs/template/loading.gif" alt="amore"></div>
       </div>
     </div>
   </div>
@@ -35,7 +36,7 @@
     <div class="container">
       <div class="main-header">
         <div class="header-left">
-          <div class="header-logo"><a class="d-flex" href="<?= base_url() ?>"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a></div>
+          <div class="header-logo"><a class="d-flex" href="<?= base_url() ?>"><img alt="amore" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a></div>
         </div>
         <div class="header-nav">
           <nav class="nav-main-menu">
@@ -62,7 +63,7 @@
 
             <?php else : ?>
 
-              <a class="text-link-bd-btom hover-up" href="<?= base_url() ?>users/register">Register</a>
+              <a class="text-link-bd-btom hover-up d-none" href="<?= base_url() ?>users/register">Register</a>
               <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>users/login"> Sign in <i class="fa fa-sign-in"></i></a>
 
             <?php endif; ?>
@@ -212,7 +213,7 @@
             <div class="login_footer form-group d-flex justify-content-between">
               <label class="cb-container">
                 <input type="checkbox"><span class="text-small">Remenber me</span><span class="checkmark"></span>
-              </label><a class="text-muted" href="page-contact.html">Forgot Password</a>
+              </label><a class="text-muted d-none" href="page-contact.html">Forgot Password</a>
             </div>
 
             <div class="progress mb-3 progress-lg" style="display: none;">
@@ -223,7 +224,7 @@
             <div class="form-group">
               <button class="btn btn-brand-1 hover-up w-100 login-btn" name="login">Login</button>
             </div>
-            <div class="text-muted text-center">Don't have an Account? <a href="page-signin.html">Sign up</a></div>
+            <div class="text-muted text-center">Don't have an Account? <a href="page-signin.html d-none">Sign up</a></div>
 
 
             <?php echo form_close(); ?>
@@ -243,8 +244,19 @@
       <div class="row">
 
         <div class="footer-col-6 col-md-6 col-sm-12"><a href="index.html"><img alt="jobBox" src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg"></a>
-          <div class="mt-20 mb-20 font-xs color-text-paragraph-2">JobBox is the heart of the design community and the best resource to discover and connect with designers and jobs worldwide.</div>
-          <div class="footer-social"><a class="icon-socials icon-facebook" href="#"></a><a class="icon-socials icon-twitter" href="#"></a><a class="icon-socials icon-linkedin" href="#"></a></div>
+          <div class="mt-20 mb-20 font-xs color-text-paragraph-2">
+            Amore Holidays Tours And Travels is a reliable name in the industry as we aim to deliver the best experience to their customers. </div>
+          <ul>
+
+            <li>
+              <a class="text-custom" href="tel:7558055198"> <i class="fa fa-phone mr-5"></i> 7558055198</a> <br>
+            </li>
+            <li><a class="text-custom" href="mailto:support@amoreholidayz.com"> <i class="fa fa-envelope mr-1"></i> support@amoreholidayz.com</a>
+            </li>
+
+          </ul>
+
+          <div class="footer-social mt-15"><a class="icon-socials icon-facebook" href="#"></a><a class="icon-socials icon-twitter" href="#"></a><a class="icon-socials icon-linkedin" href="#"></a></div>
         </div>
 
         <div class="footer-col-2 col-md-2 col-xs-6">
@@ -268,7 +280,7 @@
 
 
 
-        
+
 
 
       </div>

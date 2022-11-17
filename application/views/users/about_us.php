@@ -1,6 +1,6 @@
 <main class="main">
       <section class="section-box">
-        <div class="breacrumb-cover bg-img-about">
+        <div class="breacrumb-cover bg-img-contact">
           <div class="container">
             <div class="row">
               <div class="col-lg-6">
@@ -23,17 +23,16 @@
             <div class="text-center">
               <h6 class="f-18 color-text-mutted text-uppercase">Our company</h6>
               <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">About Our Company</h2>
-              <p class="font-sm color-text-paragraph wow animate__animated animate__fadeInUp w-lg-50 mx-auto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ligula ante, dictum non aliquet eu, dapibus ac quam. Morbi vel ante viverra orci tincidunt tempor eu id ipsum. Sed consectetur, risus a blandit tempor, velit magna pellentesque risus, at congue tellus dui quis nisl.</p>
+              <p class="font-sm color-text-paragraph wow animate__animated animate__fadeInUp w-lg-50 mx-auto">
+              Amore Holidays Tours And Travels is a reliable name in the industry as we aim to deliver the best experience to their customers.              </p>
             </div>
             <div class="row mt-70">
               <div class="col-lg-6 col-md-12 col-sm-12"><img src="<?= base_url() ?>assets/users/imgs/page/about/img-about2.png" alt="joxBox"></div>
               <div class="col-lg-6 col-md-12 col-sm-12">
                 <h3 class="mt-15">What we can do?</h3>
                 <div class="mt-20">
-                  <p class="font-md color-text-paragraph mt-20">Aenean sollicituin, lorem quis bibendum auctor nisi elit consequat ipsum sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet maurisorbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctora ornare odio.</p>
-                  <p class="font-md color-text-paragraph mt-20">Aenean sollicituin, lorem quis bibendum auctor nisi elit consequat ipsum sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet maurisorbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctora ornare odio.</p>
-                  <p class="font-md color-text-paragraph mt-20">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis non nisi purus. Integer sit nostra, per inceptos himenaeos.</p>
-                  <p class="font-md color-text-paragraph mt-20">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis non nisi purus. Integer sit nostra, per inceptos himenaeos.</p>
+                  <p class="font-md color-text-paragraph mt-20">Travel Agents, Car Rental, Car Rental For Self Driven, Tour Operators, Car Rental for Outstation etc.</p>
+                  <p class="font-md color-text-paragraph mt-20">We have lots of job openings abroad which you can go through and apply for something that you think you are a best fit.</p>
                 </div>
               </div>
             </div>

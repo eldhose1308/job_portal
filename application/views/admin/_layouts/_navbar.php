@@ -39,7 +39,7 @@
       </div>
       <div class="header-right">
         <div class="block-signin">
-          <a class="text-link-bd-btom hover-up" href="<?= base_url() ?>admin/profile"><?= ss('user_name') ?></a>
+          <a class="text-link-bd-btom hover-up text-white"><?= ss('user_name') ?></a>
           <a class="btn btn-default btn-shadow ml-40 hover-up" href="<?= base_url() ?>admin/logout"> Sign out <i class="fa fa-sign-out"></i></a>
         </div>
       </div>

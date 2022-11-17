@@ -14,7 +14,7 @@ $differenceInSeconds = $timeSecond - $timeFirst;
 <main class="main">
 
     <section class="section-box">
-        <div class="breacrumb-cover bg-img-about">
+        <div class="breacrumb-cover bg-img-contact">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">

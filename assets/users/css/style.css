@@ -10352,3 +10352,7 @@ ul li:last-child .card-list-4 {
 }
 
 /** Dashboard user icon ***/
+
+.text-custom{
+  color: #ff9600;
+}

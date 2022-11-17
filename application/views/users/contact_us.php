@@ -71,18 +71,25 @@
 
                     <p class="form-messege"></p>
                 </div>
-                <div class="col-lg-4 text-center d-none d-lg-block"><img src="<?= base_url() ?>assets/users/imgs/page/contact/img.png" alt="joxBox"></div>
+                <div class="col-lg-4 text-center d-none d-lg-block"><img src="<?= base_url() ?>assets/users/imgs/page/contact/img.png" alt="amore"></div>
             </div>
         </div>
     </section>
 
 
-    <section class="section-box mt-80">
+    <section class="section-box mt-80 bg-dark">
         <div class="container">
-            <div class="box-info-contact">
+            <div class="box-info-contact bg-dark">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12 mb-30"><a href="#"><img src="<?= base_url() ?>assets/users/imgs/page/contact/logo.svg" alt="joxBox"></a>
-                        <div class="font-sm color-text-paragraph">205 North Michigan Avenue, Suite 810 Chicago, 60601, USA<br> Phone: (123) 456-7890<br> Email: <a>[email&#160;protected]</a></div><a class="text-uppercase color-brand-2 link-map" href="#">View map</a>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-30"><a href="#"><img src="<?= base_url() ?>assets/users/imgs/template/jobhub-logo.svg" alt="amore"></a>
+                        <div class="font-sm text-white">
+                        Opposite Saritha junction, Banerji Rd, Kacheripady, Ernakulam, Kerala 682018
+                        <br>
+                        Email : <a class="text-custom" href="mailto:support@amoreholidayz.com">support@amoreholidayz.com</a>
+                        <br>
+                        Mobile : <a class="text-custom" href="tel:7558055198">7558055198</a>
+                    </div>
+                            <a class="text-uppercase color-brand-2 link-map" href="#">View map</a>
                     </div>
 
                 </div>

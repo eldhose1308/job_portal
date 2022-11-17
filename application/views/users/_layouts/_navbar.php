@@ -50,13 +50,13 @@
                                 <div class="user-profile">
 
                                     <span class="user-short-name">
-                                        AMJ
+                                        
                                     </span>
                                 </div>
 
                                 <div>
-                                    <strong class="text-white">Steven Jobs</strong>
-                                    <div class="dropdown"><a class="font-xs text-our-custom icon-down" id="dropdownProfile" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">Super Admin</a>
+                                    <strong class="text-white" id="user_name-preview"><?= ss('full_name') ?></strong>
+                                    <div class="dropdown"><a class="font-xs text-our-custom icon-down" id="dropdownProfile" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">Candidate</a>
                                         <ul class="dropdown-menu dropdown-menu-light dropdown-menu-end" aria-labelledby="dropdownProfile">
                                             <li><a class="dropdown-item user-menu-item" href="<?= base_url() ?>users/profile">Profile</a></li>
                                             <li><a class="dropdown-item user-menu-item" href="<?= base_url() ?>users/jobs/usershome">Dashboard</a></li>
