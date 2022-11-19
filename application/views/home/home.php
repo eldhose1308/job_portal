@@ -95,6 +95,7 @@
 
 
                 </div>
+                <div class="text-center mt-10"><a href="<?= base_url() ?>packages" class="btn btn-brand-1 btn-icon-more hover-up">See more </a></div>
 
 
             </div>

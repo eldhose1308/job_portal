@@ -1,6 +1,6 @@
 
   <link rel="manifest" href="manifest.json" crossorigin>
-  <link rel="shortcut icon" type="image/x-icon" href="<?= base_url() ?>assets/users/imgs/template/favicon.svg">
+  <link href="<?= base_url () ?>assets/users/imgs/icons/favicon.ico" rel="shortcut icon" />
   <link href="<?= base_url() ?>assets/users/css/style.css" rel="stylesheet">
 
 

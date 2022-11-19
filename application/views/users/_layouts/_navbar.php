@@ -7,9 +7,9 @@
             <div class="header-nav">
                 <nav class="nav-main-menu">
                     <ul class="main-menu">
-
                         <li><a href="<?= base_url() ?>">Home</a></li>
-                        <li><a href="<?= base_url() ?>about_us">About us</a></li>
+                        <li><a href="<?= base_url() ?>about_us">About</a></li>
+                        <li><a href="<?= base_url() ?>packages">Packages</a></li>
 
                         <?php if ($this->session->has_userdata('user_login_status')) : ?>
 
@@ -95,6 +95,8 @@
                     <nav>
                         <ul class="mobile-menu font-heading">
                             <li><a href="<?= base_url() ?>">Home</a></li>
+                        <li><a href="<?= base_url() ?>packages">Packages</a></li>
+
                             <li><a href="<?= base_url() ?>usershome">Dashboard</a></li>
 
                             <li><a href="<?= base_url() ?>jobs">Jobs</a></li>
@@ -130,6 +132,8 @@
                         <ul class="mobile-menu font-heading">
 
                             <li><a href="<?= base_url() ?>">Home</a></li>
+                        <li><a href="<?= base_url() ?>packages">Packages</a></li>
+
                             <li><a href="<?= base_url() ?>usershome">Dashboard</a></li>
 
                             <li><a href="<?= base_url() ?>jobs">Jobs</a></li>

@@ -1,5 +1,5 @@
  <!-- Favicon -->
- <!-- <link href="<?= base_url () ?>assets/users/imgs/icons/favicon.ico" rel="shortcut icon" /> -->
+ <link href="<?= base_url () ?>assets/users/imgs/icons/favicon.ico" rel="shortcut icon" />
 
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">

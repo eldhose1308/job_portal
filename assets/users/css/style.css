@@ -1151,6 +1151,10 @@ h6,
 .btn-primary{
   background-color: #FF9600 !important;
 }
+/* 
+.text-primary{
+  color: #FF9600 !important;
+} */
 
 .btn-border-3 {
   padding: 12px 20px;
@@ -3473,7 +3477,7 @@ ul li:last-child .card-list-4 {
   display: inline-flex;
     text-align: left;
     justify-content: end;
-    width: 85%;
+    width: 45%;
 }
 
 .header .main-header .header-nav {

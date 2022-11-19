@@ -9,6 +9,8 @@
           <ul class="main-menu">
 
             <li><a href="<?= base_url() ?>">Home</a></li>
+            <li><a href="<?= base_url() ?>admin/packages">Packages</a></li>
+
             <li><a href="<?= base_url() ?>adminhome">Dashboard</a></li>
 
             <li class="has-children"><a href="#0">Candidates</a>
@@ -61,6 +63,7 @@
             <ul class="mobile-menu font-heading">
               <li><a href="<?= base_url() ?>">Home</a></li>
               <li><a href="<?= base_url() ?>adminhome">Dashboard</a></li>
+              <li><a href="<?= base_url() ?>admin/packages">Packages</a></li>
 
               <li class="has-children"><a href="#0">Candidates</a>
                 <ul class="sub-menu">
@@ -113,6 +116,7 @@
 
               <li><a href="<?= base_url() ?>">Home</a></li>
               <li><a href="<?= base_url() ?>adminhome">Dashboard</a></li>
+              <li><a href="<?= base_url() ?>admin/packages">Packages</a></li>
 
               <li class="has-children"><a href="#0">Candidates</a>
                 <ul class="sub-menu">

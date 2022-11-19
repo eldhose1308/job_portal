@@ -179,12 +179,12 @@ $route['export'] = 'admin/export';
 $route['visits'] = 'ajax/visits';
 
 
-$route['donate'] = 'donations/donate';
 
 $route['contact_us'] = 'home/contact_us';
 $route['jobs'] = 'home/jobs';
 $route['job_details/(:any)'] = 'home/job_details/$1';
 
+$route['packages'] = 'home/packages';
 $route['about_us'] = 'home/about_us';
 
 $route['privacy_policy'] = 'home/privacy_policy';

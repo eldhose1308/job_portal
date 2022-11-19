@@ -39,6 +39,15 @@ class home extends CI_Controller
 
 
 
+    public function packages()
+    {
+        $data = array();
+
+        $this->template->users_views('users/packages', $data);
+    }
+
+
+
     public function about_us()
     {
         $data = array();
